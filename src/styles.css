@@ -120,7 +120,7 @@
 }
 @keyframes hero-gloss {
   0% { background-position: 150% 0; }
-  100% { background-position: -50% 0; }
+  18%, 100% { background-position: -50% 0; }
 }
 .hero-logo-pen {
   position: absolute; top: -6%; bottom: -6%; width: 2px; left: 0; pointer-events: none;
@@ -133,8 +133,7 @@
   -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
   background: linear-gradient(105deg, transparent 40%, color-mix(in oklab, var(--bronze) 85%, white) 50%, transparent 60%);
   background-size: 250% 100%; background-position: 150% 0;
-  animation: hero-gloss 1.6s ease-in-out 3s both, hero-gloss 2.2s ease-in-out 12s infinite;
-  animation-composition: replace;
+  animation: hero-gloss 10s ease-in-out 3s infinite both;
 }
 @keyframes hero-sway {
   0%, 100% { transform: perspective(1400px) rotateY(-1.2deg) rotateX(0.6deg) translateY(0) scale(1); filter: drop-shadow(0 20px 16px color-mix(in oklab, var(--foreground) 11%, transparent)); }
