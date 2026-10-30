@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import logo from "@/assets/logo-hd.png";
-import fachadaRua from "@/assets/fachada-rua-hd.jpg";
 import { ContactBlock } from "@/components/ContactBlock";
 import { SectionHeading } from "@/components/PageIntro";
 import { PostCard } from "./conteudos.index";
@@ -63,9 +62,8 @@ function Index() {
       </section>
 
       <section className="section-y">
-        <div className="container-site grid items-start gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <img src={fachadaRua} alt="Vista da rua com a fachada do escritório" loading="lazy" width={1200} height={700} className="order-2 aspect-[4/3] w-full object-cover lg:order-1" />
-          <div className="order-1 lg:order-2">
+        <div className="container-site">
+          <div>
             <h2 className="text-h2">Sobre nós</h2>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
               O Grupo Kurihara & Figueiredo reúne experiência e dedicação para oferecer soluções jurídicas completas:
