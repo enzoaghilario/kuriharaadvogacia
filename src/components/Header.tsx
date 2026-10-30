@@ -17,7 +17,7 @@ export function Wordmark({ dark }: { dark: boolean }) {
   return (
     <Link to="/" className="flex flex-col leading-none" aria-label={`${SITE.name} — início`}>
       <span className={`font-serif text-xl sm:text-2xl ${dark ? "text-on-dark" : "text-foreground"}`}>
-        Silva <span className="text-bronze">&amp;</span> Kurihara
+        Silva <span className="text-bronze">&</span> Kurihara
       </span>
       <span className={`mt-1 text-[0.6rem] uppercase tracking-[0.3em] ${dark ? "text-on-dark-muted" : "text-muted-foreground"}`}>
         Advogados Associados
@@ -28,35 +28,20 @@ export function Wordmark({ dark }: { dark: boolean }) {
 
 export function Header() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const overHero = pathname === "/" && !scrolled && !open;
-
-  useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 24);
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
-  }, []);
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        overHero ? "bg-transparent" : "border-b bg-background/95 backdrop-blur-sm"
-      }`}
-    >
+    <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/95 backdrop-blur-sm">
       <div className="container-site grid h-20 grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
-        <Wordmark dark={overHero} />
+        <Wordmark dark={false} />
         <nav aria-label="Principal" className="hidden items-center gap-5 lg:flex xl:gap-8">
           {NAV.map((n) => (
             <Link
               key={n.to}
               to={n.to}
               activeOptions={{ exact: n.to === "/" }}
-              className={`text-sm tracking-wide transition-colors ${
-                overHero ? "text-on-dark-muted hover:text-on-dark" : "text-muted-foreground hover:text-foreground"
-              } data-[status=active]:text-bronze`}
+              className="text-sm tracking-wide text-muted-foreground transition-colors hover:text-foreground data-[status=active]:text-bronze"
             >
               {n.label}
             </Link>
@@ -65,28 +50,20 @@ export function Header() {
             href={SITE.whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${
-              overHero
-                ? "border-on-dark/40 text-on-dark hover:border-bronze hover:text-bronze"
-                : "border-primary bg-primary text-primary-foreground hover:bg-graphite"
-            }`}
+            className="inline-flex items-center gap-2 border border-primary bg-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-graphite"
           >
             <WhatsAppIcon size={15} />
             WhatsApp
           </a>
           <a
             href={SITE.phoneHref}
-            className={`border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${
-              overHero
-                ? "border-on-dark/40 text-on-dark hover:border-bronze hover:text-bronze"
-                : "border-foreground/30 text-foreground hover:border-bronze hover:text-bronze"
-            }`}
+            className="border border-foreground/30 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-foreground transition-colors hover:border-bronze hover:text-bronze"
           >
             Ligar
           </a>
         </nav>
         <button
-          className={`grid h-11 w-11 place-items-center lg:hidden ${overHero ? "text-on-dark" : "text-foreground"}`}
+          className="grid h-11 w-11 place-items-center text-foreground lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="menu-mobile"

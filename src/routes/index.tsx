@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import fachada from "@/assets/fachada-hd.jpg";
+import logo from "@/assets/logo-hd.png";
 import fachadaRua from "@/assets/fachada-rua-hd.jpg";
 import { ContactBlock } from "@/components/ContactBlock";
 import { SectionHeading } from "@/components/PageIntro";
@@ -28,35 +28,30 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
-      <section className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-graphite">
+      <section className="relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
         <img
-          src={fachada}
-          alt="Fachada do escritório Silva & Kurihara em Morro Agudo"
-          width={1920}
-          height={1080}
+          src={logo}
+          alt="Grupo Kurihara & Figueiredo"
+          width={1314}
+          height={514}
           fetchPriority="high"
-          className="absolute inset-0 -z-20 h-full w-full object-cover object-[30%_center]"
+          className="w-full max-w-xl animate-rise"
         />
-        <div className="bg-hero-overlay absolute inset-0 -z-10" />
-        <div className="container-site pb-20 pt-36 sm:pb-28">
-          <div className="max-w-3xl animate-rise">
-            <p className="text-sm text-on-dark-muted">Rua Maria Liporini Meireles, 731 · Morro Agudo/SP</p>
-            <h1 className="text-display mt-4 text-on-dark">
-              Silva &amp; Kurihara
-            </h1>
-            <p className="mt-2 text-lg text-on-dark-muted">Advogados Associados</p>
-            <p className="mt-8 max-w-xl text-lg leading-relaxed text-on-dark-muted sm:text-xl">
-              Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões.
-            </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Link to="/escritorio" className="bg-on-dark px-7 py-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-graphite hover:bg-secondary">
-                Conheça o escritório
-              </Link>
-              <Link to="/contato" className="border border-on-dark/40 px-7 py-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-on-dark hover:border-bronze hover:text-bronze">
-                Entre em contato
-              </Link>
-            </div>
-          </div>
+        <p className="mt-10 text-sm text-muted-foreground">Rua Maria Liporini Meireles, 731 · Morro Agudo/SP</p>
+        <h1 className="text-display mt-4 text-foreground">
+          Silva & Kurihara
+        </h1>
+        <p className="mt-2 text-lg text-muted-foreground">Advogados Associados</p>
+        <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+          Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões.
+        </p>
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <Link to="/escritorio" className="bg-primary px-7 py-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-graphite">
+            Conheça o escritório
+          </Link>
+          <Link to="/contato" className="border border-foreground/30 px-7 py-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-foreground hover:border-bronze hover:text-bronze">
+            Entre em contato
+          </Link>
         </div>
       </section>
 
@@ -66,7 +61,7 @@ function Index() {
           <div className="order-1 lg:order-2">
             <h2 className="text-h2">Sobre nós</h2>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              O Grupo Kurihara &amp; Figueiredo reúne experiência e dedicação para oferecer soluções jurídicas completas:
+              O Grupo Kurihara & Figueiredo reúne experiência e dedicação para oferecer soluções jurídicas completas:
               advocacia civil, trabalhista, empresarial, previdenciária e imobiliária, direito de família e sucessões,
               recuperação de crédito, recuperação judicial e reestruturação de empresas.
             </p>
