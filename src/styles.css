@@ -113,7 +113,8 @@
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; scroll-behavior: auto !important; } }
 
 /* Hero entrance — logo is "engraved" left to right behind a bronze pen of light, then a gloss glides over the letters */
-.hero-logo-stage { background: var(--logo-ground); padding: 1.5rem 2rem; }
+.hero-logo-stage { padding: 0; }
+.hero-logo-white { filter: brightness(0) invert(1); }
 @keyframes hero-engrave {
   0% { opacity: 1; clip-path: inset(0 100% 0 0); transform: perspective(1400px) rotateY(-8deg) scale(0.97); filter: blur(3px); }
   70% { clip-path: inset(0 0 0 0); filter: blur(0); }
