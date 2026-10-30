@@ -64,7 +64,7 @@ export function InstagramFeed({
   lastSuccessAt: string | null;
 }) {
   return (
-    <section className="section-y border-t">
+    <section className="section-y">
       <div className="container-site">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <div>

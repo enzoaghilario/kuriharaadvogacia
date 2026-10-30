@@ -1,9 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageIntro } from "@/components/PageIntro";
-import { formatDate, POSTS, type Post } from "@/content/posts";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
-const T = "Conteúdos jurídicos | Kurihara & Figueiredo Advogados Associados";
-const D = "Artigos e conteúdos informativos publicados pelo escritório Kurihara & Figueiredo Advogados Associados.";
+import { InstagramFeed } from "@/components/InstagramFeed";
+import { PageIntro, SectionHeading } from "@/components/PageIntro";
+import { formatDate, POSTS, type Post } from "@/content/posts";
+import { getInstagramFeed } from "@/lib/instagram.functions";
+
+const T = "Conteúdos | Kurihara & Figueiredo Advogados Associados";
+const D = "Publicações recentes do Instagram do escritório Kurihara & Figueiredo Advogados Associados e artigos jurídicos.";
+
+const instagramFeedQueryOptions = queryOptions({
+  queryKey: ["instagram-feed"],
+  queryFn: () => getInstagramFeed(),
+});
 
 export const Route = createFileRoute("/conteudos/")({
   head: () => ({
@@ -12,8 +21,11 @@ export const Route = createFileRoute("/conteudos/")({
       { name: "description", content: D },
       { property: "og:title", content: T },
       { property: "og:description", content: D },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(instagramFeedQueryOptions),
   component: Conteudos,
 });
 
@@ -31,22 +43,28 @@ export function PostCard({ post }: { post: Post }) {
 }
 
 function Conteudos() {
-  const posts = [...POSTS].sort((a, b) => b.date.localeCompare(a.date));
+  const { data: feed } = useSuspenseQuery(instagramFeedQueryOptions);
+  const articles = [...POSTS].sort((a, b) => b.date.localeCompare(a.date));
+
   return (
     <>
       <PageIntro eyebrow="Conteúdos" title="Conteúdos jurídicos">
         Informações jurídicas apresentadas de forma clara e acessível.
       </PageIntro>
-      <section className="section-y">
+
+      <InstagramFeed posts={feed.posts} configured={feed.configured} lastSuccessAt={feed.lastSuccessAt} />
+
+      <section className="section-y border-t">
         <div className="container-site">
-          {posts.length === 0 ? (
-            <div className="border border-dashed p-10 text-center sm:p-16">
+          <SectionHeading eyebrow="Artigos" title="Para ler com calma" />
+          {articles.length === 0 ? (
+            <div className="mt-12 border border-dashed p-10 text-center sm:p-16">
               <p className="font-serif text-2xl">Em breve</p>
               <p className="mt-3 text-muted-foreground">As primeiras publicações estão em preparação.</p>
             </div>
           ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {posts.map((p) => <div key={p.slug} className="relative flex"><PostCard post={p} /></div>)}
+            <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {articles.map((p) => <div key={p.slug} className="relative flex"><PostCard post={p} /></div>)}
             </div>
           )}
         </div>
