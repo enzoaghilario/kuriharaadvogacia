@@ -1,5 +1,10 @@
 # Roadmap
 
+## Correções de acessibilidade e privacidade
+
+- [x] Remover o botão de contato dos serviços fechados e verificar teclado/abertura
+- [x] Atualizar o aviso sobre o nome solicitado antes do WhatsApp
+
 ## Feed do Instagram na área de Conteúdos
 
 - [x] Banco de dados: tabelas de publicações e de estado da sincronização
