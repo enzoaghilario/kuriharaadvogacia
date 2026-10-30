@@ -26,7 +26,7 @@ export const Route = createFileRoute("/escritorio")({
 function Escritorio() {
   return (
     <>
-      <PageIntro eyebrow="O escritório" title="Sobre nós" />
+      <PageIntro eyebrow="O escritório" title="Venha conhecer o nosso escritório" />
       <section className="section-y">
         <div className="container-site grid gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
           <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
