@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageIntro } from "@/components/PageIntro";
 
-const T = "Aviso de privacidade | Silva & Kurihara Advogados Associados";
-const D = "Como o site do escritório Silva & Kurihara Advogados Associados trata informações de visitantes.";
+const T = "Aviso de privacidade | Kurihara & Figueiredo Advogados Associados";
+const D = "Como o site do escritório Kurihara & Figueiredo Advogados Associados trata informações de visitantes.";
 
 export const Route = createFileRoute("/privacidade")({
   head: () => ({

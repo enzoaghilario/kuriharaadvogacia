@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ContactBlock } from "@/components/ContactBlock";
 import { PageIntro } from "@/components/PageIntro";
 
-const T = "Contato | Silva & Kurihara Advogados Associados — Morro Agudo";
+const T = "Contato | Kurihara & Figueiredo Advogados Associados — Morro Agudo";
 const D = "Fale com o escritório: WhatsApp (16) 98801-4617, telefone (16) 3851-0303, Rua Maria Liporini Meireles, 731, Centro, Morro Agudo — SP.";
 
 export const Route = createFileRoute("/contato")({

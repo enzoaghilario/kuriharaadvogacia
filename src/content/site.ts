@@ -1,6 +1,6 @@
 export const SITE = {
-  name: "Silva & Kurihara Advogados Associados",
-  short: "Silva & Kurihara",
+  name: "Kurihara & Figueiredo Advogados Associados",
+  short: "Kurihara & Figueiredo",
   street: "Rua Maria Liporini Meireles, 731",
   district: "Centro",
   city: "Morro Agudo",

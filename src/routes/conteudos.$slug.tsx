@@ -12,14 +12,14 @@ export const Route = createFileRoute("/conteudos/$slug")({
     loaderData
       ? {
           meta: [
-            { title: `${loaderData.title} | Silva & Kurihara` },
+            { title: `${loaderData.title} | Kurihara & Figueiredo` },
             { name: "description", content: loaderData.summary },
             { property: "og:title", content: loaderData.title },
             { property: "og:description", content: loaderData.summary },
             { property: "og:type", content: "article" },
           ],
         }
-      : { meta: [{ title: "Conteúdo indisponível | Silva & Kurihara" }, { name: "robots", content: "noindex" }] },
+      : { meta: [{ title: "Conteúdo indisponível | Kurihara & Figueiredo" }, { name: "robots", content: "noindex" }] },
   notFoundComponent: () => (
     <div className="container-site pt-44 pb-24">
       <h1 className="text-h2">Conteúdo não encontrado</h1>

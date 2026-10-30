@@ -80,9 +80,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Silva & Kurihara Advogados Associados — Morro Agudo, SP" },
+      { title: "Kurihara & Figueiredo Advogados Associados — Morro Agudo, SP" },
       { name: "description", content: "Escritório de advocacia em Morro Agudo, São Paulo." },
-      { property: "og:site_name", content: "Silva & Kurihara Advogados Associados" },
+      { property: "og:site_name", content: "Kurihara & Figueiredo Advogados Associados" },
       { property: "og:locale", content: "pt_BR" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -104,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "LegalService",
-          name: "Silva & Kurihara Advogados Associados",
+          name: "Kurihara & Figueiredo Advogados Associados",
           telephone: "+55 16 3851-0303",
           contactPoint: [
             {
