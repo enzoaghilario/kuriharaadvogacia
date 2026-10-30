@@ -28,7 +28,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
-      <section className="relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
+      <section className="hero-breathe relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
         <div className="hero-logo-stage relative w-full max-w-xl">
           <img
             src={logo}
