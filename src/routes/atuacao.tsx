@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageIntro } from "@/components/PageIntro";
 import { AREAS } from "@/content/areas";
+import { ServiceWhatsAppDialog } from "@/components/ServiceWhatsAppDialog";
 
 const T = "Áreas de atuação | Kurihara & Figueiredo Advogados Associados";
 const D = "Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões e recuperação judicial em Morro Agudo, SP.";
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/atuacao")({
 
 function Atuacao() {
   const [open, setOpen] = useState<string | null>(null);
+  const [service, setService] = useState<string | null>(null);
   return (
     <>
       <PageIntro eyebrow="Serviços" title="Áreas de atuação" />
@@ -48,6 +50,9 @@ function Atuacao() {
                     <div className="overflow-hidden">
                       <div className="rule-bronze mb-5 ml-12 max-w-2xl !w-10" />
                       <p className="ml-12 max-w-2xl pb-6 text-base leading-relaxed text-muted-foreground">{a.description}</p>
+                      <button type="button" onClick={() => setService(a.name)} className="mb-6 ml-12 text-sm text-bronze underline-offset-4 hover:underline">
+                        Falar com o escritório sobre {a.name.toLowerCase()} →
+                      </button>
                     </div>
                   </div>
                 </li>
@@ -60,6 +65,7 @@ function Atuacao() {
           </p>
         </div>
       </section>
+      <ServiceWhatsAppDialog service={service} onClose={() => setService(null)} />
     </>
   );
 }
