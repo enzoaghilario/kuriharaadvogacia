@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2,
+  "title": "Design System: Kurihara & Figueiredo",
+  "extensions": {
+    "motion": [{ "name": "interaction", "value": "180ms ease", "purpose": "Color and border state changes" }, { "name": "logo-breathe", "value": "14s ease-in-out", "purpose": "Preserved logo breathing with reduced-motion fallback" }],
+    "breakpoints": [{ "name": "sm", "value": "640px" }, { "name": "lg", "value": "1024px" }]
+  },
+  "components": [{ "name": "Primary action", "kind": "button", "refersTo": "button-primary", "html": "<button class=\"ds-primary\">Contato</button>", "css": ".ds-primary{background:var(--primary);color:var(--primary-foreground);border:0;padding:16px 24px;cursor:pointer}.ds-primary:hover{background:var(--foreground)}.ds-primary:focus-visible{outline:2px solid var(--ring);outline-offset:3px}" }],
+  "narrative": { "northStar": "Serious, intellectual legal identity", "rules": [{ "name": "Original logo", "body": "Preserve black artwork on a light field.", "section": "colors" }] }
+}

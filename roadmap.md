@@ -2,9 +2,9 @@
 
 ## Tema escuro institucional
 
-- [ ] Aplicar azul profundo, grafite e dourado com contraste legível
-- [ ] Preservar logo, fotos, conteúdo, animação e contatos
-- [ ] Verificar páginas e serviços no computador e no celular
+- [x] Aplicar azul profundo, grafite e dourado com contraste legível
+- [x] Preservar logo, fotos, conteúdo, animação e contatos
+- [x] Verificar páginas e serviços no computador e no celular
 
 ## Correções de acessibilidade e privacidade
 
