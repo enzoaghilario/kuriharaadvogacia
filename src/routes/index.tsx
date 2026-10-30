@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import fachada from "@/assets/fachada-hd.jpg";
+import logo from "@/assets/logo-hd.png";
 import fachadaRua from "@/assets/fachada-rua-hd.jpg";
 import { ContactBlock } from "@/components/ContactBlock";
 import { SectionHeading } from "@/components/PageIntro";
