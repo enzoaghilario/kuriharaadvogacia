@@ -2,8 +2,8 @@
 
 ## Correções de acessibilidade e privacidade
 
-- [ ] Remover o botão de contato dos serviços fechados e verificar teclado/abertura
-- [ ] Atualizar o aviso sobre o nome solicitado antes do WhatsApp
+- [x] Remover o botão de contato dos serviços fechados e verificar teclado/abertura
+- [x] Atualizar o aviso sobre o nome solicitado antes do WhatsApp
 
 ## Feed do Instagram na área de Conteúdos
 
