@@ -46,12 +46,6 @@ export function Header() {
               {n.label}
             </Link>
           ))}
-          <a
-            href={SITE.phoneHref}
-            className="border border-foreground/30 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-foreground transition-colors hover:border-bronze hover:text-bronze"
-          >
-            Ligar
-          </a>
         </nav>
         <button
           className="grid h-11 w-11 place-items-center text-foreground lg:hidden"
