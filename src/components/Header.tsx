@@ -8,7 +8,7 @@ import { WhatsAppIcon } from "./WhatsAppIcon";
 export const NAV = [
   { to: "/", label: "Início" },
   { to: "/escritorio", label: "Escritório" },
-  ...(AREAS.length ? [{ to: "/atuacao", label: "Atuação" }] : []),
+  ...(AREAS.length ? [{ to: "/atuacao", label: "Serviços" }] : []),
   { to: "/conteudos", label: "Conteúdos" },
   { to: "/contato", label: "Contato" },
 ] as const;
