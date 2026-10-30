@@ -29,19 +29,27 @@ function Index() {
   return (
     <>
       <section className="relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
-        <img
-          src={logo}
-          alt="Grupo Kurihara & Figueiredo"
-          width={1314}
-          height={514}
-          fetchPriority="high"
-          className="hero-logo-3d w-full max-w-xl"
-        />
-        <h1 className="hero-rise-3d text-display mt-4 text-foreground" style={{ animationDelay: "3.1s" }}>
+        <div className="hero-logo-stage relative w-full max-w-xl">
+          <img
+            src={logo}
+            alt="Grupo Kurihara & Figueiredo"
+            width={1314}
+            height={514}
+            fetchPriority="high"
+            className="hero-logo-3d w-full"
+          />
+          <span aria-hidden className="hero-logo-pen" />
+          <span
+            aria-hidden
+            className="hero-logo-gloss"
+            style={{ WebkitMaskImage: `url(${logo})`, maskImage: `url(${logo})` }}
+          />
+        </div>
+        <h1 className="hero-rise-3d text-display mt-4 text-foreground" style={{ animationDelay: "3.4s" }}>
           Kurihara & Figueiredo
         </h1>
-        <p className="hero-rise-3d mt-2 text-lg text-muted-foreground" style={{ animationDelay: "3.35s" }}>Advogados Associados</p>
-        <p style={{ animationDelay: "3.6s" }} className="hero-rise-3d mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+        <p className="hero-rise-3d mt-2 text-lg text-muted-foreground" style={{ animationDelay: "3.65s" }}>Advogados Associados</p>
+        <p style={{ animationDelay: "3.9s" }} className="hero-rise-3d mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
           Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões.
         </p>
         <div style={{ animationDelay: "3.85s" }} className="hero-rise-3d mt-10 flex flex-col gap-3 sm:flex-row">

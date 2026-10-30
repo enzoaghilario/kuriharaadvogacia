@@ -106,17 +106,35 @@
 @utility animate-rise { animation: rise 0.9s cubic-bezier(.2,.7,.2,1) both; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; scroll-behavior: auto !important; } }
 
-/* Hero 3D entrance — slow emergence from depth, bronze luster on landing */
-@keyframes hero-emerge {
-  0% { opacity: 0; transform: perspective(1400px) translate3d(0, 10vh, -800px) rotateX(-22deg) rotateZ(-5deg) scale(0.6); filter: blur(10px) brightness(0.6); }
-  30% { opacity: 1; }
-  72% { filter: blur(0) brightness(1); }
-  86% { transform: perspective(1400px) translate3d(0, -0.4vh, 30px) rotateX(2deg) rotateZ(1deg) scale(1.012); }
-  100% { opacity: 1; transform: perspective(1400px) translate3d(0, 0, 0) rotateX(0deg) rotateZ(0deg) scale(1); }
+/* Hero entrance — logo is "engraved" left to right behind a bronze pen of light, then a gloss glides over the letters */
+@keyframes hero-engrave {
+  0% { opacity: 1; clip-path: inset(0 100% 0 0); transform: perspective(1400px) rotateY(-8deg) scale(0.97); filter: blur(3px); }
+  70% { clip-path: inset(0 0 0 0); filter: blur(0); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0); transform: perspective(1400px) rotateY(0) scale(1); filter: blur(0); }
 }
-@keyframes hero-luster {
-  0%, 100% { filter: drop-shadow(0 26px 22px color-mix(in oklab, var(--foreground) 15%, transparent)); }
-  45% { filter: drop-shadow(0 40px 34px color-mix(in oklab, var(--bronze) 38%, transparent)) drop-shadow(0 0 46px color-mix(in oklab, var(--bronze) 20%, transparent)); }
+@keyframes hero-pen {
+  0% { left: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  68% { left: 100%; opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+@keyframes hero-gloss {
+  0% { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+.hero-logo-pen {
+  position: absolute; top: -6%; bottom: -6%; width: 2px; left: 0; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--bronze), transparent);
+  box-shadow: 0 0 18px 4px color-mix(in oklab, var(--bronze) 45%, transparent);
+  opacity: 0; animation: hero-pen 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.3s both;
+}
+.hero-logo-gloss {
+  position: absolute; inset: 0; pointer-events: none;
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  background: linear-gradient(105deg, transparent 40%, color-mix(in oklab, var(--bronze) 85%, white) 50%, transparent 60%);
+  background-size: 250% 100%; background-position: 150% 0;
+  animation: hero-gloss 1.6s ease-in-out 3s both, hero-gloss 2.2s ease-in-out 12s infinite;
+  animation-composition: replace;
 }
 @keyframes hero-sway {
   0%, 100% { transform: perspective(1400px) rotateY(-1.2deg) rotateX(0.6deg) translateY(0) scale(1); filter: drop-shadow(0 20px 16px color-mix(in oklab, var(--foreground) 11%, transparent)); }
@@ -131,11 +149,11 @@
 .hero-logo-3d {
   transform-style: preserve-3d;
   animation:
-    hero-emerge 4.4s cubic-bezier(0.16, 0.84, 0.28, 1) both,
-    hero-luster 2.8s ease-in-out 4.2s 1,
-    hero-sway 14s ease-in-out 7s infinite;
+    hero-engrave 3s cubic-bezier(0.65, 0, 0.35, 1) 0.3s both,
+    hero-sway 14s ease-in-out 4.5s infinite;
 }
 .hero-rise-3d { opacity: 0; transform-origin: top center; animation: hero-rise-3d 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
 @media (prefers-reduced-motion: reduce) {
-  .hero-logo-3d, .hero-rise-3d { animation: none; opacity: 1; transform: none; }
+  .hero-logo-3d, .hero-rise-3d { animation: none; opacity: 1; transform: none; clip-path: none; }
+  .hero-logo-pen, .hero-logo-gloss { display: none; }
 }
