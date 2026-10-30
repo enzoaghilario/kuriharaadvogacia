@@ -5,7 +5,7 @@ import { PageIntro } from "@/components/PageIntro";
 import { Faq } from "@/components/Faq";
 import { AREAS } from "@/content/areas";
 
-const T = "Sobre nós | Silva & Kurihara Advogados Associados";
+const T = "Sobre nós | Kurihara & Figueiredo Advogados Associados";
 const D =
   "Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões, recuperação de crédito e recuperação judicial em Morro Agudo, SP.";
 

@@ -8,7 +8,7 @@ import { PostCard } from "./conteudos.index";
 import { POSTS } from "@/content/posts";
 import { Faq } from "@/components/Faq";
 
-const TITLE = "Silva & Kurihara Advogados Associados | Advocacia em Morro Agudo, SP";
+const TITLE = "Kurihara & Figueiredo Advogados Associados | Advocacia em Morro Agudo, SP";
 const DESC =
   "Escritório de advocacia em Morro Agudo, São Paulo. Atuação jurídica pautada pela responsabilidade, ética e compromisso. WhatsApp (16) 98801-4617 — Rua Maria Liporini Meireles, 731.";
 
@@ -39,7 +39,7 @@ function Index() {
         />
         <p className="mt-10 text-sm text-muted-foreground">Rua Maria Liporini Meireles, 731 · Morro Agudo/SP</p>
         <h1 className="text-display mt-4 text-foreground">
-          Silva & Kurihara
+          Kurihara & Figueiredo
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">Advogados Associados</p>
         <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">

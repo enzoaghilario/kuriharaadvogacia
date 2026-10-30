@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageIntro } from "@/components/PageIntro";
 import { AREAS } from "@/content/areas";
 
-const T = "Áreas de atuação | Silva & Kurihara Advogados Associados";
+const T = "Áreas de atuação | Kurihara & Figueiredo Advogados Associados";
 const D = "Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões e recuperação judicial em Morro Agudo, SP.";
 
 export const Route = createFileRoute("/atuacao")({

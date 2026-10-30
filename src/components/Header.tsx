@@ -17,7 +17,7 @@ export function Wordmark({ dark }: { dark: boolean }) {
   return (
     <Link to="/" className="flex flex-col leading-none" aria-label={`${SITE.name} — início`}>
       <span className={`font-serif text-xl sm:text-2xl ${dark ? "text-on-dark" : "text-foreground"}`}>
-        Silva <span className="text-bronze">&</span> Kurihara
+        Kurihara <span className="text-bronze">&</span> Figueiredo
       </span>
       <span className={`mt-1 text-[0.6rem] uppercase tracking-[0.3em] ${dark ? "text-on-dark-muted" : "text-muted-foreground"}`}>
         Advogados Associados

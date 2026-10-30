@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageIntro } from "@/components/PageIntro";
 import { formatDate, POSTS, type Post } from "@/content/posts";
 
-const T = "Conteúdos jurídicos | Silva & Kurihara Advogados Associados";
-const D = "Artigos e conteúdos informativos publicados pelo escritório Silva & Kurihara Advogados Associados.";
+const T = "Conteúdos jurídicos | Kurihara & Figueiredo Advogados Associados";
+const D = "Artigos e conteúdos informativos publicados pelo escritório Kurihara & Figueiredo Advogados Associados.";
 
 export const Route = createFileRoute("/conteudos/")({
   head: () => ({
