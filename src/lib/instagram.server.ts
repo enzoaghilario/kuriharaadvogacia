@@ -88,10 +88,10 @@ async function markState(patch: Record<string, unknown>): Promise<void> {
 
 /** ID da conta: vem direto da configuração ou é lido a partir da página da Meta. */
 async function resolveAccountId(token: string, env: Record<string, string | undefined>): Promise<string | null> {
-  const direct = env.INSTAGRAM_ACCOUNT_ID?.trim();
+  const direct = env["INSTAGRAM_ACCOUNT_ID"]?.trim();
   if (direct) return direct;
 
-  const page = env.INSTAGRAM_PAGE_ID?.trim();
+  const page = env["INSTAGRAM_PAGE_ID"]?.trim();
   if (!page) return null;
 
   const url = new URL(`${GRAPH_BASE}/${encodeURIComponent(page)}`);
@@ -140,7 +140,7 @@ export async function syncInstagramFeed(): Promise<{ ok: boolean; posts: number;
     return { ok: false, posts: 0, error: message };
   }
 
-  const token = env.INSTAGRAM_ACCESS_TOKEN!.trim();
+  const token = env["INSTAGRAM_ACCESS_TOKEN"]!.trim();
   await markState({ status: "running", last_attempt_at: new Date().toISOString() });
 
   const accountId = await resolveAccountId(token, env);
@@ -150,7 +150,7 @@ export async function syncInstagramFeed(): Promise<{ ok: boolean; posts: number;
     return { ok: false, posts: 0, error: message };
   }
 
-  const limit = syncLimit(env.INSTAGRAM_SYNC_LIMIT);
+  const limit = syncLimit(env["INSTAGRAM_SYNC_LIMIT"]);
   const fetched = await fetchMedia(token, accountId, limit);
 
   if (fetched.error) {
@@ -199,7 +199,7 @@ export async function syncInstagramFeed(): Promise<{ ok: boolean; posts: number;
 /** Atualiza o feed quando o intervalo venceu, sem deixar duas buscas correrem juntas. */
 export async function ensureFreshInstagramFeed(): Promise<void> {
   const env = readEnv();
-  const interval = syncIntervalMinutes(env.INSTAGRAM_SYNC_INTERVAL_MINUTES);
+  const interval = syncIntervalMinutes(env["INSTAGRAM_SYNC_INTERVAL_MINUTES"]);
   const supabaseAdmin = await admin();
 
   const { data } = await supabaseAdmin

@@ -110,9 +110,9 @@ export function shouldRefresh(lastSuccessAt: string | null, nowMs: number, inter
 /** Falha da API da Meta em uma frase curta, com o código que a Meta informou. */
 export function describeGraphError(body: unknown): string {
   const record = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
-  const nested = (record.error && typeof record.error === "object" ? record.error : record) as Record<string, unknown>;
-  const message = text(nested.message) ?? text(record.message) ?? "resposta inesperada da API da Meta";
-  const code = typeof nested.code === "number" ? nested.code : null;
+  const nested = (record["error"] && typeof record["error"] === "object" ? record["error"] : record) as Record<string, unknown>;
+  const message = text(nested["message"]) ?? text(record["message"]) ?? "resposta inesperada da API da Meta";
+  const code = typeof nested["code"] === "number" ? nested["code"] : null;
 
   const reason =
     code === 190
@@ -130,8 +130,8 @@ export function describeGraphError(body: unknown): string {
 
 /** O feed só pode buscar quando há token e conta para ler. */
 export function isFeedConfigured(env: Record<string, string | undefined>): boolean {
-  const token = text(env.INSTAGRAM_ACCESS_TOKEN);
-  const account = text(env.INSTAGRAM_ACCOUNT_ID) ?? text(env.INSTAGRAM_PAGE_ID);
+  const token = text(env["INSTAGRAM_ACCESS_TOKEN"]);
+  const account = text(env["INSTAGRAM_ACCOUNT_ID"]) ?? text(env["INSTAGRAM_PAGE_ID"]);
   return Boolean(token && account);
 }
 
