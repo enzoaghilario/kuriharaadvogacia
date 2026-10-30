@@ -113,7 +113,7 @@
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; scroll-behavior: auto !important; } }
 
 /* Hero entrance — logo is "engraved" left to right behind a bronze pen of light, then a gloss glides over the letters */
-.hero-logo-stage { background: var(--logo-ground); padding: 1.5rem 2rem; }
+.hero-logo-stage { padding: 0; }
 @keyframes hero-engrave {
   0% { opacity: 1; clip-path: inset(0 100% 0 0); transform: perspective(1400px) rotateY(-8deg) scale(0.97); filter: blur(3px); }
   70% { clip-path: inset(0 0 0 0); filter: blur(0); }
@@ -143,10 +143,10 @@
   animation: hero-gloss 10s ease-in-out 3s infinite both;
 }
 @keyframes hero-sway {
-  0%, 100% { transform: perspective(1400px) rotateY(-1.2deg) rotateX(0.6deg) translateY(0) scale(1); filter: drop-shadow(0 20px 16px color-mix(in oklab, var(--foreground) 11%, transparent)); }
-  25% { transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-8px) scale(1.04); filter: drop-shadow(0 38px 32px color-mix(in oklab, var(--foreground) 21%, transparent)); }
-  50% { transform: perspective(1400px) rotateY(1.2deg) rotateX(-0.6deg) translateY(0) scale(1); filter: drop-shadow(0 20px 16px color-mix(in oklab, var(--foreground) 11%, transparent)); }
-  75% { transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-8px) scale(1.04); filter: drop-shadow(0 38px 32px color-mix(in oklab, var(--foreground) 21%, transparent)); }
+  0%, 100% { transform: perspective(1400px) rotateY(-1.2deg) rotateX(0.6deg) translateY(0) scale(1); }
+  25% { transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-8px) scale(1.04); }
+  50% { transform: perspective(1400px) rotateY(1.2deg) rotateX(-0.6deg) translateY(0) scale(1); }
+  75% { transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-8px) scale(1.04); }
 }
 @keyframes hero-rise-3d {
   from { opacity: 0; transform: perspective(900px) translateY(38px) rotateX(-32deg); }
