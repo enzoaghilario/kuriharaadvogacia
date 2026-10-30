@@ -61,11 +61,24 @@ export function Header() {
             </Link>
           ))}
           <a
+            href={SITE.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center gap-2 border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${
+              overHero
+                ? "border-on-dark/40 text-on-dark hover:border-bronze hover:text-bronze"
+                : "border-primary bg-primary text-primary-foreground hover:bg-graphite"
+            }`}
+          >
+            <WhatsAppIcon size={15} />
+            WhatsApp
+          </a>
+          <a
             href={SITE.phoneHref}
             className={`border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${
               overHero
                 ? "border-on-dark/40 text-on-dark hover:border-bronze hover:text-bronze"
-                : "border-primary bg-primary text-primary-foreground hover:bg-graphite"
+                : "border-foreground/30 text-foreground hover:border-bronze hover:text-bronze"
             }`}
           >
             Ligar

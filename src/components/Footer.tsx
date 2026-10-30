@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram } from "lucide-react";
 import { FULL_ADDRESS, MAPS_URL, SITE } from "@/content/site";
 import { NAV, Wordmark } from "./Header";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 
 export function Footer() {
   return (
