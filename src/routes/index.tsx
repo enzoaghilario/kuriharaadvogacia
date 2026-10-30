@@ -18,6 +18,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: DESC },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESC },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -27,7 +29,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
-      <section className="hero-breathe relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
+      <section className="hero-breathe relative isolate flex min-h-[90svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
         <div className="hero-logo-stage relative w-full max-w-xl">
           <img
             src={logo}
@@ -44,7 +46,7 @@ function Index() {
             style={{ WebkitMaskImage: `url(${logo})`, maskImage: `url(${logo})` }}
           />
         </div>
-        <h1 className="hero-rise-3d text-display mt-4 text-foreground" style={{ animationDelay: "3.4s" }}>
+        <h1 className="hero-rise-3d text-display mt-8 max-w-4xl text-foreground" style={{ animationDelay: "3.4s" }}>
           Kurihara & Figueiredo
         </h1>
         <p className="hero-rise-3d mt-2 text-lg text-muted-foreground" style={{ animationDelay: "3.65s" }}>Advogados Associados</p>
