@@ -14,7 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      instagram_posts: {
+        Row: {
+          caption: string | null
+          comments_count: number | null
+          id: string
+          image_url: string | null
+          like_count: number | null
+          media_type: string
+          permalink: string
+          published_at: string
+          synced_at: string
+        }
+        Insert: {
+          caption?: string | null
+          comments_count?: number | null
+          id: string
+          image_url?: string | null
+          like_count?: number | null
+          media_type?: string
+          permalink: string
+          published_at: string
+          synced_at?: string
+        }
+        Update: {
+          caption?: string | null
+          comments_count?: number | null
+          id?: string
+          image_url?: string | null
+          like_count?: number | null
+          media_type?: string
+          permalink?: string
+          published_at?: string
+          synced_at?: string
+        }
+        Relationships: []
+      }
+      instagram_state: {
+        Row: {
+          id: number
+          last_attempt_at: string | null
+          last_error: string | null
+          last_success_at: string | null
+          posts_count: number
+          status: string
+        }
+        Insert: {
+          id?: number
+          last_attempt_at?: string | null
+          last_error?: string | null
+          last_success_at?: string | null
+          posts_count?: number
+          status?: string
+        }
+        Update: {
+          id?: number
+          last_attempt_at?: string | null
+          last_error?: string | null
+          last_success_at?: string | null
+          posts_count?: number
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
