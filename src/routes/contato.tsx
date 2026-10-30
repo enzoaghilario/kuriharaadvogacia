@@ -3,7 +3,7 @@ import { ContactBlock } from "@/components/ContactBlock";
 import { PageIntro } from "@/components/PageIntro";
 
 const T = "Contato | Silva & Kurihara Advogados Associados — Morro Agudo";
-const D = "Rua Maria Liporini Meireles, 731, Centro, Morro Agudo — SP. Telefone (16) 3851-0303.";
+const D = "Fale com o escritório: WhatsApp (16) 98801-4617, telefone (16) 3851-0303, Rua Maria Liporini Meireles, 731, Centro, Morro Agudo — SP.";
 
 export const Route = createFileRoute("/contato")({
   head: () => ({
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/contato")({
   component: () => (
     <>
       <PageIntro eyebrow="Contato" title="Fale com o escritório">
-        Atendimento presencial em Morro Agudo ou pelo telefone.
+        Atendimento presencial em Morro Agudo, pelo WhatsApp ou pelo telefone.
       </PageIntro>
       <section className="section-y">
         <div className="container-site"><ContactBlock /></div>
