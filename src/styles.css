@@ -119,8 +119,10 @@
   45% { filter: drop-shadow(0 40px 34px color-mix(in oklab, var(--bronze) 38%, transparent)) drop-shadow(0 0 46px color-mix(in oklab, var(--bronze) 20%, transparent)); }
 }
 @keyframes hero-sway {
-  0%, 100% { transform: perspective(1400px) rotateY(-1.2deg) rotateX(0.6deg) translateY(0); }
-  50% { transform: perspective(1400px) rotateY(1.2deg) rotateX(-0.6deg) translateY(-4px); }
+  0%, 100% { transform: perspective(1400px) rotateY(-1.2deg) rotateX(0.6deg) translateY(0) scale(1); filter: drop-shadow(0 20px 16px color-mix(in oklab, var(--foreground) 11%, transparent)); }
+  25% { transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-3px) scale(1.014); filter: drop-shadow(0 30px 26px color-mix(in oklab, var(--foreground) 17%, transparent)); }
+  50% { transform: perspective(1400px) rotateY(1.2deg) rotateX(-0.6deg) translateY(0) scale(1); filter: drop-shadow(0 20px 16px color-mix(in oklab, var(--foreground) 11%, transparent)); }
+  75% { transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-3px) scale(1.014); filter: drop-shadow(0 30px 26px color-mix(in oklab, var(--foreground) 17%, transparent)); }
 }
 @keyframes hero-rise-3d {
   from { opacity: 0; transform: perspective(900px) translateY(38px) rotateX(-32deg); }
@@ -131,7 +133,7 @@
   animation:
     hero-emerge 4.4s cubic-bezier(0.16, 0.84, 0.28, 1) both,
     hero-luster 2.8s ease-in-out 4.2s 1,
-    hero-sway 12s ease-in-out 7s infinite;
+    hero-sway 14s ease-in-out 7s infinite;
 }
 .hero-rise-3d { opacity: 0; transform-origin: top center; animation: hero-rise-3d 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
 @media (prefers-reduced-motion: reduce) {
