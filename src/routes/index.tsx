@@ -35,16 +35,16 @@ function Index() {
           width={1314}
           height={514}
           fetchPriority="high"
-          className="w-full max-w-xl animate-rise"
+          className="hero-logo-3d w-full max-w-xl"
         />
-        <h1 className="text-display mt-4 text-foreground">
+        <h1 className="hero-rise-3d text-display mt-4 text-foreground" style={{ animationDelay: "1.2s" }}>
           Kurihara & Figueiredo
         </h1>
-        <p className="mt-2 text-lg text-muted-foreground">Advogados Associados</p>
-        <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+        <p className="hero-rise-3d mt-2 text-lg text-muted-foreground" style={{ animationDelay: "1.4s" }}>Advogados Associados</p>
+        <p style={{ animationDelay: "1.6s" }} className="hero-rise-3d mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
           Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões.
         </p>
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+        <div style={{ animationDelay: "1.8s" }} className="hero-rise-3d mt-10 flex flex-col gap-3 sm:flex-row">
           <Link to="/escritorio" className="bg-primary px-7 py-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-graphite">
             Conheça o escritório
           </Link>
