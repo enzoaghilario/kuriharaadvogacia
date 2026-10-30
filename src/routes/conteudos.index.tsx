@@ -19,7 +19,7 @@ export const Route = createFileRoute("/conteudos/")({
 
 export function PostCard({ post }: { post: Post }) {
   return (
-    <article className="group flex flex-col border bg-card p-7 transition-colors hover:border-bronze">
+    <article className="group relative flex flex-col border bg-card p-7 transition-colors hover:border-bronze">
       <p className="eyebrow">{post.category}</p>
       <h3 className="mt-4 text-2xl leading-snug">
         <Link to="/conteudos/$slug" params={{ slug: post.slug }} className="after:absolute after:inset-0 group-hover:text-primary">{post.title}</Link>
