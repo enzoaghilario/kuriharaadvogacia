@@ -48,7 +48,7 @@ export function Header() {
     >
       <div className="container-site grid h-20 grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
         <Wordmark dark={overHero} />
-        <nav aria-label="Principal" className="hidden items-center gap-8 lg:flex">
+        <nav aria-label="Principal" className="hidden items-center gap-5 lg:flex xl:gap-8">
           {NAV.map((n) => (
             <Link
               key={n.to}
@@ -97,7 +97,7 @@ export function Header() {
       </div>
       <div
         id="menu-mobile"
-        className={`overflow-hidden bg-background transition-[max-height] duration-500 lg:hidden ${open ? "max-h-[28rem]" : "max-h-0"}`}
+        className={`overflow-hidden bg-background transition-[max-height] duration-500 lg:hidden ${open ? "max-h-[34rem]" : "max-h-0"}`}
       >
         <nav aria-label="Menu móvel" className="container-site flex flex-col pb-8">
           {NAV.map((n) => (
