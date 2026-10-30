@@ -37,7 +37,6 @@ function Index() {
           fetchPriority="high"
           className="w-full max-w-xl animate-rise"
         />
-        <p className="mt-10 text-sm text-muted-foreground">Rua Maria Liporini Meireles, 731 · Morro Agudo/SP</p>
         <h1 className="text-display mt-4 text-foreground">
           Kurihara & Figueiredo
         </h1>
