@@ -22,7 +22,7 @@ export const Route = createFileRoute("/atuacao")({
 function Atuacao() {
   return (
     <>
-      <PageIntro eyebrow="Atuação" title="Áreas de atuação" />
+      <PageIntro eyebrow="Serviços" title="Áreas de atuação" />
       <section className="section-y">
         <div className="container-site max-w-3xl">
           <ul className="border-t">
