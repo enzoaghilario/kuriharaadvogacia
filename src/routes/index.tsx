@@ -9,7 +9,7 @@ import { POSTS } from "@/content/posts";
 
 const TITLE = "Silva & Kurihara Advogados Associados | Advocacia em Morro Agudo, SP";
 const DESC =
-  "Escritório de advocacia em Morro Agudo, São Paulo. Atuação jurídica pautada pela responsabilidade, ética e compromisso. Rua Maria Liporini Meireles, 731 — (16) 3851-0303.";
+  "Escritório de advocacia em Morro Agudo, São Paulo. Atuação jurídica pautada pela responsabilidade, ética e compromisso. WhatsApp (16) 98801-4617 — Rua Maria Liporini Meireles, 731.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -92,7 +92,7 @@ function Index() {
 
       <section className="section-y border-t">
         <div className="container-site">
-          <SectionHeading eyebrow="Contato" title="Visite ou ligue para o escritório" />
+          <SectionHeading eyebrow="Contato" title="Fale com o escritório" />
           <div className="mt-12"><ContactBlock /></div>
         </div>
       </section>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { AREAS } from "@/content/areas";
 import { SITE } from "@/content/site";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 
 export const NAV = [
   { to: "/", label: "Início" },
@@ -47,7 +48,7 @@ export function Header() {
     >
       <div className="container-site grid h-20 grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
         <Wordmark dark={overHero} />
-        <nav aria-label="Principal" className="hidden items-center gap-8 lg:flex">
+        <nav aria-label="Principal" className="hidden items-center gap-5 lg:flex xl:gap-8">
           {NAV.map((n) => (
             <Link
               key={n.to}
@@ -61,11 +62,24 @@ export function Header() {
             </Link>
           ))}
           <a
+            href={SITE.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center gap-2 border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${
+              overHero
+                ? "border-on-dark/40 text-on-dark hover:border-bronze hover:text-bronze"
+                : "border-primary bg-primary text-primary-foreground hover:bg-graphite"
+            }`}
+          >
+            <WhatsAppIcon size={15} />
+            WhatsApp
+          </a>
+          <a
             href={SITE.phoneHref}
             className={`border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${
               overHero
                 ? "border-on-dark/40 text-on-dark hover:border-bronze hover:text-bronze"
-                : "border-primary bg-primary text-primary-foreground hover:bg-graphite"
+                : "border-foreground/30 text-foreground hover:border-bronze hover:text-bronze"
             }`}
           >
             Ligar
@@ -83,7 +97,7 @@ export function Header() {
       </div>
       <div
         id="menu-mobile"
-        className={`overflow-hidden bg-background transition-[max-height] duration-500 lg:hidden ${open ? "max-h-[28rem]" : "max-h-0"}`}
+        className={`overflow-hidden bg-background transition-[max-height] duration-500 lg:hidden ${open ? "max-h-[34rem]" : "max-h-0"}`}
       >
         <nav aria-label="Menu móvel" className="container-site flex flex-col pb-8">
           {NAV.map((n) => (
@@ -97,7 +111,16 @@ export function Header() {
               {n.label}
             </Link>
           ))}
-          <a href={SITE.phoneHref} className="mt-6 bg-primary py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-primary-foreground">
+          <a
+            href={SITE.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center justify-center gap-2 bg-primary py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-primary-foreground"
+          >
+            <WhatsAppIcon size={17} />
+            WhatsApp {SITE.whatsapp}
+          </a>
+          <a href={SITE.phoneHref} className="mt-3 border border-foreground/30 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] hover:border-bronze hover:text-bronze">
             Ligar {SITE.phone}
           </a>
         </nav>
