@@ -8,6 +8,8 @@ export const SITE = {
   zip: "14640-000",
   phone: "(16) 3851-0303",
   phoneHref: "tel:+551638510303",
+  whatsapp: "(16) 98801-4617",
+  whatsappHref: "https://wa.me/5516988014617",
   instagram: "https://www.instagram.com/grupokuriharaefigueiredo/",
   facebook: "https://www.facebook.com/grupokuriharaefigueiredo/",
 };
