@@ -106,27 +106,34 @@
 @utility animate-rise { animation: rise 0.9s cubic-bezier(.2,.7,.2,1) both; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; scroll-behavior: auto !important; } }
 
-/* Hero 3D entrance */
-@keyframes hero-spin-in {
-  0% { opacity: 0; transform: perspective(1200px) translateZ(-600px) rotateY(-120deg) rotateX(18deg) scale(0.6); filter: blur(8px); }
-  60% { opacity: 1; filter: blur(0); }
-  80% { transform: perspective(1200px) translateZ(30px) rotateY(8deg) rotateX(-2deg) scale(1.02); }
-  100% { opacity: 1; transform: perspective(1200px) translateZ(0) rotateY(0) rotateX(0) scale(1); }
+/* Hero 3D entrance — slow emergence from depth, bronze luster on landing */
+@keyframes hero-emerge {
+  0% { opacity: 0; transform: perspective(1400px) translate3d(0, 24vh, -1100px) rotateX(-58deg) rotateZ(-16deg) scale(0.45); filter: blur(16px) brightness(0.55); }
+  30% { opacity: 1; }
+  72% { filter: blur(0) brightness(1); }
+  86% { transform: perspective(1400px) translate3d(0, -0.6vh, 50px) rotateX(5deg) rotateZ(2.5deg) scale(1.02); }
+  100% { opacity: 1; transform: perspective(1400px) translate3d(0, 0, 0) rotateX(0deg) rotateZ(0deg) scale(1); }
 }
-@keyframes hero-float {
-  0%, 100% { transform: perspective(1200px) rotateY(-4deg) rotateX(2deg) translateY(0); }
-  50% { transform: perspective(1200px) rotateY(4deg) rotateX(-2deg) translateY(-6px); }
+@keyframes hero-luster {
+  0%, 100% { filter: drop-shadow(0 26px 22px color-mix(in oklab, var(--foreground) 15%, transparent)); }
+  45% { filter: drop-shadow(0 40px 34px color-mix(in oklab, var(--bronze) 38%, transparent)) drop-shadow(0 0 46px color-mix(in oklab, var(--bronze) 20%, transparent)); }
+}
+@keyframes hero-sway {
+  0%, 100% { transform: perspective(1400px) rotateY(-2.5deg) rotateX(1.5deg) translateY(0); }
+  50% { transform: perspective(1400px) rotateY(2.5deg) rotateX(-1.5deg) translateY(-9px); }
 }
 @keyframes hero-rise-3d {
-  from { opacity: 0; transform: perspective(800px) translateY(30px) rotateX(-40deg); }
-  to { opacity: 1; transform: perspective(800px) translateY(0) rotateX(0); }
+  from { opacity: 0; transform: perspective(900px) translateY(38px) rotateX(-32deg); }
+  to { opacity: 1; transform: perspective(900px) translateY(0) rotateX(0); }
 }
 .hero-logo-3d {
   transform-style: preserve-3d;
-  animation: hero-spin-in 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) both, hero-float 7s ease-in-out 1.8s infinite;
-  filter: drop-shadow(0 30px 25px color-mix(in oklab, var(--foreground) 18%, transparent));
+  animation:
+    hero-emerge 4.4s cubic-bezier(0.16, 0.84, 0.28, 1) both,
+    hero-luster 2.8s ease-in-out 4.2s 1,
+    hero-sway 12s ease-in-out 7s infinite;
 }
-.hero-rise-3d { opacity: 0; transform-origin: top center; animation: hero-rise-3d 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.hero-rise-3d { opacity: 0; transform-origin: top center; animation: hero-rise-3d 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
 @media (prefers-reduced-motion: reduce) {
   .hero-logo-3d, .hero-rise-3d { animation: none; opacity: 1; transform: none; }
 }
