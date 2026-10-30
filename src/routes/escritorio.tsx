@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import fachada from "@/assets/fachada-hd.jpg";
+import fachada from "@/assets/escritorio-fachada-original.png.asset.json";
 import { PageIntro } from "@/components/PageIntro";
 import { Faq } from "@/components/Faq";
 
@@ -43,7 +43,7 @@ function Escritorio() {
             </p>
           </div>
           <div className="space-y-4">
-            <img src={fachada} alt="Entrada do escritório com a inscrição Advocacia" loading="lazy" width={1200} height={800} className="aspect-[4/3] w-full object-cover" />
+            <img src={fachada.url} alt="Fachada do escritório com a inscrição Advocacia e as placas originais" loading="lazy" width={777} height={531} className="h-auto w-full" />
           </div>
         </div>
       </section>
