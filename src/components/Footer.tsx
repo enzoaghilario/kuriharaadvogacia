@@ -13,7 +13,11 @@ export function Footer() {
           <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="mt-6 block max-w-xs text-sm leading-relaxed hover:text-on-dark">
             {FULL_ADDRESS}
           </a>
-          <a href={SITE.phoneHref} className="mt-3 block text-sm hover:text-on-dark">{SITE.phone}</a>
+          <a href={SITE.whatsappHref} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm hover:text-on-dark">
+            <WhatsAppIcon size={16} />
+            WhatsApp {SITE.whatsapp}
+          </a>
+          <a href={SITE.phoneHref} className="mt-2 block text-sm hover:text-on-dark">{SITE.phone}</a>
         </div>
         <div>
           <p className="eyebrow">Navegação</p>

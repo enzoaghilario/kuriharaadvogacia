@@ -106,6 +106,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@type": "LegalService",
           name: "Silva & Kurihara Advogados Associados",
           telephone: "+55 16 3851-0303",
+          contactPoint: [
+            {
+              "@type": "ContactPoint",
+              telephone: "+55 16 3851-0303",
+              contactType: "customer service",
+              availableLanguage: "Portuguese",
+            },
+            {
+              "@type": "ContactPoint",
+              telephone: "+55 16 98801-4617",
+              contactType: "customer service",
+              contactOption: "TollFree",
+              availableLanguage: "Portuguese",
+            },
+          ],
           address: {
             "@type": "PostalAddress",
             streetAddress: "Rua Maria Liporini Meireles, 731 - Centro",

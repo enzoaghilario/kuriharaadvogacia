@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { AREAS } from "@/content/areas";
 import { SITE } from "@/content/site";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 
 export const NAV = [
   { to: "/", label: "Início" },
@@ -110,7 +111,16 @@ export function Header() {
               {n.label}
             </Link>
           ))}
-          <a href={SITE.phoneHref} className="mt-6 bg-primary py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-primary-foreground">
+          <a
+            href={SITE.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center justify-center gap-2 bg-primary py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-primary-foreground"
+          >
+            <WhatsAppIcon size={17} />
+            WhatsApp {SITE.whatsapp}
+          </a>
+          <a href={SITE.phoneHref} className="mt-3 border border-foreground/30 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] hover:border-bronze hover:text-bronze">
             Ligar {SITE.phone}
           </a>
         </nav>
