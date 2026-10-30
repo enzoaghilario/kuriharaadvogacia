@@ -159,6 +159,6 @@
 .hero-breathe { transform-origin: 50% 45%; animation: hero-breathe-section 14s ease-in-out 4.5s infinite; }
 .hero-rise-3d { opacity: 0; transform-origin: top center; animation: hero-rise-3d 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
 @media (prefers-reduced-motion: reduce) {
-  .hero-logo-3d, .hero-rise-3d { animation: none; opacity: 1; transform: none; clip-path: none; }
+  .hero-logo-3d, .hero-rise-3d, .hero-breathe { animation: none; opacity: 1; transform: none; clip-path: none; }
   .hero-logo-pen, .hero-logo-gloss { display: none; }
 }
