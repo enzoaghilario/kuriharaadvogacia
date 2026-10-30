@@ -50,9 +50,11 @@ function Atuacao() {
                     <div className="overflow-hidden">
                       <div className="rule-bronze mb-5 ml-12 max-w-2xl !w-10" />
                       <p className="ml-12 max-w-2xl pb-6 text-base leading-relaxed text-muted-foreground">{a.description}</p>
-                      <button type="button" onClick={() => setService(a.name)} className="mb-6 ml-12 text-sm text-bronze underline-offset-4 hover:underline">
-                        Falar com o escritório sobre {a.name.toLowerCase()} →
-                      </button>
+                      {isOpen && (
+                        <button type="button" onClick={() => setService(a.name)} className="mb-6 ml-12 text-sm text-bronze underline-offset-4 hover:underline">
+                          Falar com o escritório sobre {a.name.toLowerCase()} →
+                        </button>
+                      )}
                     </div>
                   </div>
                 </li>
