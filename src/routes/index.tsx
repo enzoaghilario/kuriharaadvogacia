@@ -6,6 +6,7 @@ import { ContactBlock } from "@/components/ContactBlock";
 import { SectionHeading } from "@/components/PageIntro";
 import { PostCard } from "./conteudos.index";
 import { POSTS } from "@/content/posts";
+import { Faq } from "@/components/Faq";
 
 const TITLE = "Silva & Kurihara Advogados Associados | Advocacia em Morro Agudo, SP";
 const DESC =
@@ -39,14 +40,13 @@ function Index() {
         <div className="bg-hero-overlay absolute inset-0 -z-10" />
         <div className="container-site pb-20 pt-36 sm:pb-28">
           <div className="max-w-3xl animate-rise">
-            <p className="eyebrow">Morro Agudo — São Paulo</p>
-            <h1 className="text-display mt-6 text-on-dark">
-              Silva <span className="text-bronze">&amp;</span> Kurihara
+            <p className="text-sm text-on-dark-muted">Rua Maria Liporini Meireles, 731 · Morro Agudo/SP</p>
+            <h1 className="text-display mt-4 text-on-dark">
+              Silva &amp; Kurihara
             </h1>
-            <p className="mt-4 text-sm uppercase tracking-[0.35em] text-on-dark-muted">Advogados Associados</p>
-            <div className="rule-bronze my-8" />
-            <p className="max-w-xl text-lg leading-relaxed text-on-dark-muted sm:text-xl">
-              Atuação jurídica pautada pela responsabilidade, ética e compromisso com cada questão confiada ao escritório.
+            <p className="mt-2 text-lg text-on-dark-muted">Advogados Associados</p>
+            <p className="mt-8 max-w-xl text-lg leading-relaxed text-on-dark-muted sm:text-xl">
+              Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <Link to="/escritorio" className="bg-on-dark px-7 py-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-graphite hover:bg-secondary">
@@ -61,23 +61,26 @@ function Index() {
       </section>
 
       <section className="section-y">
-        <div className="container-site grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <div className="relative order-2 lg:order-1">
-            <img src={fachadaRua} alt="Vista da rua com a fachada do escritório" loading="lazy" width={1200} height={700} className="aspect-[4/3] w-full object-cover" />
-            <div className="absolute -bottom-6 -right-4 hidden h-32 w-32 border border-bronze sm:block" aria-hidden />
-          </div>
+        <div className="container-site grid items-start gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+          <img src={fachadaRua} alt="Vista da rua com a fachada do escritório" loading="lazy" width={1200} height={700} className="order-2 aspect-[4/3] w-full object-cover lg:order-1" />
           <div className="order-1 lg:order-2">
-            <SectionHeading eyebrow="O escritório" title="Conheça o escritório" />
-            <p className="mt-8 text-lg leading-relaxed text-muted-foreground">
-              Silva &amp; Kurihara Advogados Associados é um escritório de advocacia localizado em Morro Agudo, São Paulo,
-              orientado pelos princípios de ética, responsabilidade, discrição e profissionalismo.
+            <h2 className="text-h2">Sobre nós</h2>
+            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+              O Grupo Kurihara &amp; Figueiredo reúne experiência e dedicação para oferecer soluções jurídicas completas:
+              advocacia civil, trabalhista, empresarial, previdenciária e imobiliária, direito de família e sucessões,
+              recuperação de crédito, recuperação judicial e reestruturação de empresas.
             </p>
-            <Link to="/escritorio" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-primary hover:text-bronze">
-              Saiba mais <ArrowRight size={16} />
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+              Atuamos com transparência e compromisso, sempre ao lado de nossos clientes.
+            </p>
+            <Link to="/escritorio" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary underline underline-offset-4 hover:text-bronze">
+              Conheça o escritório <ArrowRight size={16} />
             </Link>
           </div>
         </div>
       </section>
+
+      <Faq />
 
       {POSTS.length > 0 && (
         <section className="section-y border-t bg-secondary">
