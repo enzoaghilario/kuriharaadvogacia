@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import fachada from "@/assets/fachada-hd.jpg";
-import fachadaRua from "@/assets/fachada-rua-hd.jpg";
 import { PageIntro } from "@/components/PageIntro";
 import { Faq } from "@/components/Faq";
 
@@ -45,7 +44,6 @@ function Escritorio() {
           </div>
           <div className="space-y-4">
             <img src={fachada} alt="Entrada do escritório com a inscrição Advocacia" loading="lazy" width={1200} height={800} className="aspect-[4/3] w-full object-cover" />
-            <img src={fachadaRua} alt="Fachada do escritório vista da rua, na Rua Maria Liporini Meireles" loading="lazy" width={1200} height={700} className="aspect-[16/9] w-full object-cover" />
           </div>
         </div>
       </section>
