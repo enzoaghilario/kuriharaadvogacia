@@ -46,7 +46,7 @@ export function ServiceWhatsAppDialog({ service, onClose }: { service: string | 
             type="submit"
             className="mt-6 inline-flex w-full items-center justify-center gap-2 bg-primary px-6 py-3 text-sm text-primary-foreground transition-opacity hover:opacity-90"
           >
-            <WhatsAppIcon className="h-4 w-4" />
+            <WhatsAppIcon size={16} />
             Continuar para WhatsApp
           </button>
         </form>
