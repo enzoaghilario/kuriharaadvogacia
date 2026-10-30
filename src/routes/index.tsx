@@ -31,14 +31,16 @@ function Index() {
     <>
       <section className="hero-breathe relative isolate flex min-h-[90svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
         <div className="hero-logo-stage relative w-full max-w-xl">
-          <img
-            src={logo}
-            alt="Grupo Kurihara & Figueiredo"
-            width={1314}
-            height={514}
-            fetchPriority="high"
-            className="hero-logo-3d w-full"
-          />
+          <div className="hero-logo-white">
+            <img
+              src={logo}
+              alt="Grupo Kurihara & Figueiredo"
+              width={1314}
+              height={514}
+              fetchPriority="high"
+              className="hero-logo-3d w-full"
+            />
+          </div>
           <span aria-hidden className="hero-logo-pen" />
           <span
             aria-hidden
