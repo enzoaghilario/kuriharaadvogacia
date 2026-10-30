@@ -40,38 +40,44 @@
 
 :root {
   --radius: 2px;
-  --background: oklch(0.973 0.004 85); /* #F7F6F3 */
-  --foreground: oklch(0.28 0.005 250); /* graphite */
-  --card: oklch(0.99 0.003 85);
-  --card-foreground: oklch(0.28 0.005 250);
-  --popover: oklch(0.99 0.003 85);
-  --popover-foreground: oklch(0.28 0.005 250);
-  --primary: oklch(0.255 0.04 258); /* navy #17243A */
-  --primary-foreground: oklch(0.973 0.004 85);
-  --secondary: oklch(0.92 0.016 80); /* beige #E9E3D9 */
-  --secondary-foreground: oklch(0.28 0.005 250);
-  --muted: oklch(0.92 0.016 80);
-  --muted-foreground: oklch(0.47 0.008 250);
-  --accent: oklch(0.92 0.016 80);
-  --accent-foreground: oklch(0.28 0.005 250);
-  --destructive: oklch(0.55 0.2 27);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.86 0.014 80);
-  --input: oklch(0.86 0.014 80);
-  --ring: oklch(0.64 0.06 75);
-  --bronze: oklch(0.64 0.06 75); /* #A88B60 */
-  --graphite: oklch(0.28 0.005 250); /* #292B2D */
-  --graphite-soft: oklch(0.32 0.006 250); /* #35383B */
-  --navy: oklch(0.255 0.04 258);
+  color-scheme: dark;
+  --background: oklch(0.205 0.025 258);
+  --foreground: oklch(0.94 0.013 85);
+  --card: oklch(0.245 0.022 258);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.245 0.022 258);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.78 0.083 82);
+  --primary-foreground: oklch(0.205 0.025 258);
+  --secondary: oklch(0.245 0.017 258);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.28 0.018 258);
+  --muted-foreground: oklch(0.77 0.012 85);
+  --accent: oklch(0.31 0.025 258);
+  --accent-foreground: var(--foreground);
+  --destructive: oklch(0.76 0.14 27);
+  --destructive-foreground: oklch(0.205 0.025 258);
+  --border: oklch(0.37 0.019 258);
+  --input: var(--border);
+  --ring: var(--primary);
+  --bronze: var(--primary);
+  --graphite: oklch(0.18 0.006 258);
+  --graphite-soft: oklch(0.26 0.008 258);
+  --navy: oklch(0.205 0.025 258);
+  --logo-ground: oklch(0.973 0.004 85);
   --wood: oklch(0.55 0.06 60);
   --on-dark: oklch(0.973 0.004 85);
-  --on-dark-muted: oklch(0.8 0.01 80);
+  --on-dark-muted: var(--muted-foreground);
   --gradient-hero: linear-gradient(90deg, oklch(0.18 0.01 250 / 0.9) 0%, oklch(0.18 0.01 250 / 0.6) 50%, oklch(0.18 0.01 250 / 0.15) 100%);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; overflow-x: hidden; }
+  html { scroll-behavior: smooth; overflow-x: hidden; scrollbar-color: var(--border) var(--background); }
+  ::selection { background: var(--primary); color: var(--primary-foreground); }
+  input, textarea { caret-color: var(--primary); }
+  a, button { transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease; }
+  a.bg-primary:hover, button.bg-primary:hover { background-color: var(--foreground); color: var(--primary-foreground); }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -79,7 +85,7 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
-  h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 500; letter-spacing: -0.01em; }
+  h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 500; letter-spacing: 0; text-wrap: balance; }
   :focus-visible { outline: 2px solid var(--bronze); outline-offset: 3px; }
 }
 
@@ -89,8 +95,8 @@
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 4vw, 2.5rem);
 }
-@utility text-display { font-size: clamp(2.75rem, 7vw, 5.5rem); line-height: 1.02; }
-@utility text-h2 { font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.1; }
+@utility text-display { font-size: 3rem; line-height: 1.08; @media (min-width: 640px) { font-size: 4.5rem; } }
+@utility text-h2 { font-size: 2rem; line-height: 1.15; @media (min-width: 640px) { font-size: 3.25rem; } }
 @utility eyebrow {
   font-size: 0.72rem;
   letter-spacing: 0.24em;
@@ -107,6 +113,7 @@
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; scroll-behavior: auto !important; } }
 
 /* Hero entrance — logo is "engraved" left to right behind a bronze pen of light, then a gloss glides over the letters */
+.hero-logo-stage { background: var(--logo-ground); padding: 1.5rem 2rem; }
 @keyframes hero-engrave {
   0% { opacity: 1; clip-path: inset(0 100% 0 0); transform: perspective(1400px) rotateY(-8deg) scale(0.97); filter: blur(3px); }
   70% { clip-path: inset(0 0 0 0); filter: blur(0); }

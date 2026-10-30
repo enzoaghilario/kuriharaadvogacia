@@ -37,7 +37,7 @@ export function ServiceWhatsAppDialog({ service, onClose }: { service: string | 
             onChange={(e) => { setName(e.target.value); if (error) setError(false); }}
             placeholder="Seu nome"
             aria-invalid={error}
-            className="w-full border-0 border-b border-border bg-transparent pb-2 font-serif text-xl text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-bronze"
+            className="w-full border-0 border-b border-border bg-transparent pb-2 font-serif text-xl text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-bronze"
           />
           <p className={`mt-2 h-4 text-xs text-destructive transition-opacity ${error ? "opacity-100" : "opacity-0"}`}>
             Informe seu nome para continuar.

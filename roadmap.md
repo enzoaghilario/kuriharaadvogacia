@@ -1,5 +1,11 @@
 # Roadmap
 
+## Tema escuro institucional
+
+- [x] Aplicar azul profundo, grafite e dourado com contraste legível
+- [x] Preservar logo, fotos, conteúdo, animação e contatos
+- [x] Verificar páginas e serviços no computador e no celular
+
 ## Correções de acessibilidade e privacidade
 
 - [x] Remover o botão de contato dos serviços fechados e verificar teclado/abertura
