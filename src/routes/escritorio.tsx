@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import fachada from "@/assets/fachada.jpg.asset.json";
-import fachadaRua from "@/assets/fachada-rua.jpg.asset.json";
+import fachada from "@/assets/fachada-hd.jpg";
+import fachadaRua from "@/assets/fachada-rua-hd.jpg";
 import { PageIntro } from "@/components/PageIntro";
 
 const T = "O escritório | Silva & Kurihara Advogados Associados";
@@ -44,8 +44,8 @@ function Escritorio() {
             </ul>
           </div>
           <div className="grid grid-cols-5 gap-4">
-            <img src={fachada.url} alt="Entrada do escritório com a inscrição Advocacia" loading="lazy" width={800} height={1000} className="col-span-3 aspect-[3/4] w-full object-cover" />
-            <img src={fachadaRua.url} alt="Fachada do escritório vista da rua" loading="lazy" width={600} height={800} className="col-span-2 mt-16 aspect-[3/4] w-full object-cover" />
+            <img src={fachada} alt="Entrada do escritório com a inscrição Advocacia" loading="lazy" width={800} height={1000} className="col-span-3 aspect-[3/4] w-full object-cover" />
+            <img src={fachadaRua} alt="Fachada do escritório vista da rua" loading="lazy" width={600} height={800} className="col-span-2 mt-16 aspect-[3/4] w-full object-cover" />
           </div>
         </div>
       </section>

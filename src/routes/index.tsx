@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import fachada from "@/assets/fachada.jpg.asset.json";
-import fachadaRua from "@/assets/fachada-rua.jpg.asset.json";
+import fachada from "@/assets/fachada-hd.jpg";
+import fachadaRua from "@/assets/fachada-rua-hd.jpg";
 import { ContactBlock } from "@/components/ContactBlock";
 import { SectionHeading } from "@/components/PageIntro";
 import { PostCard } from "./conteudos.index";
@@ -29,12 +29,12 @@ function Index() {
     <>
       <section className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-graphite">
         <img
-          src={fachada.url}
+          src={fachada}
           alt="Fachada do escritório Silva & Kurihara em Morro Agudo"
-          width={1600}
-          height={900}
+          width={1920}
+          height={1080}
           fetchPriority="high"
-          className="absolute inset-0 -z-20 h-full w-full scale-105 object-cover blur-[2px]"
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-[30%_center]"
         />
         <div className="bg-hero-overlay absolute inset-0 -z-10" />
         <div className="container-site pb-20 pt-36 sm:pb-28">
@@ -63,7 +63,7 @@ function Index() {
       <section className="section-y">
         <div className="container-site grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
           <div className="relative order-2 lg:order-1">
-            <img src={fachadaRua.url} alt="Vista da rua com a fachada do escritório" loading="lazy" width={1200} height={700} className="aspect-[4/3] w-full object-cover" />
+            <img src={fachadaRua} alt="Vista da rua com a fachada do escritório" loading="lazy" width={1200} height={700} className="aspect-[4/3] w-full object-cover" />
             <div className="absolute -bottom-6 -right-4 hidden h-32 w-32 border border-bronze sm:block" aria-hidden />
           </div>
           <div className="order-1 lg:order-2">
