@@ -16,6 +16,7 @@ import { Route as EscritorioRouteImport } from './routes/escritorio'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ConteudosIndexRouteImport } from './routes/conteudos.index'
 import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
+import { Route as ApiPublicJobsInstagramSyncRouteImport } from './routes/api/public/jobs/instagram-sync'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,12 @@ const ConteudosSlugRoute = ConteudosSlugRouteImport.update({
   path: '/conteudos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicJobsInstagramSyncRoute =
+  ApiPublicJobsInstagramSyncRouteImport.update({
+    id: '/api/public/jobs/instagram-sync',
+    path: '/api/public/jobs/instagram-sync',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/privacidade': typeof PrivacidadeRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/conteudos/': typeof ConteudosIndexRoute
+  '/api/public/jobs/instagram-sync': typeof ApiPublicJobsInstagramSyncRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +78,7 @@ export interface FileRoutesByTo {
   '/privacidade': typeof PrivacidadeRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/conteudos': typeof ConteudosIndexRoute
+  '/api/public/jobs/instagram-sync': typeof ApiPublicJobsInstagramSyncRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +89,7 @@ export interface FileRoutesById {
   '/privacidade': typeof PrivacidadeRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/conteudos/': typeof ConteudosIndexRoute
+  '/api/public/jobs/instagram-sync': typeof ApiPublicJobsInstagramSyncRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +101,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/conteudos/$slug'
     | '/conteudos/'
+    | '/api/public/jobs/instagram-sync'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +111,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/conteudos/$slug'
     | '/conteudos'
+    | '/api/public/jobs/instagram-sync'
   id:
     | '__root__'
     | '/'
@@ -109,6 +121,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/conteudos/$slug'
     | '/conteudos/'
+    | '/api/public/jobs/instagram-sync'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +132,7 @@ export interface RootRouteChildren {
   PrivacidadeRoute: typeof PrivacidadeRoute
   ConteudosSlugRoute: typeof ConteudosSlugRoute
   ConteudosIndexRoute: typeof ConteudosIndexRoute
+  ApiPublicJobsInstagramSyncRoute: typeof ApiPublicJobsInstagramSyncRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConteudosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/jobs/instagram-sync': {
+      id: '/api/public/jobs/instagram-sync'
+      path: '/api/public/jobs/instagram-sync'
+      fullPath: '/api/public/jobs/instagram-sync'
+      preLoaderRoute: typeof ApiPublicJobsInstagramSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +204,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacidadeRoute: PrivacidadeRoute,
   ConteudosSlugRoute: ConteudosSlugRoute,
   ConteudosIndexRoute: ConteudosIndexRoute,
+  ApiPublicJobsInstagramSyncRoute: ApiPublicJobsInstagramSyncRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
