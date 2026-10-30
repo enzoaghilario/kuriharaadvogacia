@@ -1,14 +1,17 @@
-# Logo integrada à entrada, sem o contorno branco
+# Logo preta integrada à entrada, sem contorno branco
 
-## O que muda
-- **Sai o retângulo/contorno branco** atrás da logo. Ela passa a ficar direto sobre o fundo escuro, junto com o resto da entrada.
-- Como a logo original é preta e sumiria no escuro, ela aparece **na cor clara do texto do site (creme)**, usando o próprio arquivo como molde — letras e formato idênticos, nada redesenhado.
-- **Continua independente e com os mesmos efeitos:** gravação da esquerda para a direita com a linha de luz dourada, brilho dourado passando pelas letras e a respiração própria (um pouco mais forte que a do resto da seção).
-- Um halo dourado bem suave atrás dela para dar profundidade, sem formar caixa.
+## Problema
+Hoje a logo preta fica dentro de um retângulo claro recortado sobre o fundo escuro — parece um adesivo colado.
+
+## Solução
+- **A entrada inteira vira um campo claro (tom papel/marfim)**, não só um retângulo atrás da logo. Assim a logo preta original fica sobre o fundo dela sem nenhum contorno.
+- Na parte de baixo da entrada, o tom claro **se dissolve num degradê suave para o azul escuro** do resto do site, unindo as duas partes sem corte.
+- Detalhes em dourado discreto (fio fino abaixo do nome, botões) ligam a entrada ao restante.
+- Nome, subtítulo e botões passam para tons escuros (grafite/azul) para ler bem no claro.
+- **Logo segue independente com todos os efeitos:** gravação da esquerda para a direita com a linha de luz dourada, brilho dourado nas letras e respiração própria (mais forte que a da seção).
 
 Quem tem "reduzir movimento" ativado vê tudo pronto, sem animação.
 
 ## Detalhes técnicos
-- `src/routes/index.tsx`: trocar o `<img>` por `<div role="img" aria-label>` com `mask-image: url(logo)` preenchido com `--foreground`; manter `hero-logo-pen` e `hero-logo-gloss`.
-- `src/styles.css`: remover `background: var(--logo-ground)` e o padding do `.hero-logo-stage`; aplicar as animações existentes (engrave, sway) ao novo elemento; halo via `::before` radial com `--bronze`.
-- Atualizar `mem://index.md` (logo em tom claro sobre o escuro na entrada).
+- `src/routes/index.tsx`: hero recebe classe `hero-light` (fundo `--logo-ground` + gradiente inferior para `--background`); textos usam tokens escuros dedicados; logo `<img>` mantida.
+- `src/styles.css`: remover fundo/padding do `.hero-logo-stage`; criar tokens `--hero-ink`, `--hero-ink-muted` e utilitário `hero-light`; manter keyframes atuais.
