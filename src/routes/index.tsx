@@ -3,6 +3,7 @@ import { ArrowRight, Phone } from "lucide-react";
 import { SITE } from "@/content/site";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import logo from "@/assets/logo-hd-white.png";
+import logoDark from "@/assets/logo-hd.png";
 import { ContactBlock } from "@/components/ContactBlock";
 import { SectionHeading } from "@/components/PageIntro";
 import { PostCard } from "./conteudos.index";
@@ -39,7 +40,14 @@ function Index() {
               width={1314}
               height={514}
               fetchPriority="high"
-              className="hero-logo-3d w-full"
+              className="hero-logo-3d only-dark w-full"
+            />
+            <img
+              src={logoDark}
+              alt="Grupo Kurihara & Figueiredo"
+              width={1314}
+              height={514}
+              className="hero-logo-3d only-light w-full"
             />
           <span aria-hidden className="hero-logo-pen" />
           <span

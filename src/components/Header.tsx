@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { AREAS } from "@/content/areas";
 import { SITE } from "@/content/site";
 import { WhatsAppIcon } from "./WhatsAppIcon";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const NAV = [
   { to: "/", label: "Início" },
@@ -35,6 +36,7 @@ export function Header() {
     <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/95 backdrop-blur-sm">
       <div className="container-site grid h-20 grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
         <Wordmark dark={false} />
+        <div className="flex items-center gap-3 lg:gap-6">
         <nav aria-label="Principal" className="hidden items-center gap-5 lg:flex xl:gap-8">
           {NAV.map((n) => (
             <Link
@@ -47,6 +49,7 @@ export function Header() {
             </Link>
           ))}
         </nav>
+        <ThemeToggle />
         <button
           className="grid h-11 w-11 place-items-center text-foreground lg:hidden"
           onClick={() => setOpen((v) => !v)}
@@ -56,6 +59,7 @@ export function Header() {
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
+        </div>
       </div>
       <div
         id="menu-mobile"
