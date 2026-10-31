@@ -22,7 +22,7 @@ export function PartnerForm() {
     event.preventDefault();
     const form = event.currentTarget;
     const data = Object.fromEntries(new FormData(form));
-    const parsed = partnerSchema.safeParse({ ...data, privacy: data.privacy === "on" });
+    const parsed = partnerSchema.safeParse({ ...data, privacy: data['privacy'] === "on" });
     if (!parsed.success) {
       setError(parsed.error.issues[0]?.message ?? "Verifique os campos.");
       return;
