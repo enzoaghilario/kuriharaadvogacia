@@ -62,9 +62,6 @@ function Index() {
           <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-3 border border-foreground/30 px-7 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-foreground hover:border-bronze hover:text-bronze">
             <Phone size={16} /> Ligar agora
           </a>
-          <Link to="/contato" className="border border-foreground/30 px-7 py-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-foreground hover:border-bronze hover:text-bronze">
-            Enviar mensagem
-          </Link>
         </div>
       </section>
 
