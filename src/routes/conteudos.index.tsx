@@ -2,16 +2,24 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { InstagramFeed } from "@/components/InstagramFeed";
+import { LegalNews } from "@/components/LegalNews";
 import { PageIntro, SectionHeading } from "@/components/PageIntro";
 import { formatDate, POSTS, type Post } from "@/content/posts";
 import { getInstagramFeed } from "@/lib/instagram.functions";
+import { getLegalNews } from "@/lib/news.functions";
 
 const T = "Conteúdos | Kurihara & Figueiredo Advogados Associados";
-const D = "Publicações recentes do Instagram do escritório Kurihara & Figueiredo Advogados Associados e artigos jurídicos.";
+const D = "Publicações recentes do Instagram do escritório Kurihara & Figueiredo Advogados Associados, notícias jurídicas e artigos.";
 
 const instagramFeedQueryOptions = queryOptions({
   queryKey: ["instagram-feed"],
   queryFn: () => getInstagramFeed(),
+});
+
+const legalNewsQueryOptions = queryOptions({
+  queryKey: ["legal-news"],
+  queryFn: () => getLegalNews(),
+  staleTime: 15 * 60 * 1000,
 });
 
 export const Route = createFileRoute("/conteudos/")({
@@ -25,7 +33,11 @@ export const Route = createFileRoute("/conteudos/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(instagramFeedQueryOptions),
+  loader: ({ context }) =>
+    Promise.all([
+      context.queryClient.ensureQueryData(instagramFeedQueryOptions),
+      context.queryClient.ensureQueryData(legalNewsQueryOptions),
+    ]),
   component: Conteudos,
 });
 
@@ -44,6 +56,7 @@ export function PostCard({ post }: { post: Post }) {
 
 function Conteudos() {
   const { data: feed } = useSuspenseQuery(instagramFeedQueryOptions);
+  const { data: news } = useSuspenseQuery(legalNewsQueryOptions);
   const articles = [...POSTS].sort((a, b) => b.date.localeCompare(a.date));
 
   return (
@@ -53,6 +66,8 @@ function Conteudos() {
       </PageIntro>
 
       <InstagramFeed posts={feed.posts} configured={feed.configured} lastSuccessAt={feed.lastSuccessAt} />
+
+      <LegalNews noticias={news.noticias} ok={news.ok} />
 
       <section className="section-y border-t">
         <div className="container-site">
