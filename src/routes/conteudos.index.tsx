@@ -3,13 +3,13 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { InstagramFeed } from "@/components/InstagramFeed";
 import { LegalNews } from "@/components/LegalNews";
-import { PageIntro, SectionHeading } from "@/components/PageIntro";
-import { formatDate, POSTS, type Post } from "@/content/posts";
+import { PageIntro } from "@/components/PageIntro";
+import { formatDate, type Post } from "@/content/posts";
 import { getInstagramFeed } from "@/lib/instagram.functions";
 import { getLegalNews } from "@/lib/news.functions";
 
 const T = "Conteúdos | Kurihara & Figueiredo Advogados Associados";
-const D = "Publicações recentes do Instagram do escritório Kurihara & Figueiredo Advogados Associados, notícias jurídicas e artigos.";
+const D = "Publicações recentes do Instagram do escritório Kurihara & Figueiredo Advogados Associados e notícias jurídicas selecionadas.";
 
 const instagramFeedQueryOptions = queryOptions({
   queryKey: ["instagram-feed"],
@@ -57,7 +57,6 @@ export function PostCard({ post }: { post: Post }) {
 function Conteudos() {
   const { data: feed } = useSuspenseQuery(instagramFeedQueryOptions);
   const { data: news } = useSuspenseQuery(legalNewsQueryOptions);
-  const articles = [...POSTS].sort((a, b) => b.date.localeCompare(a.date));
 
   return (
     <>
