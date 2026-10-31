@@ -26,10 +26,11 @@ describe("diálogo de WhatsApp dos serviços", () => {
     fireEvent.click(screen.getByRole("button", { name: /Continuar para WhatsApp/i }));
 
     expect(abrir).toHaveBeenCalledTimes(1);
-    const url = abrir.mock.calls[0][0] as string;
+    const url = abrir.mock.calls[0]?.[0] as string;
     expect(url.startsWith("https://wa.me/5516988014617?text=")).toBe(true);
-    expect(decodeURIComponent(url.split("?text=")[1])).toContain("Meu nome é Ana Souza.");
-    expect(decodeURIComponent(url.split("?text=")[1])).toContain("Advocacia civil");
+    const mensagem = decodeURIComponent(url.split("?text=")[1] ?? "");
+    expect(mensagem).toContain("Meu nome é Ana Souza.");
+    expect(mensagem).toContain("Advocacia civil");
     vi.unstubAllGlobals();
   });
 });
