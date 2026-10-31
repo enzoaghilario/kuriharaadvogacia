@@ -199,3 +199,7 @@ html { transition: background-color 300ms ease; }
   .hero-logo-3d, .hero-rise-3d, .hero-breathe { animation: none; opacity: 1; transform: none; clip-path: none; }
   .hero-logo-pen, .hero-logo-gloss { display: none; }
 }
+
+/* Oculta a marca d'água "Made with Typebot" no rodapé do balão de chat */
+typebot-badge { display: none !important; }
+typebot-bubble a[href*="typebot.io"] { display: none !important; }
