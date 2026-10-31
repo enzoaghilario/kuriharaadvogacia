@@ -67,7 +67,7 @@ describe("autenticação da rota agendada", () => {
   });
 
   it("recusa a chamada sem header de autorização", async () => {
-    process.env.CRON_SECRET = "segredo-de-teste";
+    process.env["CRON_SECRET"] = "segredo-de-teste";
 
     const response = await authenticateCronRequest(
       new Request("http://localhost/", { method: "POST" }),
@@ -77,7 +77,7 @@ describe("autenticação da rota agendada", () => {
   });
 
   it("recusa a chamada com token errado", async () => {
-    process.env.CRON_SECRET = "segredo-de-teste";
+    process.env["CRON_SECRET"] = "segredo-de-teste";
 
     const response = await authenticateCronRequest(
       new Request("http://localhost/", {
@@ -90,7 +90,7 @@ describe("autenticação da rota agendada", () => {
   });
 
   it("aceita a chamada com o token correto", async () => {
-    process.env.CRON_SECRET = "segredo-de-teste";
+    process.env["CRON_SECRET"] = "segredo-de-teste";
 
     const response = await authenticateCronRequest(
       new Request("http://localhost/", {
@@ -103,7 +103,7 @@ describe("autenticação da rota agendada", () => {
   });
 
   it("aceita também o nome antigo do segredo", async () => {
-    process.env.LOVABLE_CRON_SECRET = "segredo-antigo";
+    process.env["LOVABLE_CRON_SECRET"] = "segredo-antigo";
 
     const response = await authenticateCronRequest(
       new Request("http://localhost/", {
