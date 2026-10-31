@@ -2,8 +2,8 @@
 
 ## Seja Parceiro
 
-- [ ] Criar página, campos, validação e navegação compatíveis com os dois temas
-- [ ] Verificar campos e ausência de envio/armazenamento enquanto não configurado
+- [x] Criar página, campos, validação e navegação compatíveis com os dois temas
+- [x] Verificar campos e ausência de envio/armazenamento enquanto não configurado
 - [ ] Integrar serviço externo e testar entrega/limpeza após sucesso — aguarda destinatário e serviço de envio
 
 ## Tema escuro institucional
