@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { authenticateCronRequest } from "@/integrations/supabase/cron-auth";
+import { authenticateCronRequest } from "@/lib/cron-auth";
 
 /**
  * Atualização automática do feed do Instagram.
@@ -15,7 +15,10 @@ export const Route = createFileRoute("/api/public/jobs/instagram-sync")({
 
         const { syncInstagramFeed } = await import("@/lib/instagram.server");
         const result = await syncInstagramFeed();
-        return Response.json({ ok: result.ok, posts: result.posts, error: result.error });
+        return Response.json(
+          { ok: result.ok, posts: result.posts, error: result.error },
+          { headers: { "content-type": "application/json; charset=utf-8" } },
+        );
       },
     },
   },
