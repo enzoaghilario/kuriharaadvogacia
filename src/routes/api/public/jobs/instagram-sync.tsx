@@ -15,7 +15,10 @@ export const Route = createFileRoute("/api/public/jobs/instagram-sync")({
 
         const { syncInstagramFeed } = await import("@/lib/instagram.server");
         const result = await syncInstagramFeed();
-        return Response.json({ ok: result.ok, posts: result.posts, error: result.error });
+        return Response.json(
+          { ok: result.ok, posts: result.posts, error: result.error },
+          { headers: { "content-type": "application/json; charset=utf-8" } },
+        );
       },
     },
   },
