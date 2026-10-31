@@ -11,6 +11,7 @@ export const NAV = [
   { to: "/escritorio", label: "Escritório" },
   ...(AREAS.length ? [{ to: "/atuacao", label: "Serviços" }] : []),
   { to: "/conteudos", label: "Conteúdos" },
+  { to: "/seja-parceiro", label: "Seja Parceiro" },
   { to: "/contato", label: "Contato" },
 ] as const;
 

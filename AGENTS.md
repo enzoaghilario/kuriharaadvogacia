@@ -11,6 +11,8 @@
 
 ## Project rules
 
+- Keep partner applications in a standalone, browser-memory-only form with a shared validation schema; enable submission only after its dedicated external email delivery is configured and verified. Why: this flow must never reuse stored contact submissions or claim delivery before a real send succeeds.
+
 - Keep site-wide palette and interaction styling in semantic CSS tokens; page components consume role classes rather than literal colors. Why: shared changes remain consistent across navigation, disclosures, dialogs and content pages.
 
 - The Instagram feed is served from `public.instagram_posts`; the only writer is the scheduled route `/api/public/jobs/instagram-sync`, and pages read the stored rows. Why: the site keeps working and never shows invented posts when the Meta API is unreachable or the access key expires.

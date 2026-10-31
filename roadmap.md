@@ -1,5 +1,11 @@
 # Roadmap
 
+## Seja Parceiro
+
+- [x] Criar página, campos, validação e navegação compatíveis com os dois temas
+- [x] Verificar campos e ausência de envio/armazenamento enquanto não configurado
+- [ ] Integrar serviço externo e testar entrega/limpeza após sucesso — aguarda destinatário e serviço de envio
+
 ## Tema escuro institucional
 
 - [x] Aplicar azul profundo, grafite e dourado com contraste legível
