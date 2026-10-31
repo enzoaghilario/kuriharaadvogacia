@@ -65,6 +65,34 @@
   --graphite-soft: oklch(0.26 0.008 258);
   --navy: oklch(0.205 0.025 258);
   --logo-ground: oklch(0.973 0.004 85);
+}
+
+html.light {
+  color-scheme: light;
+  --background: oklch(0.973 0.004 85);
+  --foreground: oklch(0.28 0.005 250);
+  --card: oklch(0.99 0.003 85);
+  --card-foreground: oklch(0.28 0.005 250);
+  --popover: oklch(0.99 0.003 85);
+  --popover-foreground: oklch(0.28 0.005 250);
+  --primary: oklch(0.255 0.04 258);
+  --primary-foreground: oklch(0.973 0.004 85);
+  --secondary: oklch(0.92 0.016 80);
+  --secondary-foreground: oklch(0.28 0.005 250);
+  --muted: oklch(0.92 0.016 80);
+  --muted-foreground: oklch(0.47 0.008 250);
+  --accent: oklch(0.92 0.016 80);
+  --accent-foreground: oklch(0.28 0.005 250);
+  --destructive: oklch(0.55 0.2 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.86 0.014 80);
+  --input: oklch(0.86 0.014 80);
+  --ring: oklch(0.64 0.06 75);
+  --bronze: oklch(0.64 0.06 75);
+  --graphite: oklch(0.28 0.005 250);
+  --graphite-soft: oklch(0.32 0.006 250);
+  --navy: oklch(0.255 0.04 258);
+  --on-dark-muted: oklch(0.8 0.01 80);
   --wood: oklch(0.55 0.06 60);
   --on-dark: oklch(0.973 0.004 85);
   --on-dark-muted: var(--muted-foreground);
@@ -114,6 +142,8 @@
 
 /* Hero entrance — logo is "engraved" left to right behind a bronze pen of light, then a gloss glides over the letters */
 .hero-logo-stage { padding: 0; }
+html.light .only-dark, html:not(.light) .only-light { display: none; }
+html { transition: background-color 300ms ease; }
 @keyframes hero-engrave {
   0% { opacity: 1; clip-path: inset(0 100% 0 0); transform: perspective(1400px) rotateY(-8deg) scale(0.97); filter: blur(3px); }
   70% { clip-path: inset(0 0 0 0); filter: blur(0); }
