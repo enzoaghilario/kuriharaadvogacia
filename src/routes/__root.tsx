@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { TypebotChat } from "@/components/TypebotChat";
 
 function NotFoundComponent() {
   return (
@@ -175,6 +176,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <TypebotChat />
     </QueryClientProvider>
   );
 }
