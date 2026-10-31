@@ -22,7 +22,8 @@ const RSS = `<?xml version="1.0"?>
 
 describe("parseRssItems", () => {
   it("extrai título, link, fonte e resumo sem tags HTML", () => {
-    const [first] = parseRssItems(RSS);
+    const items = parseRssItems(RSS);
+    const first = items[0]!;
     expect(first.title).toBe("STF decide sobre tema empresarial");
     expect(first.link).toBe("https://exemplo.com/materia-1");
     expect(first.source).toBe("Portal Jurídico");
@@ -31,7 +32,8 @@ describe("parseRssItems", () => {
   });
 
   it("usa fonte padrão e data vazia quando inválida", () => {
-    const [, second] = parseRssItems(RSS);
+    const items = parseRssItems(RSS);
+    const second = items[1]!;
     expect(second.source).toBe("Informativo Jurídico");
     expect(second.pubDate).toBe("");
   });
