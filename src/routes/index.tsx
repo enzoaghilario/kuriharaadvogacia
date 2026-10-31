@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
+import { SITE } from "@/content/site";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import logo from "@/assets/logo-hd-white.png";
 import { ContactBlock } from "@/components/ContactBlock";
 import { SectionHeading } from "@/components/PageIntro";
@@ -50,15 +52,18 @@ function Index() {
           Kurihara & Figueiredo
         </h1>
         <p className="hero-rise-3d mt-2 text-lg text-muted-foreground" style={{ animationDelay: "3.65s" }}>Advogados Associados</p>
-        <p style={{ animationDelay: "3.9s" }} className="hero-rise-3d mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-          Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões.
+        <p style={{ animationDelay: "3.9s" }} className="hero-rise-3d mt-8 max-w-xl text-lg leading-relaxed text-foreground sm:text-xl">
+          Soluções jurídicas ágeis e seguras para você e sua empresa. Fale com um especialista agora.
         </p>
         <div style={{ animationDelay: "3.85s" }} className="hero-rise-3d mt-10 flex flex-col gap-3 sm:flex-row">
-          <Link to="/escritorio" className="bg-primary px-7 py-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-graphite">
-            Conheça o escritório
-          </Link>
+          <a href={SITE.whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-primary px-7 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-graphite">
+            <WhatsAppIcon size={16} /> WhatsApp {SITE.whatsapp}
+          </a>
+          <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-3 border border-foreground/30 px-7 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-foreground hover:border-bronze hover:text-bronze">
+            <Phone size={16} /> Ligar agora
+          </a>
           <Link to="/contato" className="border border-foreground/30 px-7 py-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-foreground hover:border-bronze hover:text-bronze">
-            Entre em contato
+            Enviar mensagem
           </Link>
         </div>
       </section>

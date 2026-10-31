@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_submissions: {
+        Row: {
+          area: string
+          created_at: string
+          id: string
+          message: string
+          name: string
+          phone: string
+        }
+        Insert: {
+          area: string
+          created_at?: string
+          id?: string
+          message: string
+          name: string
+          phone: string
+        }
+        Update: {
+          area?: string
+          created_at?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string
+        }
+        Relationships: []
+      }
       instagram_posts: {
         Row: {
           caption: string | null
