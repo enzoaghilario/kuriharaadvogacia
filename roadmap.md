@@ -37,3 +37,5 @@
 
 - [x] Publicar de verdade e acompanhar o site no ar durante a troca de versão
 - [x] Confirmar que a versão no ar bate com o código atual
+
+- Removida a seção de artigos ("Para ler com calma") da página Conteúdos a pedido do usuário; permanecem Instagram e Jornal jurídico.

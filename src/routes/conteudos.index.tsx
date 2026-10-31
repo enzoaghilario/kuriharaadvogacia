@@ -3,13 +3,13 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { InstagramFeed } from "@/components/InstagramFeed";
 import { LegalNews } from "@/components/LegalNews";
-import { PageIntro, SectionHeading } from "@/components/PageIntro";
-import { formatDate, POSTS, type Post } from "@/content/posts";
+import { PageIntro } from "@/components/PageIntro";
+import { formatDate, type Post } from "@/content/posts";
 import { getInstagramFeed } from "@/lib/instagram.functions";
 import { getLegalNews } from "@/lib/news.functions";
 
 const T = "Conteúdos | Kurihara & Figueiredo Advogados Associados";
-const D = "Publicações recentes do Instagram do escritório Kurihara & Figueiredo Advogados Associados, notícias jurídicas e artigos.";
+const D = "Publicações recentes do Instagram do escritório Kurihara & Figueiredo Advogados Associados e notícias jurídicas selecionadas.";
 
 const instagramFeedQueryOptions = queryOptions({
   queryKey: ["instagram-feed"],
@@ -57,7 +57,6 @@ export function PostCard({ post }: { post: Post }) {
 function Conteudos() {
   const { data: feed } = useSuspenseQuery(instagramFeedQueryOptions);
   const { data: news } = useSuspenseQuery(legalNewsQueryOptions);
-  const articles = [...POSTS].sort((a, b) => b.date.localeCompare(a.date));
 
   return (
     <>
@@ -68,22 +67,6 @@ function Conteudos() {
       <InstagramFeed posts={feed.posts} configured={feed.configured} lastSuccessAt={feed.lastSuccessAt} />
 
       <LegalNews noticias={news.noticias} ok={news.ok} />
-
-      <section className="section-y border-t">
-        <div className="container-site">
-          <SectionHeading eyebrow="Artigos" title="Para ler com calma" />
-          {articles.length === 0 ? (
-            <div className="mt-12 border border-dashed p-10 text-center sm:p-16">
-              <p className="font-serif text-2xl">Em breve</p>
-              <p className="mt-3 text-muted-foreground">As primeiras publicações estão em preparação.</p>
-            </div>
-          ) : (
-            <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {articles.map((p) => <div key={p.slug} className="relative flex"><PostCard post={p} /></div>)}
-            </div>
-          )}
-        </div>
-      </section>
     </>
   );
 }
