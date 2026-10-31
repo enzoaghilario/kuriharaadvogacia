@@ -17,6 +17,7 @@ export const Route = createFileRoute("/seja-parceiro")({
   component: () => <>
     <PageIntro eyebrow="Seja Parceiro" title="Seja Parceiro">
       <p className="font-serif text-2xl text-foreground">Programa de Assessoria Jurídica Empresarial</p>
+      <p>Conte-nos sobre a sua empresa e o suporte jurídico de que ela precisa.</p>
     </PageIntro>
     <section className="section-y">
       <div className="container-site max-w-4xl">
