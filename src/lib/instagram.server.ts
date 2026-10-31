@@ -36,6 +36,11 @@ async function admin() {
   return supabaseAdmin;
 }
 
+/** O banco do site só é necessário quando a integração está mesmo configurada. */
+function databaseConfigured(env: Record<string, string | undefined>): boolean {
+  return Boolean(env["SUPABASE_URL"] && env["SUPABASE_SERVICE_ROLE_KEY"]);
+}
+
 function publicClient() {
   const url = process.env["SUPABASE_URL"];
   const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
@@ -46,7 +51,8 @@ function publicClient() {
     global: {
       fetch: (input, init) => {
         const headers = new Headers(init?.headers);
-        if (key.startsWith("sb_") && headers.get("Authorization") === `Bearer ${key}`) headers.delete("Authorization");
+        if (key.startsWith("sb_") && headers.get("Authorization") === `Bearer ${key}`)
+          headers.delete("Authorization");
         headers.set("apikey", key);
         return fetch(input, { ...init, headers });
       },
@@ -81,13 +87,23 @@ async function graphJson(url: string): Promise<GraphResult> {
 }
 
 async function markState(patch: Record<string, unknown>): Promise<void> {
-  const supabaseAdmin = await admin();
-  const { error } = await supabaseAdmin.from("instagram_state").upsert({ id: 1, ...patch }, { onConflict: "id" });
-  if (error) console.error("instagram_state:", error.message);
+  // O estado registra o processo; se o banco falhar, o site continua funcionando.
+  try {
+    const supabaseAdmin = await admin();
+    const { error } = await supabaseAdmin
+      .from("instagram_state")
+      .upsert({ id: 1, ...patch }, { onConflict: "id" });
+    if (error) console.error("instagram_state:", error.message);
+  } catch (cause) {
+    console.error("instagram_state indisponível:", String(cause));
+  }
 }
 
 /** ID da conta: vem direto da configuração ou é lido a partir da página da Meta. */
-async function resolveAccountId(token: string, env: Record<string, string | undefined>): Promise<string | null> {
+async function resolveAccountId(
+  token: string,
+  env: Record<string, string | undefined>,
+): Promise<string | null> {
   const direct = env["INSTAGRAM_ACCOUNT_ID"]?.trim();
   if (direct) return direct;
 
@@ -100,7 +116,8 @@ async function resolveAccountId(token: string, env: Record<string, string | unde
 
   const result = await graphJson(url.toString());
   if (!result.ok) return null;
-  const account = (result.body as { instagram_business_account?: { id?: unknown } })?.instagram_business_account;
+  const account = (result.body as { instagram_business_account?: { id?: unknown } })
+    ?.instagram_business_account;
   return typeof account?.id === "string" && account.id ? account.id : null;
 }
 
@@ -131,11 +148,21 @@ async function fetchMedia(token: string, accountId: string, limit: number) {
 }
 
 /** Busca as publicações mais recentes na Meta e grava no banco, sem duplicar. */
-export async function syncInstagramFeed(): Promise<{ ok: boolean; posts: number; error: string | null }> {
+export async function syncInstagramFeed(): Promise<{
+  ok: boolean;
+  posts: number;
+  error: string | null;
+}> {
   const env = readEnv();
 
   if (!isFeedConfigured(env)) {
     const message = "integração ainda não conectada: faltam o token e a conta do Instagram";
+    await markState({ status: "not_configured", last_error: message });
+    return { ok: false, posts: 0, error: message };
+  }
+
+  if (!databaseConfigured(env)) {
+    const message = "banco do site não configurado: faltam as credenciais do Supabase";
     await markState({ status: "not_configured", last_error: message });
     return { ok: false, posts: 0, error: message };
   }
@@ -185,12 +212,20 @@ export async function syncInstagramFeed(): Promise<{ ok: boolean; posts: number;
   // Só remove publicações que saíram do Instagram quando a lista recebida é a completa.
   if (fetched.complete && posts.length) {
     const ids = posts.map((post) => post.id);
-    const { error } = await supabaseAdmin.from("instagram_posts").delete().not("id", "in", `(${ids.join(",")})`);
+    const { error } = await supabaseAdmin
+      .from("instagram_posts")
+      .delete()
+      .not("id", "in", `(${ids.join(",")})`);
     if (error) console.error("limpeza de publicações removidas:", error.message);
   }
 
   const message = `última atualização em ${new Date().toISOString()}`;
-  await markState({ status: "ok", last_error: null, last_success_at: new Date().toISOString(), posts_count: posts.length });
+  await markState({
+    status: "ok",
+    last_error: null,
+    last_success_at: new Date().toISOString(),
+    posts_count: posts.length,
+  });
   console.log(`Instagram: ${posts.length} publicações sincronizadas. ${message}`);
 
   return { ok: true, posts: posts.length, error: null };
@@ -199,55 +234,82 @@ export async function syncInstagramFeed(): Promise<{ ok: boolean; posts: number;
 /** Atualiza o feed quando o intervalo venceu, sem deixar duas buscas correrem juntas. */
 export async function ensureFreshInstagramFeed(): Promise<void> {
   const env = readEnv();
+  if (!databaseConfigured(env)) return;
+
   const interval = syncIntervalMinutes(env["INSTAGRAM_SYNC_INTERVAL_MINUTES"]);
-  const supabaseAdmin = await admin();
 
-  const { data } = await supabaseAdmin
-    .from("instagram_state")
-    .select("status, last_success_at, last_attempt_at")
-    .eq("id", 1)
-    .maybeSingle();
+  try {
+    const supabaseAdmin = await admin();
 
-  const now = Date.now();
-  if (!shouldRefresh(data?.last_success_at ?? null, now, interval)) return;
+    const { data } = await supabaseAdmin
+      .from("instagram_state")
+      .select("status, last_success_at, last_attempt_at")
+      .eq("id", 1)
+      .maybeSingle();
 
-  const lastAttempt = data?.last_attempt_at ? new Date(data.last_attempt_at).getTime() : 0;
-  if (data?.status === "running" && now - lastAttempt < LOCK_MS) return;
+    const now = Date.now();
+    if (!shouldRefresh(data?.last_success_at ?? null, now, interval)) return;
 
-  await syncInstagramFeed();
+    const lastAttempt = data?.last_attempt_at ? new Date(data.last_attempt_at).getTime() : 0;
+    if (data?.status === "running" && now - lastAttempt < LOCK_MS) return;
+
+    await syncInstagramFeed();
+  } catch (cause) {
+    // Banco fora do ar não pode derrubar a página que mostra as publicações.
+    console.error("atualização automática do Instagram:", String(cause));
+  }
 }
 
 /** Lê o que está no banco. Nada é inventado quando o feed ainda não foi conectado. */
 export async function readInstagramFeed(): Promise<{ posts: InstagramPost[]; status: FeedStatus }> {
   const env = readEnv();
-  const supabase = publicClient();
+  const configured = isFeedConfigured(env);
+  const empty: FeedStatus = { configured, lastSuccessAt: null, posts: 0 };
 
-  const [{ data: rows }, { data: state }] = await Promise.all([
-    supabase
-      .from("instagram_posts")
-      .select("id, permalink, caption, media_type, image_url, published_at, like_count, comments_count")
-      .order("published_at", { ascending: false })
-      .limit(24),
-    admin().then((client) => client.from("instagram_state").select("status, last_success_at").eq("id", 1).maybeSingle()),
-  ]);
+  // Sem backend configurado, a página mostra o estado vazio honesto em vez de quebrar.
+  if (!env["SUPABASE_URL"] || !env["SUPABASE_PUBLISHABLE_KEY"]) {
+    console.error("[Instagram] backend do site não configurado");
+    return { posts: [], status: empty };
+  }
 
-  const posts: InstagramPost[] = (rows ?? []).map((row) => ({
-    id: row.id,
-    permalink: row.permalink,
-    caption: row.caption ?? null,
-    mediaType: row.media_type,
-    imageUrl: row.image_url ?? null,
-    publishedAt: row.published_at,
-    likeCount: row.like_count ?? null,
-    commentsCount: row.comments_count ?? null,
-  }));
+  try {
+    const supabase = publicClient();
 
-  return {
-    posts,
-    status: {
-      configured: isFeedConfigured(env),
-      lastSuccessAt: state?.last_success_at ?? null,
-      posts: posts.length,
-    },
-  };
+    const [{ data: rows }, { data: state }] = await Promise.all([
+      supabase
+        .from("instagram_posts")
+        .select(
+          "id, permalink, caption, media_type, image_url, published_at, like_count, comments_count",
+        )
+        .order("published_at", { ascending: false })
+        .limit(24),
+      admin().then((client) =>
+        client.from("instagram_state").select("status, last_success_at").eq("id", 1).maybeSingle(),
+      ),
+    ]);
+
+    const posts: InstagramPost[] = (rows ?? []).map((row) => ({
+      id: row.id,
+      permalink: row.permalink,
+      caption: row.caption ?? null,
+      mediaType: row.media_type,
+      imageUrl: row.image_url ?? null,
+      publishedAt: row.published_at,
+      likeCount: row.like_count ?? null,
+      commentsCount: row.comments_count ?? null,
+    }));
+
+    return {
+      posts,
+      status: {
+        configured,
+        lastSuccessAt: state?.last_success_at ?? null,
+        posts: posts.length,
+      },
+    };
+  } catch (cause) {
+    // Backend fora do ar: o site continua no ar, sem posts inventados.
+    console.error("[Instagram] leitura do feed falhou:", String(cause));
+    return { posts: [], status: empty };
+  }
 }
