@@ -47,7 +47,9 @@ function Index() {
               alt="Grupo Kurihara & Figueiredo"
               width={1314}
               height={514}
-              className="hero-logo-3d only-light w-full"
+              fetchPriority="high"
+              decoding="async"
+              className="hero-logo-3d only-light w-full h-auto object-contain"
             />
           <span aria-hidden className="hero-logo-pen" />
           <span
