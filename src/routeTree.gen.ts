@@ -14,6 +14,7 @@ import { Route as AtuacaoRouteImport } from './routes/atuacao'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as EscritorioRouteImport } from './routes/escritorio'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as SejaParceiroRouteImport } from './routes/seja-parceiro'
 import { Route as ConteudosIndexRouteImport } from './routes/conteudos.index'
 import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
 import { Route as ApiPublicJobsInstagramSyncRouteImport } from './routes/api/public/jobs/instagram-sync'
@@ -43,6 +44,11 @@ const PrivacidadeRoute = PrivacidadeRouteImport.update({
   path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SejaParceiroRoute = SejaParceiroRouteImport.update({
+  id: '/seja-parceiro',
+  path: '/seja-parceiro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConteudosIndexRoute = ConteudosIndexRouteImport.update({
   id: '/conteudos/',
   path: '/conteudos/',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/escritorio': typeof EscritorioRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/seja-parceiro': typeof SejaParceiroRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/api/public/jobs/instagram-sync': typeof ApiPublicJobsInstagramSyncRoute
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/escritorio': typeof EscritorioRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/seja-parceiro': typeof SejaParceiroRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/conteudos': typeof ConteudosIndexRoute
   '/api/public/jobs/instagram-sync': typeof ApiPublicJobsInstagramSyncRoute
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/escritorio': typeof EscritorioRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/seja-parceiro': typeof SejaParceiroRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/api/public/jobs/instagram-sync': typeof ApiPublicJobsInstagramSyncRoute
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/escritorio'
     | '/privacidade'
+    | '/seja-parceiro'
     | '/conteudos/$slug'
     | '/conteudos/'
     | '/api/public/jobs/instagram-sync'
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/escritorio'
     | '/privacidade'
+    | '/seja-parceiro'
     | '/conteudos/$slug'
     | '/conteudos'
     | '/api/public/jobs/instagram-sync'
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/escritorio'
     | '/privacidade'
+    | '/seja-parceiro'
     | '/conteudos/$slug'
     | '/conteudos/'
     | '/api/public/jobs/instagram-sync'
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   EscritorioRoute: typeof EscritorioRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  SejaParceiroRoute: typeof SejaParceiroRoute
   ConteudosSlugRoute: typeof ConteudosSlugRoute
   ConteudosIndexRoute: typeof ConteudosIndexRoute
   ApiPublicJobsInstagramSyncRoute: typeof ApiPublicJobsInstagramSyncRoute
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/seja-parceiro': {
+      id: '/seja-parceiro'
+      path: '/seja-parceiro'
+      fullPath: '/seja-parceiro'
+      preLoaderRoute: typeof SejaParceiroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/conteudos/': {
       id: '/conteudos/'
       path: '/conteudos'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   EscritorioRoute: EscritorioRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  SejaParceiroRoute: SejaParceiroRoute,
   ConteudosSlugRoute: ConteudosSlugRoute,
   ConteudosIndexRoute: ConteudosIndexRoute,
   ApiPublicJobsInstagramSyncRoute: ApiPublicJobsInstagramSyncRoute,
