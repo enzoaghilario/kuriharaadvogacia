@@ -28,7 +28,7 @@ export function Footer() {
           </ul>
         </div>
         <div>
-          <p className="eyebrow">Redes</p>
+          <p className="eyebrow">Redes sociais</p>
           <div className="mt-5 flex gap-3">
             <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="grid h-11 w-11 place-items-center border border-on-dark/20 hover:border-bronze hover:text-bronze"><Instagram size={18} /></a>
             <a href={SITE.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="grid h-11 w-11 place-items-center border border-on-dark/20 hover:border-bronze hover:text-bronze"><Facebook size={18} /></a>
