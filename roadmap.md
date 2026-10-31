@@ -27,6 +27,12 @@
 - [x] Conferir na tela e no build
 - [ ] Pedir ao escritório o token e a conta do Instagram (Meta for Developers)
 
+## Jornal jurídico em Conteúdos
+
+- [x] Busca de notícias jurídicas no servidor (Google News RSS, sem chave)
+- [x] Seção "Jornal jurídico" com visual do site, botão Atualizar e estado de indisponível
+- [x] Testes do parser de RSS (7 testes) e verificação na tela
+
 ## Disponibilidade ao atualizar (verificação)
 
 - [x] Publicar de verdade e acompanhar o site no ar durante a troca de versão
