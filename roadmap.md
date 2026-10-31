@@ -20,3 +20,8 @@
 - [x] Rota de atualização automática e agenda a cada 30 minutos
 - [x] Conferir na tela e no build
 - [ ] Pedir ao escritório o token e a conta do Instagram (Meta for Developers)
+
+## Disponibilidade ao atualizar (verificação)
+
+- [x] Publicar de verdade e acompanhar o site no ar durante a troca de versão
+- [x] Confirmar que a versão no ar bate com o código atual
