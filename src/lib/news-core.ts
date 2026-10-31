@@ -16,14 +16,17 @@ export function googleNewsRssUrl(query: string = NEWS_QUERY): string {
 }
 
 function stripTags(html: string): string {
+  // Decodifica entidades ANTES de remover tags: o Google News escapa o HTML
+  // da descrição (&lt;a ...&gt;), que viraria tag visível se decodificado depois.
   return html
-    .replace(/<[^>]*>?/gm, "")
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#39;|&apos;/g, "'")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
+    .replace(/<[^>]*>?/gm, "")
+    .replace(/\s+/g, " ")
     .trim();
 }
 
@@ -31,7 +34,7 @@ function pickTag(block: string, tag: string): string {
   const m = block.match(
     new RegExp(`<${tag}[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</${tag}>`, "i"),
   );
-  return m ? m[1].trim() : "";
+  return m?.[1]?.trim() ?? "";
 }
 
 // Parser mínimo de RSS (workerd não tem DOMParser).
