@@ -15,7 +15,7 @@ export function TypebotChat() {
         Typebot.initBubble({
           typebot: 'my-typebot-8fqmxb7',
           theme: {
-            button: { backgroundColor: '#1D1D1D' },
+            button: { backgroundColor: '#D2B379', iconColor: '#101723', size: 'medium' },
             chatWindow: { backgroundColor: '#070a5a' },
           },
         });
