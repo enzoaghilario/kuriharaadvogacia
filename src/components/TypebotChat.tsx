@@ -16,7 +16,7 @@ export function TypebotChat() {
           typebot: 'my-typebot-8fqmxb7',
           theme: {
             button: { backgroundColor: '#1D1D1D' },
-            chatWindow: { backgroundColor: '#F8F8F8' },
+            chatWindow: { backgroundColor: '#070a5a' },
           },
         });
       }
