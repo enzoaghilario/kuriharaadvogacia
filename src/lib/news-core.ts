@@ -19,13 +19,13 @@ function stripTags(html: string): string {
   // Decodifica entidades ANTES de remover tags: o Google News escapa o HTML
   // da descrição (&lt;a ...&gt;), que viraria tag visível se decodificado depois.
   return html
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#39;|&apos;/g, "'")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
     .replace(/<[^>]*>?/gm, "")
+    .replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
