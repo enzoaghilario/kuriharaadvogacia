@@ -17,9 +17,18 @@ export const Route = createFileRoute("/conteudos/$slug")({
             { property: "og:title", content: loaderData.title },
             { property: "og:description", content: loaderData.summary },
             { property: "og:type", content: "article" },
+            { name: "twitter:card", content: "summary_large_image" },
           ],
         }
-      : { meta: [{ title: "Conteúdo indisponível | Kurihara & Figueiredo" }, { name: "robots", content: "noindex" }] },
+      : { meta: [
+          { title: "Conteúdo indisponível | Kurihara & Figueiredo" },
+          { name: "description", content: "Este conteúdo não está disponível. Consulte os conteúdos da Kurihara & Figueiredo Advogados Associados." },
+          { property: "og:title", content: "Conteúdo indisponível | Kurihara & Figueiredo" },
+          { property: "og:description", content: "Este conteúdo não está disponível. Consulte os conteúdos da Kurihara & Figueiredo Advogados Associados." },
+          { property: "og:type", content: "website" },
+          { name: "twitter:card", content: "summary_large_image" },
+          { name: "robots", content: "noindex" },
+        ] },
   notFoundComponent: () => (
     <div className="container-site pt-44 pb-24">
       <h1 className="text-h2">Conteúdo não encontrado</h1>
