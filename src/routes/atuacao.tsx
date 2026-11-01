@@ -74,9 +74,9 @@ function Atuacao() {
   const [service, setService] = useState<string | null>(null);
   return (
     <>
-      <PageIntro eyebrow="Serviços" title="Áreas de atuação" />
-      <section className="section-y">
-        <Spotlight>
+      <Spotlight>
+        <PageIntro eyebrow="Serviços" title="Áreas de atuação" />
+        <section className="section-y">
           <div className="container-site max-w-3xl">
             <ul>
               {AREAS.map((a, i) => (
@@ -95,8 +95,8 @@ function Atuacao() {
               <Link to="/contato" className="text-primary underline underline-offset-4">entre em contato</Link>.
             </p>
           </div>
-        </Spotlight>
-      </section>
+        </section>
+      </Spotlight>
       <ServiceWhatsAppDialog service={service} onClose={() => setService(null)} />
     </>
   );
