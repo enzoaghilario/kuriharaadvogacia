@@ -24,6 +24,7 @@ function stripTags(html: string): string {
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&amp;/g, "&")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
     .replace(/<[^>]*>?/gm, "")
     .replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ")
@@ -43,9 +44,12 @@ export function parseRssItems(xml: string, limit: number = NEWS_LIMIT): Noticia[
   const blocks = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) ?? [];
   for (const block of blocks.slice(0, limit)) {
     const title = stripTags(pickTag(block, "title"));
-    const link = pickTag(block, "link");
+    let link = pickTag(block, "link").replace(/&amp;/g, "&");
+    // Bing embrulha o link real em apiclick.aspx?url=...
+    const real = link.includes("bing.com/news/apiclick") ? link.match(/[?&]url=([^&]+)/)?.[1] : undefined;
+    if (real) link = decodeURIComponent(real);
     const pubDateRaw = pickTag(block, "pubDate");
-    const source = stripTags(pickTag(block, "source")) || "Informativo Jurídico";
+    const source = stripTags(pickTag(block, "source") || pickTag(block, "News:Source")) || "Informativo Jurídico";
     const snippet = stripTags(pickTag(block, "description")).slice(0, 160);
     if (!title || !link) continue;
     const date = new Date(pubDateRaw);
