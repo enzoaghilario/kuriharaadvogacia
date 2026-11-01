@@ -8,7 +8,7 @@ function hideTypebotBadge() {
   const root = bubble?.shadowRoot;
   if (!root) return false;
   let found = false;
-  root.querySelectorAll("typebot-badge, a[href*='typebot.io']").forEach((el) => {
+  root.querySelectorAll("typebot-badge, a.lite-badge, a[href*='typebot.io']").forEach((el) => {
     (el as HTMLElement).style.display = "none";
     found = true;
   });
