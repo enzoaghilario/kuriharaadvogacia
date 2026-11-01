@@ -133,6 +133,17 @@ html.light {
 }
 @utility rule-bronze { width: 3rem; height: 1px; background: var(--bronze); }
 @utility bg-hero-overlay { background: var(--gradient-hero); }
+
+/* Fundo com paralaxe: imagem fixa enquanto a página rola. */
+.bg-parallax-dark {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+@media (max-width: 768px) {
+  /* iOS não suporta "fixed"; cai para o comportamento normal. */
+  .bg-parallax-dark { background-attachment: scroll; }
+}
 @utility section-y { padding-block: clamp(4.5rem, 10vw, 8rem); }
 
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }

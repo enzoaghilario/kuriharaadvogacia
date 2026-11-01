@@ -26,13 +26,10 @@ function Escritorio() {
   return (
     <>
       <section className="relative overflow-hidden border-b">
-        <img
-          src={atendimento.url}
-          alt=""
+        <div
+          className="bg-parallax-dark absolute inset-0"
+          style={{ backgroundImage: `url(${atendimento.url})` }}
           aria-hidden="true"
-          width={1408}
-          height={768}
-          className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-navy/80" aria-hidden="true" />
         <div className="container-site relative pt-36 pb-16 sm:pt-44 sm:pb-20">
