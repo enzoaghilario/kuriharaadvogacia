@@ -2,6 +2,9 @@
 
 ## Verificação geral do site
 
+- [ ] Corrigir sobreposição do chat, menu fechado, validação de contato e aviso de privacidade
+- [ ] Testar correções no celular e no computador
+
 - [x] Conferir estrutura, formulários, navegação e apresentação no navegador
 - [x] Rodar testes e apresentar problemas confirmados e limitações
 
