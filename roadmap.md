@@ -2,13 +2,13 @@
 
 ## Verificação geral do site
 
-- [ ] Corrigir sobreposição do chat, menu fechado, validação de contato e aviso de privacidade
-- [ ] Testar correções no celular e no computador
+- [x] Corrigir sobreposição do chat, menu fechado, validação de contato e aviso de privacidade
+- [x] Testar correções no celular e no computador
 
 - [x] Conferir estrutura, formulários, navegação e apresentação no navegador
 - [x] Rodar testes e apresentar problemas confirmados e limitações
 
-Achados: balão fechado sobrepõe parte de “Ligar agora” no celular; menu fechado mantém links acessíveis por teclado; formulário de contato não destaca campos inválidos e aceita telefone sem dígitos suficientes; aviso de privacidade não descreve o formulário de contato nem o Typebot. Páginas e imagens carregaram, sem erros de execução; 63 testes passaram. Entrega real do contato não foi exercitada para não enviar dados fictícios ao escritório.
+Correções verificadas em 320, 393, 768, 1024, 1280 e 1920px: faixa livre junto ao chat nos botões de contato, menu fechado inerte, erros por campo e foco no primeiro erro, validação compartilhada no servidor e navegador, aviso incluindo contato, parceiro, chat e tema. Sem rolagem horizontal nem erros de execução nesses testes. Envio real do contato não foi exercitado para não armazenar dados fictícios do escritório; confirmação testada com resposta simulada. Zoom real de 400%, teclado virtual e áreas físicas de segurança não foram verificados.
 
 ## Seja Parceiro
 
