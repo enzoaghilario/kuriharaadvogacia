@@ -27,7 +27,7 @@ export function ContactBlock() {
             <span className="mt-2 block font-serif text-2xl tabular-nums lining-nums group-hover:text-primary">{SITE.phone}</span>
           </span>
         </a>
-        <div className="flex flex-wrap gap-3 pt-2">
+        <div className="contact-actions flex flex-wrap gap-3 pt-2">
           <a
             href={SITE.whatsappHref}
             target="_blank"

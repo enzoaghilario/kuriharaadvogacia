@@ -208,3 +208,8 @@ typebot-bubble a[href*="typebot.io"] { display: none !important; }
 .kf-chat-backdrop { position: fixed; inset: 0; z-index: 2147483646; background: color-mix(in oklab, var(--background) 80%, transparent); backdrop-filter: blur(2px); }
 html.kf-chat-open, html.kf-chat-open body { overflow: hidden; }
 typebot-bubble { position: relative; z-index: 2147483647; }
+
+/* Reserva a faixa do balão para que os botões de contato nunca fiquem sob ele. */
+@media (max-width: 640px) {
+  .contact-actions { padding-right: calc(4rem + env(safe-area-inset-right, 0px)); }
+}
