@@ -20,6 +20,7 @@ export function ContactForm() {
 
   const inputProps = (name: keyof ContactData) => ({
     required: true,
+    "aria-label": { name: "Nome", phone: "Telefone / WhatsApp", area: "Área de interesse", message: "Mensagem" }[name],
     disabled: state === "sending",
     "aria-invalid": !!errors[name],
     "aria-describedby": errors[name] ? `contact-${name}-error` : undefined,
