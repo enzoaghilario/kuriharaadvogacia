@@ -20,7 +20,8 @@ function hideTypebotBadge() {
     "div[class*='fixed'][class*='right-5'] {" +
     "--container-bottom: 96px !important;" +
     "--button-size: 44px !important;" +
-    "--bot-max-height: 62dvh !important;" +
+    "--bot-max-height: 56dvh !important;" +
+    "--bot-max-width: 92vw !important;" +
     "}" +
     "}";
   root.append(style);
