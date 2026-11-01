@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-import { googleNewsRssUrl, NEWS_QUERY, parseRssItems, type Noticia } from "@/lib/news-core";
+import { googleNewsRssUrl, parseRssItems, type Noticia } from "@/lib/news-core";
 
 export type LegalNewsResult = { noticias: Noticia[]; ok: boolean };
 
@@ -16,7 +16,7 @@ const HEADERS = {
 function sources(): string[] {
   return [
     googleNewsRssUrl(),
-    `https://www.bing.com/news/search?q=${encodeURIComponent(NEWS_QUERY)}&format=rss&setlang=pt-BR&cc=BR`,
+    `https://www.bing.com/news/search?q=${encodeURIComponent("advocacia OR STF OR STJ OR \"direito trabalhista\"")}&format=rss&setlang=pt-BR&cc=BR`,
   ];
 }
 
