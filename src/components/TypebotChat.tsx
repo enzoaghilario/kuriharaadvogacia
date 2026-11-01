@@ -24,7 +24,7 @@ function hideTypebotBadge() {
     "div[class*='fixed'][class*='right-5'] {" +
     "--container-bottom: 96px !important;" +
     "--button-size: 44px !important;" +
-    "--bot-max-height: 62dvh !important;" +
+    "--bot-max-height: 80dvh !important;" +
     "}" +
     "}";
   root.append(style);
@@ -39,8 +39,11 @@ export function TypebotChat() {
       script.textContent = `
         import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0/dist/web.js';
         if (document.getElementById('${SCRIPT_ID}')) {
+          window.__kfTypebot = Typebot;
           Typebot.initBubble({
             typebot: 'my-typebot-8fqmxb7',
+            onOpen: () => window.dispatchEvent(new CustomEvent('kf-chat', { detail: true })),
+            onClose: () => window.dispatchEvent(new CustomEvent('kf-chat', { detail: false })),
             theme: {
               button: { backgroundColor: '#D2B379', iconColor: '#101723', size: 'medium' },
               chatWindow: { backgroundColor: '#101723' },
@@ -59,7 +62,29 @@ export function TypebotChat() {
     const interval = window.setInterval(hideTypebotBadge, 1500);
     hideTypebotBadge();
 
+    // No celular: fundo escuro bloqueia toques acidentais nos botões do site.
+    const backdrop = document.createElement("div");
+    backdrop.className = "kf-chat-backdrop";
+    backdrop.setAttribute("aria-hidden", "true");
+    backdrop.addEventListener("click", () => {
+      (window as unknown as { __kfTypebot?: { close: () => void } }).__kfTypebot?.close();
+    });
+    const onChat = (e: Event) => {
+      const open = (e as CustomEvent<boolean>).detail;
+      if (open && window.matchMedia("(max-width: 640px)").matches) {
+        document.body.append(backdrop);
+        document.documentElement.classList.add("kf-chat-open");
+      } else {
+        backdrop.remove();
+        document.documentElement.classList.remove("kf-chat-open");
+      }
+    };
+    window.addEventListener("kf-chat", onChat);
+
     return () => {
+      window.removeEventListener("kf-chat", onChat);
+      backdrop.remove();
+      document.documentElement.classList.remove("kf-chat-open");
       observer.disconnect();
       window.clearInterval(interval);
       document.getElementById(SCRIPT_ID)?.remove();

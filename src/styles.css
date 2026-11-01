@@ -203,3 +203,8 @@ html { transition: background-color 300ms ease; }
 /* Oculta a marca d'água "Made with Typebot" no rodapé do balão de chat */
 typebot-badge { display: none !important; }
 typebot-bubble a[href*="typebot.io"] { display: none !important; }
+
+/* Chat aberto no celular: fundo que bloqueia toques no site */
+.kf-chat-backdrop { position: fixed; inset: 0; z-index: 2147483646; background: color-mix(in oklab, var(--background) 80%, transparent); backdrop-filter: blur(2px); }
+html.kf-chat-open, html.kf-chat-open body { overflow: hidden; }
+typebot-bubble { position: relative; z-index: 2147483647; }
