@@ -5,7 +5,7 @@ import { WhatsAppIcon } from "./WhatsAppIcon";
 export function ContactBlock() {
   return (
     <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-      <div className="space-y-8">
+      <div className="card-glass space-y-8 p-8 sm:p-10">
         <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="group flex gap-4">
           <MapPin className="mt-1 shrink-0 text-bronze" size={20} aria-hidden />
           <span>
