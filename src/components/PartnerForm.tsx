@@ -65,18 +65,18 @@ export function PartnerForm() {
         <input name="cpf" required maxLength={14} inputMode="numeric" placeholder="000.000.000-00" value={cpf}
           onChange={(e) => setCpf(maskCpf(e.target.value))}
           onBlur={() => cpf && validateField("cpf", cpf)}
-          aria-invalid={!!errors.cpf} aria-describedby={errors.cpf ? "cpf-error" : undefined}
-          className={`${field} ${errors.cpf ? fieldError : ""}`} />
-        {errors.cpf && <span id="cpf-error" role="alert" className="mt-1 block text-sm text-destructive">{errors.cpf}</span>}
+          aria-invalid={!!errors['cpf']} aria-describedby={errors['cpf'] ? "cpf-error" : undefined}
+          className={`${field} ${errors['cpf'] ? fieldError : ""}`} />
+        {errors['cpf'] && <span id="cpf-error" role="alert" className="mt-1 block text-sm text-destructive">{errors['cpf']}</span>}
       </label>
       <label className="block text-sm font-medium">E-mail corporativo *<input name="email" type="email" required maxLength={254} placeholder="Seu e-mail de trabalho" className={field} /></label>
       <label className="block text-sm font-medium">Telefone / WhatsApp *
         <input name="phone" type="tel" required maxLength={15} inputMode="tel" placeholder="(00) 00000-0000" value={phone}
           onChange={(e) => setPhone(maskPhone(e.target.value))}
           onBlur={() => phone && validateField("phone", phone)}
-          aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-error" : undefined}
-          className={`${field} ${errors.phone ? fieldError : ""}`} />
-        {errors.phone && <span id="phone-error" role="alert" className="mt-1 block text-sm text-destructive">{errors.phone}</span>}
+          aria-invalid={!!errors['phone']} aria-describedby={errors['phone'] ? "phone-error" : undefined}
+          className={`${field} ${errors['phone'] ? fieldError : ""}`} />
+        {errors['phone'] && <span id="phone-error" role="alert" className="mt-1 block text-sm text-destructive">{errors['phone']}</span>}
       </label>
       <SelectField name="area" label="Área de interesse principal" options={PARTNER_AREAS} required />
     </fieldset>
