@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { formatNewsDate, NEWS_PAGE_SIZE, type Noticia } from "@/lib/news-core";
 import { useTiltCard } from "@/lib/use-tilt-card";
 import { SectionHeading } from "@/components/PageIntro";
+import { Spotlight } from "@/components/Spotlight";
 
 type Props = { noticias: Noticia[]; ok: boolean };
 

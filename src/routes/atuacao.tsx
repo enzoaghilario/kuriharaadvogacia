@@ -4,6 +4,7 @@ import { PageIntro } from "@/components/PageIntro";
 import { AREAS, type PracticeArea } from "@/content/areas";
 import { ServiceWhatsAppDialog } from "@/components/ServiceWhatsAppDialog";
 import { useTiltCard } from "@/lib/use-tilt-card";
+import { Spotlight } from "@/components/Spotlight";
 
 const T = "Áreas de atuação | Kurihara & Figueiredo Advogados Associados";
 const D = "Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões e recuperação judicial em Morro Agudo, SP.";
