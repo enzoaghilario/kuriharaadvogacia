@@ -91,35 +91,7 @@ export function LegalNews({ noticias, ok }: Props) {
             className="mt-12 grid animate-news-fade gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             {current.map((item) => (
-              <article
-                key={item.link}
-                className="group card-glass relative flex flex-col p-7"
-              >
-                <p className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-                  <Clock size={13} aria-hidden />
-                  <time dateTime={item.pubDate}>{formatNewsDate(item.pubDate)}</time>
-                  <span aria-hidden>·</span>
-                  <span>{item.source}</span>
-                </p>
-                <h3 className="mt-4 text-xl leading-snug">
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="after:absolute after:inset-0 group-hover:text-primary"
-                  >
-                    {item.title}
-                  </a>
-                </h3>
-                {item.snippet && (
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-                    {item.snippet}
-                  </p>
-                )}
-                <p className="mt-6 inline-flex items-center gap-1.5 border-t pt-4 text-xs font-semibold uppercase tracking-widest text-bronze">
-                  Ler matéria completa <ExternalLink size={13} aria-hidden />
-                </p>
-              </article>
+              <NewsCard key={item.link} item={item} />
             ))}
           </div>
         )}
