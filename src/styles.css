@@ -237,3 +237,15 @@ typebot-bubble { position: relative; z-index: 2147483647; }
   border-color: color-mix(in oklab, var(--primary) 30%, transparent);
   box-shadow: 0 20px 45px -20px color-mix(in oklab, var(--primary) 8%, transparent);
 }
+
+/* Transição suave ao rotacionar as notícias do jornal jurídico */
+@keyframes news-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-news-fade {
+  animation: news-fade 0.45s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-news-fade { animation: none; }
+}
