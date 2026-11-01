@@ -20,6 +20,18 @@ function isValidCnpj(value: string) {
   return check(12) && check(13);
 }
 
+function isValidCpf(value: string) {
+  const digits = value.replace(/\D/g, "");
+  if (!/^\d{11}$/.test(digits) || /^(\d)\1+$/.test(digits)) return false;
+  const check = (length: number) => {
+    let sum = 0;
+    for (let i = 0; i < length; i++) sum += Number(digits[i]) * (length + 1 - i);
+    const remainder = (sum * 10) % 11;
+    return (remainder === 10 ? 0 : remainder) === Number(digits[length]);
+  };
+  return check(9) && check(10);
+}
+
 const optionalChoice = <T extends readonly [string, ...string[]]>(options: T) => z.union([z.enum(options), z.literal("")]).optional();
 
 export const partnerSchema = z.object({
