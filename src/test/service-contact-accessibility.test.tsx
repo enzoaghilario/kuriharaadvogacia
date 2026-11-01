@@ -3,6 +3,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/PageIntro", () => ({ PageIntro: () => null }));
+vi.mock("@/lib/use-tilt-card", () => ({ useTiltCard: () => ({ current: null }) }));
 vi.mock("@/components/ServiceWhatsAppDialog", () => ({ ServiceWhatsAppDialog: () => null }));
 vi.mock("@tanstack/react-router", async (importOriginal) => {
   const original = await importOriginal<typeof import("@tanstack/react-router")>();
