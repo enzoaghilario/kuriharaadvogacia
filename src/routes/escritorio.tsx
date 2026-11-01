@@ -58,7 +58,10 @@ function Escritorio() {
             </p>
           </div>
           <div className="space-y-4">
-            <img src={fachada.url} alt="Fachada do escritório com a inscrição Advocacia e as placas originais" loading="lazy" width={777} height={531} className="h-auto w-full" />
+            <div className="relative">
+              <img src={fachada.url} alt="Fachada do escritório com a inscrição Advocacia e as placas originais" loading="lazy" width={777} height={531} className="h-auto w-full" />
+              <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-b from-transparent to-background" />
+            </div>
           </div>
         </div>
       </section>
