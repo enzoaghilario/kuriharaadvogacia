@@ -23,6 +23,15 @@ describe("Partner qualification", () => {
   it("rejects an invalid CNPJ checksum", () => {
     expect(partnerSchema.safeParse({ ...valid, cnpj: "11.222.333/0001-82" }).success).toBe(false);
   });
+  it("rejects an invalid or incomplete CPF", () => {
+    expect(partnerSchema.safeParse({ ...valid, cpf: "529.982.247-26" }).success).toBe(false);
+    expect(partnerSchema.safeParse({ ...valid, cpf: "111.111.111-11" }).success).toBe(false);
+    expect(partnerSchema.safeParse({ ...valid, cpf: "529.982.247" }).success).toBe(false);
+  });
+  it("rejects a phone without DDD or with too few digits", () => {
+    expect(partnerSchema.safeParse({ ...valid, phone: "(16) 8801-461" }).success).toBe(false);
+    expect(partnerSchema.safeParse({ ...valid, phone: "98801-4617" }).success).toBe(false);
+  });
   it("validates optional choices and limits observations", () => {
     expect(partnerSchema.safeParse({ ...valid, activeCases: "Talvez" }).success).toBe(false);
     expect(partnerSchema.safeParse({ ...valid, urgency: "Imediata" }).success).toBe(false);
