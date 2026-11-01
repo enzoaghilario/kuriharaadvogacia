@@ -249,3 +249,30 @@ typebot-bubble { position: relative; z-index: 2147483647; }
 @media (prefers-reduced-motion: reduce) {
   .animate-news-fade { animation: none; }
 }
+
+/* Cards 3D: inclinação no desktop (via JS) e brilho de borda no mobile */
+.tilt-card {
+  transition:
+    transform 0.25s ease-out,
+    box-shadow 0.5s ease-out,
+    border-color 0.5s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (hover: none), (pointer: coarse) {
+  .tilt-card {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 14%, transparent);
+  }
+  .tilt-card.in-view {
+    border-color: color-mix(in oklab, var(--primary) 45%, transparent);
+    box-shadow: 0 0 28px -6px color-mix(in oklab, var(--primary) 38%, transparent);
+  }
+  .tilt-card:active {
+    transform: scale(1.02);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card {
+    transition: none;
+  }
+}
