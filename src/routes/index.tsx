@@ -33,6 +33,7 @@ function Index() {
   return (
     <>
       <section className="hero-breathe relative isolate flex min-h-[90svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
+        <div aria-hidden className="absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[120px] pointer-events-none -z-10" />
         <div className="hero-logo-stage relative w-full max-w-xl">
             <img
               src={logo}
