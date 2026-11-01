@@ -1,5 +1,12 @@
 # Roadmap
 
+## Verificação geral do site
+
+- [x] Conferir estrutura, formulários, navegação e apresentação no navegador
+- [x] Rodar testes e apresentar problemas confirmados e limitações
+
+Achados: balão fechado sobrepõe parte de “Ligar agora” no celular; menu fechado mantém links acessíveis por teclado; formulário de contato não destaca campos inválidos e aceita telefone sem dígitos suficientes; aviso de privacidade não descreve o formulário de contato nem o Typebot. Páginas e imagens carregaram, sem erros de execução; 63 testes passaram. Entrega real do contato não foi exercitada para não enviar dados fictícios ao escritório.
+
 ## Seja Parceiro
 
 - [x] Criar página, campos, validação e navegação compatíveis com os dois temas
