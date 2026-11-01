@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { PARTNER_AREAS, partnerSchema } from "@/lib/partner-schema";
 
-const valid = { company: "Empresa de teste", cnpj: "11.222.333/0001-81", responsible: "Responsável de teste", email: "teste@example.com", phone: "16988014617", area: "Empresarial", privacy: true };
+const valid = { company: "Empresa de teste", cnpj: "11.222.333/0001-81", responsible: "Responsável de teste", cpf: "529.982.247-25", email: "teste@example.com", phone: "(16) 98801-4617", area: "Empresarial", privacy: true };
 
 describe("Partner qualification", () => {
-  for (const name of ["company", "cnpj", "responsible", "email", "phone", "area", "privacy"] as const) {
+  for (const name of ["company", "cnpj", "responsible", "cpf", "email", "phone", "area", "privacy"] as const) {
     it(`requires ${name}`, () => {
       expect(partnerSchema.safeParse({ ...valid, [name]: undefined }).success).toBe(false);
     });
