@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import fachada from "@/assets/escritorio-fachada-original.png.asset.json";
 import atendimento from "@/assets/escritorio-atendimento.jpg.asset.json";
-import { PageIntro } from "@/components/PageIntro";
 import { Faq } from "@/components/Faq";
 
 
@@ -26,7 +25,23 @@ export const Route = createFileRoute("/escritorio")({
 function Escritorio() {
   return (
     <>
-      <PageIntro eyebrow="O escritório" title="Venha conhecer o nosso escritório" />
+      <section className="relative overflow-hidden border-b">
+        <img
+          src={atendimento.url}
+          alt=""
+          aria-hidden="true"
+          width={1408}
+          height={768}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-navy/80" aria-hidden="true" />
+        <div className="container-site relative pt-36 pb-16 sm:pt-44 sm:pb-20">
+          <div className="animate-rise max-w-3xl space-y-6 text-on-dark">
+            <h1 className="text-h2">Venha conhecer o nosso escritório</h1>
+            <div className="rule-bronze" />
+          </div>
+        </div>
+      </section>
       <section className="section-y">
         <div className="container-site grid gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
           <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
