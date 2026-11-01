@@ -63,30 +63,6 @@ function Escritorio() {
           </div>
         </div>
       </section>
-      <section className="relative overflow-hidden border-y">
-        <img
-          src={atendimento.url}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          width={1408}
-          height={768}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-navy/80" aria-hidden="true" />
-        <div className="container-site relative section-y">
-          <div className="max-w-2xl space-y-6 text-on-dark">
-            <div className="rule-bronze" />
-            <p className="text-h2">
-              Cada caso é ouvido com atenção e tratado com a seriedade que merece.
-            </p>
-            <p className="text-lg leading-relaxed text-on-dark-muted">
-              Atendimento próximo, linguagem clara e compromisso com os seus interesses — do primeiro contato à
-              conclusão do caso.
-            </p>
-          </div>
-        </div>
-      </section>
       <Faq />
     </>
   );
