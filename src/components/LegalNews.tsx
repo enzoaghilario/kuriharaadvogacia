@@ -41,7 +41,7 @@ export function LegalNews({ noticias, ok }: Props) {
             {noticias.map((item) => (
               <article
                 key={item.link}
-                className="group relative flex flex-col border bg-card p-7 transition-colors hover:border-bronze"
+                className="group card-glass relative flex flex-col p-7"
               >
                 <p className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
                   <Clock size={13} aria-hidden />

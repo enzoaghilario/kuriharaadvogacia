@@ -21,7 +21,7 @@ function PostCard({ post }: { post: InstagramPost }) {
       href={post.permalink}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col border bg-card transition-colors hover:border-bronze"
+      className="group card-glass flex flex-col"
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
         {post.imageUrl ? (
