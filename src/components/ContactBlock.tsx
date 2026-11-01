@@ -17,14 +17,14 @@ export function ContactBlock() {
           <WhatsAppIcon size={20} className="mt-1 shrink-0 text-bronze" />
           <span>
             <span className="eyebrow block">WhatsApp</span>
-            <span className="mt-2 block font-serif text-2xl group-hover:text-primary">{SITE.whatsapp}</span>
+            <span className="mt-2 block font-serif text-2xl tabular-nums lining-nums group-hover:text-primary">{SITE.whatsapp}</span>
           </span>
         </a>
         <a href={SITE.phoneHref} className="group flex gap-4">
           <Phone className="mt-1 shrink-0 text-bronze" size={20} aria-hidden />
           <span>
             <span className="eyebrow block">Telefone</span>
-            <span className="mt-2 block font-serif text-2xl group-hover:text-primary">{SITE.phone}</span>
+            <span className="mt-2 block font-serif text-2xl tabular-nums lining-nums group-hover:text-primary">{SITE.phone}</span>
           </span>
         </a>
         <div className="flex flex-wrap gap-3 pt-2">
