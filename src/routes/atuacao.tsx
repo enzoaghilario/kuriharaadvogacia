@@ -76,8 +76,8 @@ function Atuacao() {
     <>
       <PageIntro eyebrow="Serviços" title="Áreas de atuação" />
       <section className="section-y">
-        <div className="container-site max-w-3xl">
-          <Spotlight>
+        <Spotlight>
+          <div className="container-site max-w-3xl">
             <ul>
               {AREAS.map((a, i) => (
                 <ServiceItem
@@ -90,12 +90,12 @@ function Atuacao() {
                 />
               ))}
             </ul>
-          </Spotlight>
-          <p className="mt-10 text-lg text-muted-foreground">
-            Para saber se o escritório pode ajudar no seu caso,{" "}
-            <Link to="/contato" className="text-primary underline underline-offset-4">entre em contato</Link>.
-          </p>
-        </div>
+            <p className="mt-10 text-lg text-muted-foreground">
+              Para saber se o escritório pode ajudar no seu caso,{" "}
+              <Link to="/contato" className="text-primary underline underline-offset-4">entre em contato</Link>.
+            </p>
+          </div>
+        </Spotlight>
       </section>
       <ServiceWhatsAppDialog service={service} onClose={() => setService(null)} />
     </>
