@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import fachada from "@/assets/escritorio-fachada-original.png.asset.json";
-import atendimento from "@/assets/escritorio-atendimento.jpg.asset.json";
+import fachada from "@/assets/escritorio-fachada-original.png";
+import atendimento from "@/assets/escritorio-atendimento.jpg";
 import { Faq } from "@/components/Faq";
 
 
@@ -28,7 +28,7 @@ function Escritorio() {
       <section className="relative overflow-hidden border-b">
         <div
           className="bg-parallax-dark absolute inset-0"
-          style={{ backgroundImage: `url(${atendimento.url})` }}
+          style={{ backgroundImage: `url(${atendimento})` }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-navy/80" aria-hidden="true" />
@@ -59,7 +59,7 @@ function Escritorio() {
           </div>
           <div className="space-y-4">
             <div className="relative">
-              <img src={fachada.url} alt="Fachada do escritório com a inscrição Advocacia e as placas originais" loading="lazy" width={777} height={531} className="h-auto w-full" />
+              <img src={fachada} alt="Fachada do escritório com a inscrição Advocacia e as placas originais" loading="lazy" width={777} height={531} className="h-auto w-full" />
               <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-b from-transparent to-background" />
             </div>
           </div>
