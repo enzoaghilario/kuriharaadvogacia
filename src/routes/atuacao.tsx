@@ -77,18 +77,20 @@ function Atuacao() {
       <PageIntro eyebrow="Serviços" title="Áreas de atuação" />
       <section className="section-y">
         <div className="container-site max-w-3xl">
-          <ul>
-            {AREAS.map((a, i) => (
-              <ServiceItem
-                key={a.slug}
-                area={a}
-                index={i}
-                isOpen={open === a.slug}
-                onToggle={() => setOpen(open === a.slug ? null : a.slug)}
-                onContact={() => setService(a.name)}
-              />
-            ))}
-          </ul>
+          <Spotlight>
+            <ul>
+              {AREAS.map((a, i) => (
+                <ServiceItem
+                  key={a.slug}
+                  area={a}
+                  index={i}
+                  isOpen={open === a.slug}
+                  onToggle={() => setOpen(open === a.slug ? null : a.slug)}
+                  onContact={() => setService(a.name)}
+                />
+              ))}
+            </ul>
+          </Spotlight>
           <p className="mt-10 text-lg text-muted-foreground">
             Para saber se o escritório pode ajudar no seu caso,{" "}
             <Link to="/contato" className="text-primary underline underline-offset-4">entre em contato</Link>.

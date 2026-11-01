@@ -87,14 +87,16 @@ export function LegalNews({ noticias, ok }: Props) {
             </p>
           </div>
         ) : (
-          <div
-            key={page}
-            className="mt-12 grid animate-news-fade gap-6 md:grid-cols-2 lg:grid-cols-3"
-          >
-            {current.map((item) => (
-              <NewsCard key={item.link} item={item} />
-            ))}
-          </div>
+          <Spotlight className="mt-12">
+            <div
+              key={page}
+              className="grid animate-news-fade gap-6 md:grid-cols-2 lg:grid-cols-3"
+            >
+              {current.map((item) => (
+                <NewsCard key={item.link} item={item} />
+              ))}
+            </div>
+          </Spotlight>
         )}
       </div>
     </section>
