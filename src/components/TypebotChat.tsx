@@ -14,7 +14,15 @@ function hideTypebotBadge() {
   const style = document.createElement("style");
   style.id = "kf-hide-typebot-badge";
   style.textContent =
-    "a.lite-badge, typebot-badge, a[href*='typebot.io'] { display: none !important; }";
+    "a.lite-badge, typebot-badge, a[href*='typebot.io'] { display: none !important; }" +
+    /* No celular: balão menor e mais alto para não cobrir os botões de contato. */
+    "@media (max-width: 640px) {" +
+    "div[class*='fixed'][class*='right-5'] {" +
+    "--container-bottom: 96px !important;" +
+    "--button-size: 44px !important;" +
+    "--bot-max-height: 62dvh !important;" +
+    "}" +
+    "}";
   root.append(style);
 }
 
