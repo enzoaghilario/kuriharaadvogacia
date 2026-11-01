@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft, Building2, Send, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY_SIZES, PARTNER_AREAS, REVENUE_RANGES, partnerSchema } from "@/lib/partner-schema";
-import { maskCpf, maskPhone } from "@/lib/masks";
+import { maskCnpj, maskCpf, maskPhone } from "@/lib/masks";
 
 const field = "mt-2 w-full rounded-sm border border-input bg-background px-3 py-3 text-base text-foreground outline-none focus:border-bronze focus:ring-1 focus:ring-ring";
 const fieldError = "border-destructive focus:border-destructive focus:ring-destructive";
