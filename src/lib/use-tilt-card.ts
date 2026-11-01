@@ -15,7 +15,7 @@ export function useTiltCard<T extends HTMLElement>() {
 
     if (!hasMouse) {
       const io = new IntersectionObserver(
-        ([entry]) => el.classList.toggle("in-view", entry.isIntersecting),
+        ([entry]) => el.classList.toggle("in-view", entry?.isIntersecting ?? false),
         { threshold: 0.35 },
       );
       io.observe(el);
