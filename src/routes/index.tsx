@@ -5,6 +5,7 @@ import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import logo from "@/assets/logo-hd-white.png";
 import logoDark from "@/assets/logo-hd.png";
 import { ContactBlock } from "@/components/ContactBlock";
+import { HeroParticles } from "@/components/HeroParticles";
 import { SectionHeading } from "@/components/PageIntro";
 import { PostCard } from "./conteudos.index";
 import { POSTS } from "@/content/posts";
@@ -33,6 +34,7 @@ function Index() {
   return (
     <>
       <section className="hero-breathe relative isolate flex min-h-[90svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
+        <HeroParticles />
         <div aria-hidden className="absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[120px] pointer-events-none -z-10" />
         <div className="hero-logo-stage relative w-full max-w-xl">
             <img
