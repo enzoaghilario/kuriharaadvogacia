@@ -9,7 +9,10 @@ export type Noticia = {
 
 export const NEWS_QUERY =
   "direito empresarial OR advocacia OR STF OR legislacao trabalhista";
-export const NEWS_LIMIT = 9;
+// Acervo maior que a página exibida: o botão "Atualizar" rotaciona as
+// notícias em lotes sem novo fetch até esgotar o acervo.
+export const NEWS_LIMIT = 24;
+export const NEWS_PAGE_SIZE = 6;
 
 export function googleNewsRssUrl(query: string = NEWS_QUERY): string {
   return `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=pt-BR&gl=BR&ceid=BR:pt-419`;
