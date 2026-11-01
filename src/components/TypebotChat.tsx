@@ -2,24 +2,20 @@ import { useEffect } from "react";
 
 const SCRIPT_ID = "typebot-bubble-script";
 
-/** Esconde o selo "Made with Typebot" que vive dentro do shadow DOM do balão. */
+/**
+ * Esconde o selo "Made with Typebot" que vive dentro do shadow DOM do balão.
+ * O Typebot reescreve o estilo inline do selo, então injetamos uma folha de
+ * estilo com !important dentro do próprio shadow root — ela vence o inline.
+ */
 function hideTypebotBadge() {
   const bubble = document.querySelector("typebot-bubble");
   const root = bubble?.shadowRoot;
-  if (!root) return false;
-  let found = false;
-  root.querySelectorAll("typebot-badge, a.lite-badge, a[href*='typebot.io']").forEach((el) => {
-    (el as HTMLElement).style.display = "none";
-    found = true;
-  });
-  root.querySelectorAll("*").forEach((el) => {
-    if (el.children.length === 0 && (el.textContent || "").toLowerCase().includes("made with typebot")) {
-      const host = (el.closest("a, div, span") ?? el) as HTMLElement;
-      host.style.display = "none";
-      found = true;
-    }
-  });
-  return found;
+  if (!root || root.getElementById("kf-hide-typebot-badge")) return;
+  const style = document.createElement("style");
+  style.id = "kf-hide-typebot-badge";
+  style.textContent =
+    "a.lite-badge, typebot-badge, a[href*='typebot.io'] { display: none !important; }";
+  root.append(style);
 }
 
 export function TypebotChat() {
