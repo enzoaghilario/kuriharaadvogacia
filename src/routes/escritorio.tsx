@@ -32,6 +32,8 @@ function Escritorio() {
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-navy/80" aria-hidden="true" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-background via-background/50 to-transparent" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-b from-transparent via-background/50 to-background" />
         <div className="container-site relative pt-36 pb-16 sm:pt-44 sm:pb-20">
           <div className="animate-rise max-w-3xl space-y-6 text-on-dark">
             <h1 className="text-h2">Venha conhecer o nosso escritório</h1>
@@ -56,7 +58,10 @@ function Escritorio() {
             </p>
           </div>
           <div className="space-y-4">
-            <img src={fachada.url} alt="Fachada do escritório com a inscrição Advocacia e as placas originais" loading="lazy" width={777} height={531} className="h-auto w-full" />
+            <div className="relative">
+              <img src={fachada.url} alt="Fachada do escritório com a inscrição Advocacia e as placas originais" loading="lazy" width={777} height={531} className="h-auto w-full" />
+              <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-b from-transparent to-background" />
+            </div>
           </div>
         </div>
       </section>

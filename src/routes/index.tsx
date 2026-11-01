@@ -74,6 +74,7 @@ function Index() {
             <Phone size={16} /> Ligar agora
           </a>
         </div>
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-b from-transparent via-background/50 to-background" />
       </section>
 
       <section className="section-y">
