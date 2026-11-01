@@ -1,5 +1,10 @@
 # Roadmap
 
+## Verificação geral do site
+
+- [ ] Conferir estrutura, formulários, navegação e apresentação no navegador
+- [ ] Rodar testes e apresentar problemas confirmados e limitações
+
 ## Seja Parceiro
 
 - [x] Criar página, campos, validação e navegação compatíveis com os dois temas
