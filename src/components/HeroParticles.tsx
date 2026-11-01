@@ -108,9 +108,11 @@ export function HeroParticles() {
       mouse.x = -9999;
       mouse.y = -9999;
     };
+    // O canvas fica atrás do conteúdo (-z-10), então o mouse é ouvido na
+    // janela e convertido para coordenadas do hero.
     if (onMove) {
-      canvas.addEventListener("mousemove", onMove);
-      canvas.addEventListener("mouseleave", onLeave);
+      window.addEventListener("mousemove", onMove, { passive: true });
+      window.addEventListener("mouseout", onLeave);
     }
 
     return () => {
@@ -118,8 +120,8 @@ export function HeroParticles() {
       ro.disconnect();
       io.disconnect();
       if (onMove) {
-        canvas.removeEventListener("mousemove", onMove);
-        canvas.removeEventListener("mouseleave", onLeave);
+        window.removeEventListener("mousemove", onMove);
+        window.removeEventListener("mouseout", onLeave);
       }
     };
   }, []);
