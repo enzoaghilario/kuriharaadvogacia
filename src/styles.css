@@ -276,3 +276,35 @@ typebot-bubble { position: relative; z-index: 2147483647; }
     transition: none;
   }
 }
+
+/* Spotlight: ponto de luz dourado que segue o mouse (desktop) ou fica fixo
+   na base da grade (mobile) */
+.spotlight {
+  position: relative;
+}
+.spotlight-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  background: radial-gradient(
+    340px circle at var(--spot-x, 50%) var(--spot-y, 20%),
+    color-mix(in oklab, var(--primary) 13%, transparent),
+    transparent 70%
+  );
+}
+.spotlight:hover .spotlight-glow {
+  opacity: 1;
+}
+@media (hover: none), (pointer: coarse) {
+  .spotlight-glow {
+    opacity: 1;
+    background: radial-gradient(
+      440px circle at 50% 100%,
+      color-mix(in oklab, var(--primary) 14%, transparent),
+      transparent 70%
+    );
+  }
+}
