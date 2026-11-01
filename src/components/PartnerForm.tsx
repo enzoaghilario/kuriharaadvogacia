@@ -3,8 +3,10 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft, Building2, Send, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY_SIZES, PARTNER_AREAS, REVENUE_RANGES, partnerSchema } from "@/lib/partner-schema";
+import { maskCpf, maskPhone } from "@/lib/masks";
 
 const field = "mt-2 w-full rounded-sm border border-input bg-background px-3 py-3 text-base text-foreground outline-none focus:border-bronze focus:ring-1 focus:ring-ring";
+const fieldError = "border-destructive focus:border-destructive focus:ring-destructive";
 
 function SelectField({ name, label, options, required = false }: { name: string; label: string; options: readonly string[]; required?: boolean }) {
   return <label className="block text-sm font-medium">{label}{required && " *"}
@@ -17,6 +19,20 @@ function SelectField({ name, label, options, required = false }: { name: string;
 
 export function PartnerForm() {
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [cpf, setCpf] = useState("");
+  const [phone, setPhone] = useState("");
+
+  function validateField(name: "cpf" | "phone", value: string) {
+    const shape = partnerSchema.shape[name];
+    const result = shape.safeParse(value);
+    setErrors((prev) => {
+      const next = { ...prev };
+      if (result.success) delete next[name];
+      else next[name] = result.error.issues[0]?.message ?? "Verifique o campo.";
+      return next;
+    });
+  }
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,22 +40,44 @@ export function PartnerForm() {
     const data = Object.fromEntries(new FormData(form));
     const parsed = partnerSchema.safeParse({ ...data, privacy: data['privacy'] === "on" });
     if (!parsed.success) {
+      const fieldErrors: Record<string, string> = {};
+      for (const issue of parsed.error.issues) {
+        const key = String(issue.path[0] ?? "");
+        if (key && !fieldErrors[key]) fieldErrors[key] = issue.message;
+      }
+      setErrors(fieldErrors);
       setError(parsed.error.issues[0]?.message ?? "Verifique os campos.");
       return;
     }
+    setErrors({});
     // No recipient or external email service is configured. Never send or
     // simulate success, and never persist the form's personal information.
     setError("O envio ainda não está disponível. Nenhuma informação foi transmitida.");
   }
 
-  return <form onSubmit={onSubmit} autoComplete="off" className="space-y-10">
+  return <form onSubmit={onSubmit} autoComplete="off" noValidate className="space-y-10">
     <fieldset className="grid min-w-0 gap-6 sm:grid-cols-2">
       <legend className="mb-6 font-serif text-2xl"><span className="flex items-center gap-3"><Building2 aria-hidden="true" className="h-6 w-6 shrink-0 text-bronze" />Informações da empresa</span></legend>
       <label className="block text-sm font-medium">Razão social / Nome fantasia *<input name="company" required maxLength={150} placeholder="Nome da sua empresa" className={field} /></label>
       <label className="block text-sm font-medium">CNPJ *<input name="cnpj" required maxLength={18} inputMode="numeric" placeholder="00.000.000/0000-00" className={field} /></label>
       <label className="block text-sm font-medium">Nome do responsável *<input name="responsible" required maxLength={100} placeholder="Seu nome completo" className={field} /></label>
+      <label className="block text-sm font-medium">CPF do responsável *
+        <input name="cpf" required maxLength={14} inputMode="numeric" placeholder="000.000.000-00" value={cpf}
+          onChange={(e) => setCpf(maskCpf(e.target.value))}
+          onBlur={() => cpf && validateField("cpf", cpf)}
+          aria-invalid={!!errors['cpf']} aria-describedby={errors['cpf'] ? "cpf-error" : undefined}
+          className={`${field} ${errors['cpf'] ? fieldError : ""}`} />
+        {errors['cpf'] && <span id="cpf-error" role="alert" className="mt-1 block text-sm text-destructive">{errors['cpf']}</span>}
+      </label>
       <label className="block text-sm font-medium">E-mail corporativo *<input name="email" type="email" required maxLength={254} placeholder="Seu e-mail de trabalho" className={field} /></label>
-      <label className="block text-sm font-medium">Telefone / WhatsApp *<input name="phone" type="tel" required maxLength={30} placeholder="(00) 00000-0000" className={field} /></label>
+      <label className="block text-sm font-medium">Telefone / WhatsApp *
+        <input name="phone" type="tel" required maxLength={15} inputMode="tel" placeholder="(00) 00000-0000" value={phone}
+          onChange={(e) => setPhone(maskPhone(e.target.value))}
+          onBlur={() => phone && validateField("phone", phone)}
+          aria-invalid={!!errors['phone']} aria-describedby={errors['phone'] ? "phone-error" : undefined}
+          className={`${field} ${errors['phone'] ? fieldError : ""}`} />
+        {errors['phone'] && <span id="phone-error" role="alert" className="mt-1 block text-sm text-destructive">{errors['phone']}</span>}
+      </label>
       <SelectField name="area" label="Área de interesse principal" options={PARTNER_AREAS} required />
     </fieldset>
     <fieldset className="grid min-w-0 gap-6 border-t pt-8 sm:grid-cols-2">

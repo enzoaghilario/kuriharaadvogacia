@@ -17,6 +17,7 @@ describe("Partner form privacy", () => {
     fireEvent.change(screen.getByLabelText(/Razão social/), { target: { value: "Empresa de teste" } });
     fireEvent.change(screen.getByLabelText(/CNPJ/), { target: { value: "11.222.333/0001-81" } });
     fireEvent.change(screen.getByLabelText(/Nome do responsável/), { target: { value: "Responsável de teste" } });
+    fireEvent.change(screen.getByLabelText(/CPF/), { target: { value: "52998224725" } });
     fireEvent.change(screen.getByLabelText(/E-mail corporativo/), { target: { value: "teste@example.com" } });
     fireEvent.change(screen.getByLabelText(/Telefone/), { target: { value: "16988014617" } });
     fireEvent.change(screen.getByLabelText(/Área de interesse/), { target: { value: "Empresarial" } });
