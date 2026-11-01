@@ -22,6 +22,52 @@ export const Route = createFileRoute("/atuacao")({
   component: Atuacao,
 });
 
+function ServiceItem({
+  area,
+  index,
+  isOpen,
+  onToggle,
+  onContact,
+}: {
+  area: PracticeArea;
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  onContact: () => void;
+}) {
+  const ref = useTiltCard<HTMLLIElement>();
+  return (
+    <li ref={ref} className="tilt-card border-b">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        className="group flex w-full items-baseline gap-6 py-5 text-left"
+      >
+        <span className="font-serif text-sm text-bronze">{String(index + 1).padStart(2, "0")}</span>
+        <span className="flex-1 font-serif text-xl text-foreground transition-colors group-hover:text-bronze">{area.name}</span>
+        <span aria-hidden className={`text-base text-bronze transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
+          ▾
+        </span>
+      </button>
+      <div className={`grid transition-[grid-template-rows] duration-300 ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+        <div className="overflow-hidden">
+          <div className="rule-bronze mb-5 ml-12 max-w-2xl !w-10" />
+          <p className="ml-12 max-w-2xl pb-6 text-base leading-relaxed text-muted-foreground">{area.description}</p>
+          <ul className="mb-6 ml-12 max-w-2xl list-disc space-y-1 pl-5 text-base text-foreground marker:text-bronze">
+            {area.topics.map((t) => <li key={t}>{t}</li>)}
+          </ul>
+          {isOpen && (
+            <button type="button" onClick={onContact} className="mb-6 ml-12 text-sm text-bronze underline-offset-4 hover:underline">
+              Falar com o escritório sobre {area.name.toLowerCase()} →
+            </button>
+          )}
+        </div>
+      </div>
+    </li>
+  );
+}
+
 function Atuacao() {
   const [open, setOpen] = useState<string | null>(null);
   const [service, setService] = useState<string | null>(null);
@@ -31,39 +77,16 @@ function Atuacao() {
       <section className="section-y">
         <div className="container-site max-w-3xl">
           <ul>
-            {AREAS.map((a, i) => {
-              const isOpen = open === a.slug;
-              return (
-                <li key={a.slug} className="border-b">
-                  <button
-                    type="button"
-                    onClick={() => setOpen(isOpen ? null : a.slug)}
-                    aria-expanded={isOpen}
-                    className="group flex w-full items-baseline gap-6 py-5 text-left"
-                  >
-                    <span className="font-serif text-sm text-bronze">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="flex-1 font-serif text-xl text-foreground transition-colors group-hover:text-bronze">{a.name}</span>
-                    <span aria-hidden className={`text-base text-bronze transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
-                      ▾
-                    </span>
-                  </button>
-                  <div className={`grid transition-[grid-template-rows] duration-300 ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
-                    <div className="overflow-hidden">
-                      <div className="rule-bronze mb-5 ml-12 max-w-2xl !w-10" />
-                      <p className="ml-12 max-w-2xl pb-6 text-base leading-relaxed text-muted-foreground">{a.description}</p>
-                      <ul className="mb-6 ml-12 max-w-2xl list-disc space-y-1 pl-5 text-base text-foreground marker:text-bronze">
-                        {a.topics.map((t) => <li key={t}>{t}</li>)}
-                      </ul>
-                      {isOpen && (
-                        <button type="button" onClick={() => setService(a.name)} className="mb-6 ml-12 text-sm text-bronze underline-offset-4 hover:underline">
-                          Falar com o escritório sobre {a.name.toLowerCase()} →
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
+            {AREAS.map((a, i) => (
+              <ServiceItem
+                key={a.slug}
+                area={a}
+                index={i}
+                isOpen={open === a.slug}
+                onToggle={() => setOpen(open === a.slug ? null : a.slug)}
+                onContact={() => setService(a.name)}
+              />
+            ))}
           </ul>
           <p className="mt-10 text-lg text-muted-foreground">
             Para saber se o escritório pode ajudar no seu caso,{" "}
