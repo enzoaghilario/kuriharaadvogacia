@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageIntro } from "@/components/PageIntro";
-import { AREAS, type Area } from "@/content/areas";
+import { AREAS, type PracticeArea } from "@/content/areas";
 import { ServiceWhatsAppDialog } from "@/components/ServiceWhatsAppDialog";
 import { useTiltCard } from "@/lib/use-tilt-card";
 
