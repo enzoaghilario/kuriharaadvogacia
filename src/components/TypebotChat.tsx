@@ -15,6 +15,10 @@ function hideTypebotBadge() {
   style.id = "kf-hide-typebot-badge";
   style.textContent =
     "a.lite-badge, typebot-badge, a[href*='typebot.io'] { display: none !important; }" +
+    /* Caixa de texto e botão Enviar mais compactos. */
+    ".typebot-input-form .typebot-input { min-height: 38px !important; padding: 4px 6px !important; }" +
+    ".typebot-input-form input, .typebot-input-form textarea { font-size: 14px !important; padding: 6px 10px !important; min-height: 32px !important; }" +
+    ".typebot-input-form .typebot-button, .typebot-input-form button { font-size: 14px !important; padding: 6px 14px !important; min-height: 32px !important; height: auto !important; }" +
     /* No celular: balão menor e mais alto para não cobrir os botões de contato. */
     "@media (max-width: 640px) {" +
     "div[class*='fixed'][class*='right-5'] {" +
