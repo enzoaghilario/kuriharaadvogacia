@@ -20,10 +20,11 @@ function SelectField({ name, label, options, required = false }: { name: string;
 export function PartnerForm() {
   const [error, setError] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [cnpj, setCnpj] = useState("");
   const [cpf, setCpf] = useState("");
   const [phone, setPhone] = useState("");
 
-  function validateField(name: "cpf" | "phone", value: string) {
+  function validateField(name: "cnpj" | "cpf" | "phone", value: string) {
     const shape = partnerSchema.shape[name];
     const result = shape.safeParse(value);
     setErrors((prev) => {
@@ -59,7 +60,14 @@ export function PartnerForm() {
     <fieldset className="grid min-w-0 gap-6 sm:grid-cols-2">
       <legend className="mb-6 font-serif text-2xl"><span className="flex items-center gap-3"><Building2 aria-hidden="true" className="h-6 w-6 shrink-0 text-bronze" />Informações da empresa</span></legend>
       <label className="block text-sm font-medium">Razão social / Nome fantasia *<input name="company" required maxLength={150} placeholder="Nome da sua empresa" className={field} /></label>
-      <label className="block text-sm font-medium">CNPJ *<input name="cnpj" required maxLength={18} inputMode="numeric" placeholder="00.000.000/0000-00" className={field} /></label>
+      <label className="block text-sm font-medium">CNPJ *
+        <input name="cnpj" required maxLength={18} inputMode="numeric" placeholder="00.000.000/0000-00" value={cnpj}
+          onChange={(e) => setCnpj(maskCnpj(e.target.value))}
+          onBlur={() => cnpj && validateField("cnpj", cnpj)}
+          aria-invalid={!!errors['cnpj']} aria-describedby={errors['cnpj'] ? "cnpj-error" : undefined}
+          className={`${field} ${errors['cnpj'] ? fieldError : ""}`} />
+        {errors['cnpj'] && <span id="cnpj-error" role="alert" className="mt-1 block text-sm text-destructive">{errors['cnpj']}</span>}
+      </label>
       <label className="block text-sm font-medium">Nome do responsável *<input name="responsible" required maxLength={100} placeholder="Seu nome completo" className={field} /></label>
       <label className="block text-sm font-medium">CPF do responsável *
         <input name="cpf" required maxLength={14} inputMode="numeric" placeholder="000.000.000-00" value={cpf}
