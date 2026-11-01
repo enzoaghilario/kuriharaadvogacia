@@ -45,8 +45,8 @@ export function TypebotChat() {
             onOpen: () => window.dispatchEvent(new CustomEvent('kf-chat', { detail: true })),
             onClose: () => window.dispatchEvent(new CustomEvent('kf-chat', { detail: false })),
             theme: {
-              button: { backgroundColor: '#D2B379', iconColor: '#101723', size: 'medium' },
-              chatWindow: { backgroundColor: '#101723' },
+              button: { backgroundColor: '#1D1D1D', size: 'medium' },
+              chatWindow: { backgroundColor: '#070a5a' },
             },
           });
         }
