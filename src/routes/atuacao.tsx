@@ -95,8 +95,8 @@ function Atuacao() {
               <Link to="/contato" className="text-primary underline underline-offset-4">entre em contato</Link>.
             </p>
           </div>
-        </Spotlight>
-      </section>
+        </section>
+      </Spotlight>
       <ServiceWhatsAppDialog service={service} onClose={() => setService(null)} />
     </>
   );
