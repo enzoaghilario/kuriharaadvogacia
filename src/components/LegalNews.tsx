@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Clock, ExternalLink, RefreshCw } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { formatNewsDate, type Noticia } from "@/lib/news-core";
+import { formatNewsDate, NEWS_PAGE_SIZE, type Noticia } from "@/lib/news-core";
 import { SectionHeading } from "@/components/PageIntro";
 
 type Props = { noticias: Noticia[]; ok: boolean };
@@ -9,6 +10,21 @@ type Props = { noticias: Noticia[]; ok: boolean };
 export function LegalNews({ noticias, ok }: Props) {
   const queryClient = useQueryClient();
   const refreshing = queryClient.isFetching({ queryKey: ["legal-news"] }) > 0;
+  const [page, setPage] = useState(0);
+
+  const totalPages = Math.max(1, Math.ceil(noticias.length / NEWS_PAGE_SIZE));
+  const current = noticias.slice(page * NEWS_PAGE_SIZE, (page + 1) * NEWS_PAGE_SIZE);
+
+  function atualizar() {
+    if (page + 1 < totalPages) {
+      // Ainda há notícias do acervo: apenas rotaciona a vitrine.
+      setPage(page + 1);
+    } else {
+      // Acervo esgotado: busca notícias novas e volta ao início.
+      setPage(0);
+      queryClient.invalidateQueries({ queryKey: ["legal-news"] });
+    }
+  }
 
   return (
     <section className="section-y border-t">
@@ -17,12 +33,12 @@ export function LegalNews({ noticias, ok }: Props) {
           <SectionHeading eyebrow="Atualizações" title="Jornal jurídico" />
           <button
             type="button"
-            onClick={() => queryClient.invalidateQueries({ queryKey: ["legal-news"] })}
+            onClick={atualizar}
             disabled={refreshing}
             className="inline-flex w-fit items-center gap-2 border border-foreground/30 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:border-bronze hover:text-bronze disabled:opacity-50"
           >
             <RefreshCw size={14} className={refreshing ? "animate-spin" : ""} />
-            {refreshing ? "Atualizando…" : "Atualizar"}
+            {refreshing ? "Atualizando…" : "Atualizar notícias"}
           </button>
         </div>
         <p className="mt-3 text-sm text-muted-foreground">
@@ -37,8 +53,11 @@ export function LegalNews({ noticias, ok }: Props) {
             </p>
           </div>
         ) : (
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {noticias.map((item) => (
+          <div
+            key={page}
+            className="mt-12 grid animate-news-fade gap-6 md:grid-cols-2 lg:grid-cols-3"
+          >
+            {current.map((item) => (
               <article
                 key={item.link}
                 className="group card-glass relative flex flex-col p-7"
@@ -46,6 +65,8 @@ export function LegalNews({ noticias, ok }: Props) {
                 <p className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
                   <Clock size={13} aria-hidden />
                   <time dateTime={item.pubDate}>{formatNewsDate(item.pubDate)}</time>
+                  <span aria-hidden>·</span>
+                  <span>{item.source}</span>
                 </p>
                 <h3 className="mt-4 text-xl leading-snug">
                   <a
