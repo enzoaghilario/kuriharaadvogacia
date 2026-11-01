@@ -16,7 +16,7 @@ const HEADERS = {
 function sources(): string[] {
   return [
     googleNewsRssUrl(),
-    `https://www.bing.com/news/search?q=${encodeURIComponent("advocacia OR STF OR STJ OR \"direito trabalhista\"")}&format=rss&setlang=pt-BR&cc=BR`,
+    `https://www.bing.com/news/search?q=${encodeURIComponent("STF OR STJ")}&format=rss&setlang=pt-BR&cc=BR`,
   ];
 }
 
