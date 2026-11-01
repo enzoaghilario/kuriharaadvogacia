@@ -64,7 +64,9 @@ export function Header() {
       </div>
       <div
         id="menu-mobile"
-        className={`overflow-hidden bg-background transition-[max-height] duration-500 lg:hidden ${open ? "max-h-[34rem]" : "max-h-0"}`}
+        inert={!open}
+        aria-hidden={!open}
+        className={`overflow-y-auto overscroll-contain bg-background transition-[max-height] duration-500 lg:hidden ${open ? "max-h-[calc(100dvh-5rem)]" : "max-h-0"}`}
       >
         <nav aria-label="Menu móvel" className="container-site flex flex-col pb-8">
           {NAV.map((n) => (
