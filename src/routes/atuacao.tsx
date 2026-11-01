@@ -74,9 +74,9 @@ function Atuacao() {
   const [service, setService] = useState<string | null>(null);
   return (
     <>
-      <PageIntro eyebrow="Serviços" title="Áreas de atuação" />
-      <section className="section-y">
-        <Spotlight>
+      <Spotlight>
+        <PageIntro eyebrow="Serviços" title="Áreas de atuação" />
+        <section className="section-y">
           <div className="container-site max-w-3xl">
             <ul>
               {AREAS.map((a, i) => (
