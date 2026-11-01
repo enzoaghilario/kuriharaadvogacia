@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import fachada from "@/assets/escritorio-fachada-original.png";
-import atendimento from "@/assets/escritorio-atendimento.jpg";
+const fachada = "/escritorio-fachada-original.png";
+const atendimento = "/escritorio-atendimento.jpg";
 import { Faq } from "@/components/Faq";
 
 
