@@ -38,6 +38,7 @@ export const partnerSchema = z.object({
   company: z.string().trim().min(2, "Informe a razão social ou o nome fantasia.").max(150),
   cnpj: z.string().trim().max(18).regex(/^[\d./-]+$/, "Informe um CNPJ válido.").refine(isValidCnpj, "Informe um CNPJ válido."),
   responsible: z.string().trim().min(2, "Informe o nome do responsável.").max(100),
+  cpf: z.string().trim().max(14).regex(/^[\d.-]+$/, "Informe um CPF válido.").refine(isValidCpf, "Informe um CPF válido e completo."),
   email: z.string().trim().email("Informe um e-mail corporativo válido.").max(254),
   phone: z.string().trim().max(30).regex(/^[\d\s()+-]+$/, "Informe um telefone válido.").refine((v) => /^\d{10,13}$/.test(v.replace(/\D/g, "")), "Informe um telefone válido com DDD."),
   area: z.enum(PARTNER_AREAS, { errorMap: () => ({ message: "Escolha a área de interesse principal." }) }),
