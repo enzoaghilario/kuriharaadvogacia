@@ -223,3 +223,17 @@ typebot-bubble { position: relative; z-index: 2147483647; }
 @media (max-width: 640px) {
   .contact-actions { padding-right: calc(4rem + env(safe-area-inset-right, 0px)); }
 }
+
+/* Card em vidro — fundo translúcido, borda sutil e brilho dourado ao passar o mouse */
+.card-glass {
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px -20px oklch(0 0 0 / 0.45);
+  transition: border-color 300ms ease, box-shadow 300ms ease, background 300ms ease;
+}
+.card-glass:hover {
+  border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+  box-shadow: 0 20px 45px -20px color-mix(in oklab, var(--primary) 8%, transparent);
+}
