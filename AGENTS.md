@@ -21,3 +21,9 @@
 
 - The Instagram feed is served from `public.instagram_posts`; the only writer is the scheduled route `/api/public/jobs/instagram-sync`, and pages read the stored rows. Why: the site keeps working and never shows invented posts when the Meta API is unreachable or the access key expires.
 
+
+- Legal news come only from specialized legal outlets via Google News, filtered by a keyword blocklist and http(s)-only links, with a 4s fetch timeout and 30-min server cache; /conteudos never awaits them in its loader. Why: keep partisan/crime news off the firm's site and keep the page fast.
+
+- Canonical, og:url, og:image, sitemap.xml and robots.txt are built from the request origin through `pageHead` in src/lib/seo.ts and server routes. Why: the custom domain will change and URLs must follow it automatically.
+
+- Security headers are added to every response in src/server.ts without overwriting existing ones; frame-ancestors must keep allowing Lovable hosts. Why: hardening without breaking the editor preview.
