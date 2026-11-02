@@ -1,3 +1,4 @@
+import { pageHead } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 const fachada = "/escritorio-fachada-original.png";
 const atendimento = "/escritorio-atendimento.jpg";
@@ -6,19 +7,10 @@ import { Faq } from "@/components/Faq";
 
 const T = "Sobre nós | Kurihara & Figueiredo Advogados Associados";
 const D =
-  "Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões, recuperação de crédito e recuperação judicial em Morro Agudo, SP.";
+  "Conheça o escritório Kurihara & Figueiredo Advogados Associados em Morro Agudo, SP: nossa história, a forma como atendemos e respostas às dúvidas mais frequentes.";
 
 export const Route = createFileRoute("/escritorio")({
-  head: () => ({
-    meta: [
-      { title: T },
-      { name: "description", content: D },
-      { property: "og:title", content: T },
-      { property: "og:description", content: D },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: ({ match }) => pageHead({ origin: match.context.origin, path: "/escritorio", title: T, description: D }),
   component: Escritorio,
 });
 

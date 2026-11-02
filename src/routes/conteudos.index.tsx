@@ -1,3 +1,4 @@
+import { pageHead } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
@@ -23,16 +24,7 @@ const legalNewsQueryOptions = queryOptions({
 });
 
 export const Route = createFileRoute("/conteudos/")({
-  head: () => ({
-    meta: [
-      { title: T },
-      { name: "description", content: D },
-      { property: "og:title", content: T },
-      { property: "og:description", content: D },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: ({ match }) => pageHead({ origin: match.context.origin, path: "/conteudos", title: T, description: D }),
   // As notícias não bloqueiam a página: carregam no navegador depois da renderização.
   loader: ({ context }) => context.queryClient.ensureQueryData(instagramFeedQueryOptions),
   component: Conteudos,

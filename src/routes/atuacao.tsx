@@ -1,3 +1,4 @@
+import { pageHead } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageIntro } from "@/components/PageIntro";
@@ -7,19 +8,10 @@ import { useTiltCard } from "@/lib/use-tilt-card";
 import { Spotlight } from "@/components/Spotlight";
 
 const T = "Áreas de atuação | Kurihara & Figueiredo Advogados Associados";
-const D = "Advocacia civil, trabalhista, empresarial, previdenciária, imobiliária, família e sucessões e recuperação judicial em Morro Agudo, SP.";
+const D = "Serviços jurídicos do escritório em Morro Agudo, SP: direito civil, trabalhista, empresarial, previdenciário, imobiliário, família e sucessões, recuperação de crédito, recuperação judicial e reestruturação de empresas.";
 
 export const Route = createFileRoute("/atuacao")({
-  head: () => ({
-    meta: [
-      { title: T },
-      { name: "description", content: D },
-      { property: "og:title", content: T },
-      { property: "og:description", content: D },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: ({ match }) => pageHead({ origin: match.context.origin, path: "/atuacao", title: T, description: D }),
   component: Atuacao,
 });
 

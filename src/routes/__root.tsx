@@ -15,6 +15,9 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TypebotChat } from "@/components/TypebotChat";
+import { getRequestOrigin } from "@/lib/seo";
+
+let clientOrigin: string | undefined;
 
 function NotFoundComponent() {
   return (
@@ -77,6 +80,14 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  // Origem atual para canonical/og:url absolutos (no navegador lê window.location).
+  beforeLoad: async () => {
+    if (typeof window !== "undefined") {
+      clientOrigin ??= window.location.origin;
+      return { origin: clientOrigin };
+    }
+    return { origin: await getRequestOrigin() };
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
