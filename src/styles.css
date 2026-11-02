@@ -222,6 +222,9 @@ typebot-bubble { position: relative; z-index: 2147483647; }
 /* Reserva a faixa do balão para que os botões de contato nunca fiquem sob ele. */
 @media (max-width: 640px) {
   .contact-actions { padding-right: calc(4rem + env(safe-area-inset-right, 0px)); }
+  /* Espaço para o balão do chat não cobrir o fim das páginas no celular. */
+  #conteudo { padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)); }
+  footer { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* Card em vidro — fundo translúcido, borda sutil e brilho dourado ao passar o mouse */
