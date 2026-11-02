@@ -45,8 +45,14 @@ export function buildStructuredData(origin = "") {
       })),
     },
     sameAs: [SITE.instagram, SITE.facebook],
-    // Quando o escritório informar o horário de funcionamento, adicione aqui:
-    // openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: [...], opens: "HH:MM", closes: "HH:MM" }],
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: SITE.hours.weekdays.map((d) => `https://schema.org/${d}`),
+        opens: SITE.hours.opens,
+        closes: SITE.hours.closes,
+      },
+    ],
   };
   const website = {
     "@context": "https://schema.org",

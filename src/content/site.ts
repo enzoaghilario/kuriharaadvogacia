@@ -12,6 +12,13 @@ export const SITE = {
   whatsappHref: "https://wa.me/5516988014617",
   instagram: "https://www.instagram.com/grupokuriharaefigueiredo/",
   facebook: "https://www.facebook.com/grupokuriharaefigueiredo/",
+  hours: {
+    days: "Segunda a sexta",
+    opens: "07:00",
+    closes: "18:00",
+    label: "Segunda a sexta, das 7h às 18h",
+    weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const,
+  },
 };
 
 export const FULL_ADDRESS = `${SITE.street}, ${SITE.district}, ${SITE.city} — ${SITE.state}, CEP ${SITE.zip}`;

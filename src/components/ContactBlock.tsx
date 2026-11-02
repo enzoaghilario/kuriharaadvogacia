@@ -1,4 +1,4 @@
-import { Facebook, Instagram, MapPin, Phone } from "lucide-react";
+import { Clock, Facebook, Instagram, MapPin, Phone } from "lucide-react";
 import { FULL_ADDRESS, MAPS_EMBED, MAPS_URL, SITE } from "@/content/site";
 import { WhatsAppIcon } from "./WhatsAppIcon";
 
@@ -27,6 +27,13 @@ export function ContactBlock() {
             <span className="mt-2 block font-serif text-2xl tabular-nums lining-nums group-hover:text-primary">{SITE.phone}</span>
           </span>
         </a>
+        <div className="flex gap-4">
+          <Clock className="mt-1 shrink-0 text-bronze" size={20} aria-hidden />
+          <span>
+            <span className="eyebrow block">Horário</span>
+            <span className="mt-2 block leading-relaxed">{SITE.hours.label}</span>
+          </span>
+        </div>
         <div className="contact-actions flex flex-wrap gap-3 pt-2">
           <a
             href={SITE.whatsappHref}

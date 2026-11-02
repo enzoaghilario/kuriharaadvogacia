@@ -18,6 +18,7 @@ export function Footer() {
             WhatsApp {SITE.whatsapp}
           </a>
           <a href={SITE.phoneHref} className="flex min-h-11 items-center text-sm hover:text-on-dark">{SITE.phone}</a>
+          <p className="flex min-h-11 items-center text-sm">{SITE.hours.label}</p>
         </div>
         <div>
           <p className="eyebrow">Navegação</p>

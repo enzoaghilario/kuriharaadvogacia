@@ -25,6 +25,7 @@ export function buildLlmsTxt(origin: string): string {
     `- Endereço: ${FULL_ADDRESS}`,
     `- Telefone: ${SITE.phone}`,
     `- WhatsApp: ${SITE.whatsapp} (${SITE.whatsappHref})`,
+    `- Horário: ${SITE.hours.label}`,
     "",
     "## Áreas de atuação",
     "",
