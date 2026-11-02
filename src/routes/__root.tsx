@@ -16,6 +16,9 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TypebotChat } from "@/components/TypebotChat";
 import { getRequestOrigin } from "@/lib/seo";
+import { buildStructuredData, safeJsonLd } from "@/lib/structured-data";
+import { GOOGLE_SITE_VERIFICATION } from "@/content/analytics";
+import { ConsentBanner } from "@/components/ConsentBanner";
 
 let clientOrigin: string | undefined;
 
@@ -88,7 +91,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     }
     return { origin: await getRequestOrigin() };
   },
-  head: () => ({
+  head: ({ match }) => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -99,10 +102,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#292B2D" },
+      ...(GOOGLE_SITE_VERIFICATION ? [{ name: "google-site-verification", content: GOOGLE_SITE_VERIFICATION }] : []),
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "icon", type: "image/png", sizes: "48x48", href: "/favicon-48x48.png" },
+      { rel: "icon", type: "image/png", sizes: "96x96", href: "/favicon-96x96.png" },
+      { rel: "icon", type: "image/png", sizes: "192x192", href: "/favicon-192x192.png" },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+      { rel: "manifest", href: "/site.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -110,44 +120,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap",
       },
     ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "LegalService",
-          name: "Kurihara & Figueiredo Advogados Associados",
-          telephone: "+55 16 3851-0303",
-          contactPoint: [
-            {
-              "@type": "ContactPoint",
-              telephone: "+55 16 3851-0303",
-              contactType: "customer service",
-              availableLanguage: "Portuguese",
-            },
-            {
-              "@type": "ContactPoint",
-              telephone: "+55 16 98801-4617",
-              contactType: "customer service",
-              contactOption: "TollFree",
-              availableLanguage: "Portuguese",
-            },
-          ],
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "Rua Maria Liporini Meireles, 731 - Centro",
-            addressLocality: "Morro Agudo",
-            addressRegion: "SP",
-            postalCode: "14640-000",
-            addressCountry: "BR",
-          },
-          sameAs: [
-            "https://www.instagram.com/grupokuriharaefigueiredo/",
-            "https://www.facebook.com/grupokuriharaefigueiredo/",
-          ],
-        }),
-      },
-    ],
+    scripts: buildStructuredData((match.context as { origin?: string }).origin ?? "").map((d) => ({
+      type: "application/ld+json",
+      children: safeJsonLd(d),
+    })),
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -188,6 +164,7 @@ function RootComponent() {
       </main>
       <Footer />
       <TypebotChat />
+      <ConsentBanner />
     </QueryClientProvider>
   );
 }

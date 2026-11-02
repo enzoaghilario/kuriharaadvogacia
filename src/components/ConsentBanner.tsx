@@ -11,7 +11,8 @@ export function ConsentBanner({ ids = { ga: GA_MEASUREMENT_ID, clarity: CLARITY_
     const c = readConsent();
     if (c) loadAnalytics(ids, c);
     else setShow(true);
-  }, [enabled, ids]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled, ids.ga, ids.clarity]);
 
   if (!enabled || !show) return null;
 
