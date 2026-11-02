@@ -37,7 +37,7 @@ export function TypebotChat() {
       script.id = SCRIPT_ID;
       script.type = "module";
       script.textContent = `
-        import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0/dist/web.js';
+        import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.10.11/dist/web.js';
         if (document.getElementById('${SCRIPT_ID}')) {
           window.__kfTypebot = Typebot;
           Typebot.initBubble({
