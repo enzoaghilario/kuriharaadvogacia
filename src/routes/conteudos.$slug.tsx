@@ -1,3 +1,4 @@
+import { pageHead } from "@/lib/seo";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { formatDate, POSTS } from "@/content/posts";
@@ -8,18 +9,15 @@ export const Route = createFileRoute("/conteudos/$slug")({
     if (!post) throw notFound();
     return post;
   },
-  head: ({ loaderData }) =>
+  head: ({ loaderData, match, params }) =>
     loaderData
-      ? {
-          meta: [
-            { title: `${loaderData.title} | Kurihara & Figueiredo` },
-            { name: "description", content: loaderData.summary },
-            { property: "og:title", content: loaderData.title },
-            { property: "og:description", content: loaderData.summary },
-            { property: "og:type", content: "article" },
-            { name: "twitter:card", content: "summary_large_image" },
-          ],
-        }
+      ? pageHead({
+          origin: match.context.origin,
+          path: `/conteudos/${params.slug}`,
+          title: `${loaderData.title} | Kurihara & Figueiredo`,
+          description: loaderData.summary,
+          type: "article",
+        })
       : { meta: [
           { title: "Conteúdo indisponível | Kurihara & Figueiredo" },
           { name: "description", content: "Este conteúdo não está disponível. Consulte os conteúdos da Kurihara & Figueiredo Advogados Associados." },

@@ -75,7 +75,7 @@ export function Header() {
               to={n.to}
               onClick={() => setOpen(false)}
               activeOptions={{ exact: n.to === "/" }}
-              className="border-b py-4 font-serif text-2xl text-foreground data-[status=active]:text-bronze"
+              className="flex min-h-11 items-center border-b py-4 font-serif text-2xl text-foreground data-[status=active]:text-bronze"
             >
               {n.label}
             </Link>
@@ -84,12 +84,12 @@ export function Header() {
             href={SITE.whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center justify-center gap-2 bg-primary py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-primary-foreground"
+            className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 bg-primary py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-primary-foreground"
           >
             <WhatsAppIcon size={17} />
             WhatsApp {SITE.whatsapp}
           </a>
-          <a href={SITE.phoneHref} className="mt-3 border border-foreground/30 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] hover:border-bronze hover:text-bronze">
+          <a href={SITE.phoneHref} className="mt-3 flex min-h-11 items-center justify-center border border-foreground/30 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] hover:border-bronze hover:text-bronze">
             Ligar {SITE.phone}
           </a>
         </nav>

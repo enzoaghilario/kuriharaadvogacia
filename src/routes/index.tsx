@@ -1,3 +1,4 @@
+import { pageHead } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Phone } from "lucide-react";
 import { SITE } from "@/content/site";
@@ -16,27 +17,17 @@ const DESC =
   "Escritório de advocacia em Morro Agudo, São Paulo. Atuação jurídica pautada pela responsabilidade, ética e compromisso. WhatsApp (16) 98801-4617 — Rua Maria Liporini Meireles, 731.";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: TITLE },
-      { name: "description", content: DESC },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESC },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "/" }],
-  }),
+  head: ({ match }) => pageHead({ origin: match.context.origin, path: "/", title: TITLE, description: DESC }),
   component: Index,
 });
 
 function Index() {
   return (
     <>
-      <section className="hero-breathe relative isolate flex min-h-[90svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-32 text-center">
+      <section className="hero-breathe relative isolate flex min-h-[90svh] flex-col items-center justify-center overflow-hidden bg-background px-6 pb-16 pt-28 sm:pt-32 text-center">
         <HeroParticles />
         <div aria-hidden className="absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[120px] pointer-events-none -z-10" />
-        <div className="hero-logo-stage relative w-full max-w-xl">
+        <div className="hero-logo-stage relative w-full max-w-[16rem] sm:max-w-xl">
             <img
               src={logo}
               alt="Grupo Kurihara & Figueiredo"
@@ -65,6 +56,9 @@ function Index() {
           Kurihara & Figueiredo
         </h1>
         <p className="hero-rise-3d mt-2 text-lg text-muted-foreground" style={{ animationDelay: "3.65s" }}>Advogados Associados</p>
+        <a href={SITE.whatsappHref} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center justify-center gap-3 bg-primary px-7 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-graphite sm:hidden">
+          <WhatsAppIcon size={16} /> Falar no WhatsApp
+        </a>
         <p style={{ animationDelay: "3.9s" }} className="hero-rise-3d mt-8 max-w-xl text-lg leading-relaxed text-foreground sm:text-xl">
           Soluções jurídicas ágeis e seguras para você e sua empresa. Fale com um especialista agora.
         </p>

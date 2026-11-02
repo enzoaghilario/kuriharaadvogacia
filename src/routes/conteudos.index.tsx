@@ -1,5 +1,6 @@
+import { pageHead } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { InstagramFeed } from "@/components/InstagramFeed";
 import { LegalNews } from "@/components/LegalNews";
@@ -23,21 +24,9 @@ const legalNewsQueryOptions = queryOptions({
 });
 
 export const Route = createFileRoute("/conteudos/")({
-  head: () => ({
-    meta: [
-      { title: T },
-      { name: "description", content: D },
-      { property: "og:title", content: T },
-      { property: "og:description", content: D },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  loader: ({ context }) =>
-    Promise.all([
-      context.queryClient.ensureQueryData(instagramFeedQueryOptions),
-      context.queryClient.ensureQueryData(legalNewsQueryOptions),
-    ]),
+  head: ({ match }) => pageHead({ origin: match.context.origin, path: "/conteudos", title: T, description: D }),
+  // As notícias não bloqueiam a página: carregam no navegador depois da renderização.
+  loader: ({ context }) => context.queryClient.ensureQueryData(instagramFeedQueryOptions),
   component: Conteudos,
 });
 
@@ -56,7 +45,7 @@ export function PostCard({ post }: { post: Post }) {
 
 function Conteudos() {
   const { data: feed } = useSuspenseQuery(instagramFeedQueryOptions);
-  const { data: news } = useSuspenseQuery(legalNewsQueryOptions);
+  const news = useQuery(legalNewsQueryOptions);
 
   return (
     <>
@@ -66,7 +55,7 @@ function Conteudos() {
 
       <InstagramFeed posts={feed.posts} configured={feed.configured} lastSuccessAt={feed.lastSuccessAt} />
 
-      <LegalNews noticias={news.noticias} ok={news.ok} />
+      <LegalNews loading={news.isPending} noticias={news.data?.noticias ?? []} ok={news.data?.ok ?? !news.isError} />
     </>
   );
 }

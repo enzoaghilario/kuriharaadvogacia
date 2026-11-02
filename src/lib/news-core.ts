@@ -7,8 +7,53 @@ export type Noticia = {
   snippet: string;
 };
 
-export const NEWS_QUERY =
-  "direito empresarial OR advocacia OR STF OR legislacao trabalhista";
+export const NEWS_SITES = [
+  "conjur.com.br",
+  "migalhas.com.br",
+  "jota.info",
+  "stj.jus.br",
+  "tst.jus.br",
+  "portal.stf.jus.br",
+];
+export const NEWS_TOPICS = [
+  "direito trabalhista",
+  "previdenciário",
+  "direito civil",
+  "direito empresarial",
+  "consumidor",
+  "tributário",
+  "direito de família",
+];
+export const NEWS_QUERY = `(${NEWS_SITES.map((s) => `site:${s}`).join(" OR ")}) (${NEWS_TOPICS.map((t) => `"${t}"`).join(" OR ")})`;
+
+// Notícias com qualquer destes termos (título ou resumo) são descartadas:
+// política partidária e crimes não combinam com o site do escritório.
+export const NEWS_BLOCKLIST = [
+  "lula", "bolsonaro", "eleição", "eleições", "eleito", "eleita", "reeleito", "reeleita",
+  "partido", "pt", "pl", "deputado", "deputada", "senador", "senadora", "candidato", "candidata",
+  "estupro", "homicídio", "assassinato", "preso", "presa", "prisão", "condenado", "condenada",
+  "tráfico", "facção", "robinho", "crime", "crimes",
+];
+
+function normalize(text: string): string {
+  return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+const BLOCK_RE = new RegExp(
+  `(^|[^a-z0-9])(${NEWS_BLOCKLIST.map(normalize).join("|")})(?=$|[^a-z0-9])`,
+);
+
+export function isBlockedNews(title: string, snippet = ""): boolean {
+  return BLOCK_RE.test(normalize(`${title} ${snippet}`));
+}
+
+export function isHttpUrl(link: string): boolean {
+  try {
+    const u = new URL(link);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
 // Acervo maior que a página exibida: o botão "Atualizar" rotaciona as
 // notícias em lotes sem novo fetch até esgotar o acervo.
 export const NEWS_LIMIT = 24;
@@ -45,16 +90,17 @@ function pickTag(block: string, tag: string): string {
 export function parseRssItems(xml: string, limit: number = NEWS_LIMIT): Noticia[] {
   const items: Noticia[] = [];
   const blocks = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) ?? [];
-  for (const block of blocks.slice(0, limit)) {
+  for (const block of blocks) {
+    if (items.length >= limit) break;
     const title = stripTags(pickTag(block, "title"));
-    let link = pickTag(block, "link").replace(/&amp;/g, "&");
-    // Bing embrulha o link real em apiclick.aspx?url=...
-    const real = link.includes("bing.com/news/apiclick") ? link.match(/[?&]url=([^&]+)/)?.[1] : undefined;
-    if (real) link = decodeURIComponent(real);
+    const link = pickTag(block, "link").replace(/&amp;/g, "&");
     const pubDateRaw = pickTag(block, "pubDate");
-    const source = stripTags(pickTag(block, "source") || pickTag(block, "News:Source")) || "Informativo Jurídico";
+    const source = stripTags(pickTag(block, "source")) || "Informativo Jurídico";
     const snippet = stripTags(pickTag(block, "description")).slice(0, 160);
-    if (!title || !link) continue;
+    if (!title || !link || !isHttpUrl(link)) continue;
+    if (isBlockedNews(title, snippet)) continue;
+    // Páginas de índice/arquivo dos portais não são notícias.
+    if (/^arquivo de |p[áa]gina \d+ de \d+|term browse/i.test(title)) continue;
     const date = new Date(pubDateRaw);
     items.push({
       title,
