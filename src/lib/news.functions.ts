@@ -11,26 +11,30 @@ const HEADERS = {
   "Accept-Language": "pt-BR,pt;q=0.9",
 };
 
-// Fontes em ordem: o Google News às vezes bloqueia o servidor publicado,
-// então caímos para o Bing Notícias.
-function sources(): string[] {
-  return [
-    googleNewsRssUrl(),
-    `https://www.bing.com/news/search?q=${encodeURIComponent("STF OR STJ")}&format=rss&setlang=pt-BR&cc=BR`,
-  ];
-}
+const FETCH_TIMEOUT_MS = 4000;
+const CACHE_TTL_MS = 30 * 60 * 1000;
+
+// Cache em memória por instância do servidor: evita refazer a busca a cada visita.
+let cache: { at: number; value: LegalNewsResult } | null = null;
 
 export const getLegalNews = createServerFn({ method: "GET" }).handler(
   async (): Promise<LegalNewsResult> => {
-    for (const url of sources()) {
-      try {
-        const res = await fetch(url, { headers: HEADERS });
-        if (!res.ok) continue;
+    if (cache && Date.now() - cache.at < CACHE_TTL_MS) return cache.value;
+    try {
+      const res = await fetch(googleNewsRssUrl(), {
+        headers: HEADERS,
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      });
+      if (res.ok) {
         const noticias = parseRssItems(await res.text());
-        if (noticias.length) return { noticias, ok: true };
-      } catch {
-        // tenta a próxima fonte
+        if (noticias.length) {
+          const value = { noticias, ok: true };
+          cache = { at: Date.now(), value };
+          return value;
+        }
       }
+    } catch {
+      // timeout ou falha de rede: cai no estado "indisponível"
     }
     return { noticias: [], ok: false };
   },
