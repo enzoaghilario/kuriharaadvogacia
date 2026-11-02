@@ -44,18 +44,45 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+const SECURITY_HEADERS: Record<string, string> = {
+  // frame-ancestors libera o editor do Lovable para exibir a prévia.
+  "Content-Security-Policy":
+    "frame-ancestors 'self' https://lovable.dev https://*.lovable.dev https://*.lovable.app; base-uri 'self'; object-src 'none'; form-action 'self'",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+};
+
+export function withSecurityHeaders(response: Response): Response {
+  let res = response;
+  try {
+    for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+      if (!res.headers.has(name)) res.headers.set(name, value);
+    }
+  } catch {
+    // Cabeçalhos imutáveis (ex.: resposta de fetch repassada): copia a resposta.
+    res = new Response(response.body, response);
+    for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+      if (!res.headers.has(name)) res.headers.set(name, value);
+    }
+  }
+  return res;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withSecurityHeaders(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
-      return new Response(renderErrorPage(), {
-        status: 500,
-        headers: { "content-type": "text/html; charset=utf-8" },
-      });
+      return withSecurityHeaders(
+        new Response(renderErrorPage(), {
+          status: 500,
+          headers: { "content-type": "text/html; charset=utf-8" },
+        }),
+      );
     }
   },
 };
