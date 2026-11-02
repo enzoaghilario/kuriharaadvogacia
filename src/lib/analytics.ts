@@ -45,15 +45,14 @@ export function loadAnalytics(ids: AnalyticsIds, consent: Consent | null) {
   }
   if (ids.clarity && !document.getElementById("clarity-script")) {
     // Snippet oficial do Microsoft Clarity.
-    const c = w as unknown as Record<string, unknown> & { clarity?: { q?: unknown[] } };
-    c.clarity =
-      c.clarity ||
-      Object.assign(
-        function clarity(...args: unknown[]) {
-          ((c.clarity as { q?: unknown[] }).q ||= []).push(args);
-        },
-        {},
-      );
+    type ClarityFn = ((...args: unknown[]) => void) & { q?: unknown[] };
+    const c = w as unknown as { clarity?: ClarityFn };
+    if (!c.clarity) {
+      const fn: ClarityFn = (...args: unknown[]) => {
+        (fn.q ||= []).push(args);
+      };
+      c.clarity = fn;
+    }
     const s = document.createElement("script");
     s.id = "clarity-script";
     s.async = true;
