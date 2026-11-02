@@ -7,7 +7,7 @@ import { useTiltCard } from "@/lib/use-tilt-card";
 import { SectionHeading } from "@/components/PageIntro";
 import { Spotlight } from "@/components/Spotlight";
 
-type Props = { noticias: Noticia[]; ok: boolean };
+type Props = { noticias: Noticia[]; ok: boolean; loading?: boolean };
 
 function NewsCard({ item }: { item: Noticia }) {
   const ref = useTiltCard<HTMLElement>();
@@ -41,7 +41,7 @@ function NewsCard({ item }: { item: Noticia }) {
   );
 }
 
-export function LegalNews({ noticias, ok }: Props) {
+export function LegalNews({ noticias, ok, loading = false }: Props) {
   const queryClient = useQueryClient();
   const refreshing = queryClient.isFetching({ queryKey: ["legal-news"] }) > 0;
   const [page, setPage] = useState(0);
@@ -68,7 +68,7 @@ export function LegalNews({ noticias, ok }: Props) {
           <button
             type="button"
             onClick={atualizar}
-            disabled={refreshing}
+            disabled={refreshing || loading}
             className="inline-flex w-fit items-center gap-2 border border-foreground/30 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:border-bronze hover:text-bronze disabled:opacity-50"
           >
             <RefreshCw size={14} className={refreshing ? "animate-spin" : ""} />
@@ -79,7 +79,19 @@ export function LegalNews({ noticias, ok }: Props) {
           Notícias jurídicas e novidades legislativas reunidas automaticamente a partir de fontes públicas.
         </p>
 
-        {!ok || noticias.length === 0 ? (
+        {loading ? (
+          <div aria-busy="true" aria-label="Carregando notícias" className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }, (_, i) => (
+              <div key={i} className="card-glass flex animate-pulse flex-col gap-4 p-7">
+                <div className="h-3 w-1/3 bg-muted" />
+                <div className="h-5 w-full bg-muted" />
+                <div className="h-5 w-4/5 bg-muted" />
+                <div className="mt-2 h-3 w-full bg-muted" />
+                <div className="h-3 w-2/3 bg-muted" />
+              </div>
+            ))}
+          </div>
+        ) : !ok || noticias.length === 0 ? (
           <div className="mt-12 border border-dashed p-10 text-center sm:p-16">
             <p className="font-serif text-2xl">Indisponível no momento</p>
             <p className="mt-3 text-muted-foreground">
