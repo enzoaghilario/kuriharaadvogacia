@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-import { googleNewsRssUrl, parseRssItems, type Noticia } from "@/lib/news-core";
+import { bingNewsRssUrl, googleNewsRssUrl, mergeNews, parseRssItems, type Noticia } from "@/lib/news-core";
 
 export type LegalNewsResult = { noticias: Noticia[]; ok: boolean };
 
@@ -14,28 +14,39 @@ const HEADERS = {
 const FETCH_TIMEOUT_MS = 4000;
 const CACHE_TTL_MS = 30 * 60 * 1000;
 
-// Cache em memória por instância do servidor: evita refazer a busca a cada visita.
+// Todas as fontes rodam em paralelo; o resultado é unido e filtrado igualmente.
+export const NEWS_SOURCES: { name: string; url: () => string }[] = [
+  { name: "ConJur", url: () => "https://www.conjur.com.br/feed/" },
+  { name: "JOTA", url: () => "https://www.jota.info/feed" },
+  { name: "Google News", url: () => googleNewsRssUrl() },
+  { name: "Bing Notícias", url: () => bingNewsRssUrl() },
+];
+
 let cache: { at: number; value: LegalNewsResult } | null = null;
 
-export const getLegalNews = createServerFn({ method: "GET" }).handler(
-  async (): Promise<LegalNewsResult> => {
-    if (cache && Date.now() - cache.at < CACHE_TTL_MS) return cache.value;
-    try {
-      const res = await fetch(googleNewsRssUrl(), {
-        headers: HEADERS,
-        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-      });
-      if (res.ok) {
-        const noticias = parseRssItems(await res.text());
-        if (noticias.length) {
-          const value = { noticias, ok: true };
-          cache = { at: Date.now(), value };
-          return value;
-        }
-      }
-    } catch {
-      // timeout ou falha de rede: cai no estado "indisponível"
+async function fetchSource(src: { name: string; url: () => string }): Promise<Noticia[]> {
+  try {
+    const res = await fetch(src.url(), { headers: HEADERS, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
+    if (!res.ok) {
+      console.error(`[Jornal jurídico] ${src.name} falhou: HTTP ${res.status}`);
+      return [];
     }
-    return { noticias: [], ok: false };
-  },
-);
+    return parseRssItems(await res.text(), 50, src.name);
+  } catch (err) {
+    const reason = err instanceof Error && (err.name === "TimeoutError" || err.name === "AbortError") ? "timeout de 4 s" : String(err);
+    console.error(`[Jornal jurídico] ${src.name} falhou: ${reason}`);
+    return [];
+  }
+}
+
+export async function loadLegalNews(): Promise<LegalNewsResult> {
+  if (cache && Date.now() - cache.at < CACHE_TTL_MS) return cache.value;
+  const settled = await Promise.allSettled(NEWS_SOURCES.map(fetchSource));
+  const noticias = mergeNews(settled.map((r) => (r.status === "fulfilled" ? r.value : [])));
+  if (!noticias.length) return { noticias: [], ok: false }; // não guarda falha no cache
+  const value = { noticias, ok: true };
+  cache = { at: Date.now(), value };
+  return value;
+}
+
+export const getLegalNews = createServerFn({ method: "GET" }).handler(loadLegalNews);
