@@ -59,6 +59,27 @@ export function isHttpUrl(link: string): boolean {
 export const NEWS_LIMIT = 24;
 export const NEWS_PAGE_SIZE = 6;
 
+export function bingNewsRssUrl(): string {
+  const q = `(${NEWS_SITES.map((s) => `site:${s}`).join(" OR ")})`;
+  return `https://www.bing.com/news/search?q=${encodeURIComponent(q)}&format=rss&setlang=pt-BR&cc=BR`;
+}
+
+/** Junta listas, remove duplicados por link ou título e ordena da mais recente. */
+export function mergeNews(lists: Noticia[][], limit: number = NEWS_LIMIT): Noticia[] {
+  const seenLinks = new Set<string>();
+  const seenTitles = new Set<string>();
+  const out: Noticia[] = [];
+  for (const n of lists.flat()) {
+    const t = normalize(n.title).replace(/\s+/g, " ").trim();
+    if (seenLinks.has(n.link) || seenTitles.has(t)) continue;
+    seenLinks.add(n.link);
+    seenTitles.add(t);
+    out.push(n);
+  }
+  out.sort((a, b) => (b.pubDate || "").localeCompare(a.pubDate || ""));
+  return out.slice(0, limit);
+}
+
 export function googleNewsRssUrl(query: string = NEWS_QUERY): string {
   return `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=pt-BR&gl=BR&ceid=BR:pt-419`;
 }
@@ -87,15 +108,22 @@ function pickTag(block: string, tag: string): string {
 }
 
 // Parser mínimo de RSS (workerd não tem DOMParser).
-export function parseRssItems(xml: string, limit: number = NEWS_LIMIT): Noticia[] {
+export function parseRssItems(
+  xml: string,
+  limit: number = NEWS_LIMIT,
+  defaultSource = "Informativo Jurídico",
+): Noticia[] {
   const items: Noticia[] = [];
   const blocks = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) ?? [];
   for (const block of blocks) {
     if (items.length >= limit) break;
     const title = stripTags(pickTag(block, "title"));
-    const link = pickTag(block, "link").replace(/&amp;/g, "&");
+    let link = pickTag(block, "link").replace(/&amp;/g, "&");
+    // Bing embrulha o link real em apiclick.aspx?url=...
+    const real = link.includes("bing.com/news/apiclick") ? link.match(/[?&]url=([^&]+)/)?.[1] : undefined;
+    if (real) link = decodeURIComponent(real);
     const pubDateRaw = pickTag(block, "pubDate");
-    const source = stripTags(pickTag(block, "source")) || "Informativo Jurídico";
+    const source = stripTags(pickTag(block, "source")) || defaultSource;
     const snippet = stripTags(pickTag(block, "description")).slice(0, 160);
     if (!title || !link || !isHttpUrl(link)) continue;
     if (isBlockedNews(title, snippet)) continue;
