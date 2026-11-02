@@ -99,6 +99,8 @@ export function parseRssItems(xml: string, limit: number = NEWS_LIMIT): Noticia[
     const snippet = stripTags(pickTag(block, "description")).slice(0, 160);
     if (!title || !link || !isHttpUrl(link)) continue;
     if (isBlockedNews(title, snippet)) continue;
+    // Páginas de índice/arquivo dos portais não são notícias.
+    if (/^arquivo de |p[áa]gina \d+ de \d+|term browse/i.test(title)) continue;
     const date = new Date(pubDateRaw);
     items.push({
       title,
