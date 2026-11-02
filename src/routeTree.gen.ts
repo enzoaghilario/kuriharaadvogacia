@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AtuacaoRouteImport } from './routes/atuacao'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as EscritorioRouteImport } from './routes/escritorio'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SejaParceiroRouteImport } from './routes/seja-parceiro'
@@ -39,6 +40,11 @@ const ContatoRoute = ContatoRouteImport.update({
 const EscritorioRoute = EscritorioRouteImport.update({
   id: '/escritorio',
   path: '/escritorio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/atuacao': typeof AtuacaoRoute
   '/contato': typeof ContatoRoute
   '/escritorio': typeof EscritorioRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/seja-parceiro': typeof SejaParceiroRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/atuacao': typeof AtuacaoRoute
   '/contato': typeof ContatoRoute
   '/escritorio': typeof EscritorioRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/seja-parceiro': typeof SejaParceiroRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/atuacao': typeof AtuacaoRoute
   '/contato': typeof ContatoRoute
   '/escritorio': typeof EscritorioRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/seja-parceiro': typeof SejaParceiroRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/atuacao'
     | '/contato'
     | '/escritorio'
+    | '/llms.txt'
     | '/privacidade'
     | '/robots.txt'
     | '/seja-parceiro'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/atuacao'
     | '/contato'
     | '/escritorio'
+    | '/llms.txt'
     | '/privacidade'
     | '/robots.txt'
     | '/seja-parceiro'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/atuacao'
     | '/contato'
     | '/escritorio'
+    | '/llms.txt'
     | '/privacidade'
     | '/robots.txt'
     | '/seja-parceiro'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   AtuacaoRoute: typeof AtuacaoRoute
   ContatoRoute: typeof ContatoRoute
   EscritorioRoute: typeof EscritorioRoute
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SejaParceiroRoute: typeof SejaParceiroRoute
@@ -202,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/escritorio'
       fullPath: '/escritorio'
       preLoaderRoute: typeof EscritorioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacidade': {
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   AtuacaoRoute: AtuacaoRoute,
   ContatoRoute: ContatoRoute,
   EscritorioRoute: EscritorioRoute,
+  LlmsDottxtRoute: LlmsDottxtRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SejaParceiroRoute: SejaParceiroRoute,
