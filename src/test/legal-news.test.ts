@@ -94,3 +94,13 @@ describe("filtro do jornal jurídico", () => {
     expect(q).not.toContain("bing");
   });
 });
+
+describe("mergeNews", () => {
+  it("remove duplicados por link ou título e ordena por data", async () => {
+    const { mergeNews } = await import("@/lib/news-core");
+    const a = { title: "A", link: "https://x/a", pubDate: "2026-01-01T00:00:00.000Z", source: "s", snippet: "" };
+    const b = { ...a, title: "B", link: "https://x/b", pubDate: "2026-02-01T00:00:00.000Z" };
+    const out = mergeNews([[a, b], [{ ...a, link: "https://y/a" }, { ...b, title: "C" }]]);
+    expect(out.map((n) => n.title)).toEqual(["B", "A"]);
+  });
+});
