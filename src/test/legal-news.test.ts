@@ -66,3 +66,31 @@ describe("formatNewsDate", () => {
     expect(formatNewsDate("2026-10-30T12:00:00.000Z")).toMatch(/out/i);
   });
 });
+
+describe("filtro do jornal jurídico", () => {
+  const item = (title: string, link = "https://www.conjur.com.br/x", desc = "") =>
+    `<rss><channel><item><title>${title}</title><link>${link}</link><description>${desc}</description></item></channel></rss>`;
+
+  it("descarta política partidária e crimes no título ou resumo", () => {
+    expect(parseRssItems(item("Lula indica novo ministro ao STF"))).toHaveLength(0);
+    expect(parseRssItems(item("Caso Robinho volta à pauta"))).toHaveLength(0);
+    expect(parseRssItems(item("Decisão do STJ", undefined, "acusado de homicídio"))).toHaveLength(0);
+    expect(parseRssItems(item("TST julga horas extras de bancários"))).toHaveLength(1);
+  });
+
+  it("não bloqueia palavras que apenas contêm um termo", () => {
+    expect(parseRssItems(item("Plano de saúde deve cobrir tratamento"))).toHaveLength(1);
+  });
+
+  it("aceita apenas links http/https", () => {
+    expect(parseRssItems(item("TST julga recurso", "javascript:alert(1)"))).toHaveLength(0);
+    expect(parseRssItems(item("TST julga recurso", "ftp://x.com/a"))).toHaveLength(0);
+  });
+
+  it("busca só em veículos jurídicos especializados", () => {
+    const q = decodeURIComponent(googleNewsRssUrl());
+    expect(q).toContain("site:conjur.com.br");
+    expect(q).toContain("site:migalhas.com.br");
+    expect(q).not.toContain("bing");
+  });
+});

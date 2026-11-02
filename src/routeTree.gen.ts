@@ -14,7 +14,9 @@ import { Route as AtuacaoRouteImport } from './routes/atuacao'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as EscritorioRouteImport } from './routes/escritorio'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SejaParceiroRouteImport } from './routes/seja-parceiro'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ConteudosIndexRouteImport } from './routes/conteudos.index'
 import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
 import { Route as ApiPublicJobsInstagramSyncRouteImport } from './routes/api/public/jobs/instagram-sync'
@@ -44,9 +46,19 @@ const PrivacidadeRoute = PrivacidadeRouteImport.update({
   path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SejaParceiroRoute = SejaParceiroRouteImport.update({
   id: '/seja-parceiro',
   path: '/seja-parceiro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConteudosIndexRoute = ConteudosIndexRouteImport.update({
@@ -72,7 +84,9 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/escritorio': typeof EscritorioRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/seja-parceiro': typeof SejaParceiroRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/api/public/jobs/instagram-sync': typeof ApiPublicJobsInstagramSyncRoute
@@ -83,7 +97,9 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/escritorio': typeof EscritorioRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/seja-parceiro': typeof SejaParceiroRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/conteudos': typeof ConteudosIndexRoute
   '/api/public/jobs/instagram-sync': typeof ApiPublicJobsInstagramSyncRoute
@@ -95,7 +111,9 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/escritorio': typeof EscritorioRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/seja-parceiro': typeof SejaParceiroRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/api/public/jobs/instagram-sync': typeof ApiPublicJobsInstagramSyncRoute
@@ -108,7 +126,9 @@ export interface FileRouteTypes {
     | '/contato'
     | '/escritorio'
     | '/privacidade'
+    | '/robots.txt'
     | '/seja-parceiro'
+    | '/sitemap.xml'
     | '/conteudos/$slug'
     | '/conteudos/'
     | '/api/public/jobs/instagram-sync'
@@ -119,7 +139,9 @@ export interface FileRouteTypes {
     | '/contato'
     | '/escritorio'
     | '/privacidade'
+    | '/robots.txt'
     | '/seja-parceiro'
+    | '/sitemap.xml'
     | '/conteudos/$slug'
     | '/conteudos'
     | '/api/public/jobs/instagram-sync'
@@ -130,7 +152,9 @@ export interface FileRouteTypes {
     | '/contato'
     | '/escritorio'
     | '/privacidade'
+    | '/robots.txt'
     | '/seja-parceiro'
+    | '/sitemap.xml'
     | '/conteudos/$slug'
     | '/conteudos/'
     | '/api/public/jobs/instagram-sync'
@@ -142,7 +166,9 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   EscritorioRoute: typeof EscritorioRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
   SejaParceiroRoute: typeof SejaParceiroRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ConteudosSlugRoute: typeof ConteudosSlugRoute
   ConteudosIndexRoute: typeof ConteudosIndexRoute
   ApiPublicJobsInstagramSyncRoute: typeof ApiPublicJobsInstagramSyncRoute
@@ -185,11 +211,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/seja-parceiro': {
       id: '/seja-parceiro'
       path: '/seja-parceiro'
       fullPath: '/seja-parceiro'
       preLoaderRoute: typeof SejaParceiroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conteudos/': {
@@ -222,7 +262,9 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   EscritorioRoute: EscritorioRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
   SejaParceiroRoute: SejaParceiroRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ConteudosSlugRoute: ConteudosSlugRoute,
   ConteudosIndexRoute: ConteudosIndexRoute,
   ApiPublicJobsInstagramSyncRoute: ApiPublicJobsInstagramSyncRoute,
