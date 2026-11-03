@@ -30,7 +30,7 @@ export const NEWS_QUERY = `(${NEWS_SITES.map((s) => `site:${s}`).join(" OR ")}) 
 // política partidária e crimes não combinam com o site do escritório.
 export const NEWS_BLOCKLIST = [
   "lula", "bolsonaro", "eleição", "eleições", "eleito", "eleita", "reeleito", "reeleita",
-  "partido", "pt", "pl", "deputado", "deputada", "senador", "senadora", "candidato", "candidata",
+  "partido", "deputado", "deputada", "senador", "senadora", "candidato", "candidata",
   "estupro", "homicídio", "assassinato", "preso", "presa", "prisão", "condenado", "condenada",
   "tráfico", "facção", "robinho", "crime", "crimes",
 ];

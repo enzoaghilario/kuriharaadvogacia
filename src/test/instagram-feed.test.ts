@@ -46,7 +46,7 @@ describe("normalizeGraphMedia", () => {
   it("usa a primeira mídia do carrossel como capa", () => {
     const post = normalizeGraphMedia({
       ...photo,
-      media_type: "CAROSEL",
+      media_type: "CAROUSEL_ALBUM",
       media_url: undefined,
       children: { data: [{ id: "c1", media_url: "https://cdn.example/foto2.jpg" }] },
     });

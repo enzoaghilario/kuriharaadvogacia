@@ -60,7 +60,7 @@ export function normalizeGraphMedia(raw: GraphMedia): InstagramPost | null {
   const firstChild = children.find((child) => usableUrl(child.media_url) || usableUrl(child.thumbnail_url));
 
   let imageUrl: string | null;
-  if (mediaType === "CAROSEL") {
+  if (mediaType === "CAROUSEL_ALBUM") {
     imageUrl = usableUrl(firstChild?.media_url) ?? usableUrl(firstChild?.thumbnail_url) ?? usableUrl(raw.thumbnail_url) ?? usableUrl(raw.media_url);
   } else if (VIDEO_TYPES.has(mediaType)) {
     // Vídeo e Reels: a miniatura é a capa; o arquivo em si abre no Instagram.
