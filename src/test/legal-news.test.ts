@@ -82,6 +82,10 @@ describe("filtro do jornal jurídico", () => {
     expect(parseRssItems(item("Plano de saúde deve cobrir tratamento"))).toHaveLength(1);
   });
 
+  it("não bloqueia notícias sobre PL (projeto de lei)", () => {
+    expect(parseRssItems(item("PL 1234/2024 altera a CLT"))).toHaveLength(1);
+  });
+
   it("aceita apenas links http/https", () => {
     expect(parseRssItems(item("TST julga recurso", "javascript:alert(1)"))).toHaveLength(0);
     expect(parseRssItems(item("TST julga recurso", "ftp://x.com/a"))).toHaveLength(0);

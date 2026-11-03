@@ -148,7 +148,7 @@ async function fetchMedia(token: string, accountId: string, limit: number) {
 }
 
 /** Busca as publicações mais recentes na Meta e grava no banco, sem duplicar. */
-export async function syncInstagramFeed(): Promise<{
+export async function syncInstagramFeed(options: { lockHeld?: boolean } = {}): Promise<{
   ok: boolean;
   posts: number;
   error: string | null;
@@ -168,7 +168,9 @@ export async function syncInstagramFeed(): Promise<{
   }
 
   const token = env["INSTAGRAM_ACCESS_TOKEN"]!.trim();
-  await markState({ status: "running", last_attempt_at: new Date().toISOString() });
+  if (!options.lockHeld) {
+    await markState({ status: "running", last_attempt_at: new Date().toISOString() });
+  }
 
   const accountId = await resolveAccountId(token, env);
   if (!accountId) {
@@ -250,10 +252,26 @@ export async function ensureFreshInstagramFeed(): Promise<void> {
     const now = Date.now();
     if (!shouldRefresh(data?.last_success_at ?? null, now, interval)) return;
 
+    // Backoff: depois de uma tentativa (inclusive com erro), espera o intervalo inteiro.
     const lastAttempt = data?.last_attempt_at ? new Date(data.last_attempt_at).getTime() : 0;
-    if (data?.status === "running" && now - lastAttempt < LOCK_MS) return;
+    if (now - lastAttempt < interval * 60_000) return;
 
-    await syncInstagramFeed();
+    // Garante a linha e pega a trava com um UPDATE condicional atômico.
+    if (!data) {
+      await supabaseAdmin
+        .from("instagram_state")
+        .upsert({ id: 1 }, { onConflict: "id", ignoreDuplicates: true });
+    }
+    const cutoff = new Date(now - LOCK_MS).toISOString();
+    const { data: locked, error: lockError } = await supabaseAdmin
+      .from("instagram_state")
+      .update({ status: "running", last_attempt_at: new Date(now).toISOString() })
+      .eq("id", 1)
+      .or(`status.is.null,status.neq.running,last_attempt_at.is.null,last_attempt_at.lt.${cutoff}`)
+      .select("id");
+    if (lockError || !locked?.length) return;
+
+    await syncInstagramFeed({ lockHeld: true });
   } catch (cause) {
     // Banco fora do ar não pode derrubar a página que mostra as publicações.
     console.error("atualização automática do Instagram:", String(cause));
@@ -275,7 +293,7 @@ export async function readInstagramFeed(): Promise<{ posts: InstagramPost[]; sta
   try {
     const supabase = publicClient();
 
-    const [{ data: rows }, { data: state }] = await Promise.all([
+    const [{ data: rows }, state] = await Promise.all([
       supabase
         .from("instagram_posts")
         .select(
@@ -283,9 +301,15 @@ export async function readInstagramFeed(): Promise<{ posts: InstagramPost[]; sta
         )
         .order("published_at", { ascending: false })
         .limit(24),
-      admin().then((client) =>
-        client.from("instagram_state").select("status, last_success_at").eq("id", 1).maybeSingle(),
-      ),
+      // Falha ao ler o estado não pode esconder os posts públicos.
+      admin()
+        .then((client) =>
+          client.from("instagram_state").select("status, last_success_at").eq("id", 1).maybeSingle(),
+        )
+        .then(({ data }) => data, (cause) => {
+          console.error("[Instagram] leitura do estado falhou:", String(cause));
+          return null;
+        }),
     ]);
 
     const posts: InstagramPost[] = (rows ?? []).map((row) => ({
