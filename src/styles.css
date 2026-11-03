@@ -270,6 +270,12 @@ typebot-bubble { position: relative; z-index: 2147483647; }
     border-color: color-mix(in oklab, var(--primary) 45%, transparent);
     box-shadow: 0 0 28px -6px color-mix(in oklab, var(--primary) 38%, transparent);
   }
+  /* Linhas de lista (acordeão de serviços): o brilho desenharia uma moldura,
+     então fica apenas a borda inferior com o tom dourado. */
+  li.tilt-card,
+  li.tilt-card.in-view {
+    box-shadow: none;
+  }
   .tilt-card:active {
     transform: scale(1.02);
   }
