@@ -18,6 +18,7 @@ import { getRequestOrigin } from "@/lib/seo";
 import { buildStructuredData, safeJsonLd } from "@/lib/structured-data";
 import { GOOGLE_SITE_VERIFICATION } from "@/content/analytics";
 import { ConsentBanner } from "@/components/ConsentBanner";
+import { TypebotChat } from "@/components/TypebotChat";
 
 let clientOrigin: string | undefined;
 
@@ -163,6 +164,7 @@ function RootComponent() {
       </main>
       <Footer />
       <ConsentBanner />
+      <TypebotChat />
     </QueryClientProvider>
   );
 }
