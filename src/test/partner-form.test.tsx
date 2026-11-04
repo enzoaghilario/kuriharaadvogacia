@@ -30,6 +30,14 @@ describe("Partner form privacy", () => {
     expect(screen.getByLabelText(/Razão social/)).toHaveValue("Empresa de teste");
   });
 
+  it("points people to WhatsApp while online sending is being set up", () => {
+    render(<PartnerForm />);
+    expect(screen.getByText(/O envio online está em configuração/)).toBeInTheDocument();
+    const link = screen.getByRole("link", { name: /Falar no WhatsApp/i });
+    expect(link).toHaveAttribute("href", "https://wa.me/5516988014617");
+    expect(screen.getByRole("button", { name: /Enviar relatório/ })).toBeDisabled();
+  });
+
   it("never persists entered information in browser storage", () => {
     const storageSpy = vi.spyOn(Storage.prototype, "setItem");
     render(<PartnerForm />);
