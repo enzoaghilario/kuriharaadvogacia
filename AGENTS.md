@@ -12,6 +12,7 @@
 ## Project rules
 
 - Mount the external Typebot bubble once in the shared root using a browser-only effect, never during SSR. Why: the chat persists across page navigation without executing DOM operations on the server.
+- Attach launcher dragging through a browser-only helper that moves only the closed button and clamps it to the viewport. Why: mouse and touch movement must not displace the chat window or bypass mobile protection.
 
 - Keep partner applications in a standalone, browser-memory-only form with a shared validation schema; enable submission only after its dedicated external email delivery is configured and verified. Why: this flow must never reuse stored contact submissions or claim delivery before a real send succeeds.
 

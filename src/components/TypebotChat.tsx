@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { KF_MONOGRAM_SVG } from "@/lib/kf-monogram";
+import { attachChatDrag } from "@/lib/chat-drag";
 
 const SCRIPT_ID = "typebot-bubble-script";
 
@@ -61,13 +62,22 @@ export function TypebotChat() {
       document.body.append(script);
     }
 
-    // O selo é renderizado de forma tardia dentro do shadow DOM; observa até esconder.
-    const observer = new MutationObserver(() => {
+    let dragButton: HTMLButtonElement | undefined;
+    let detachDrag: (() => void) | undefined;
+    const updateBubble = () => {
       hideTypebotBadge();
-    });
+      const button = document.querySelector("typebot-bubble")?.shadowRoot?.querySelector<HTMLButtonElement>("button[part='button']");
+      if (button && button !== dragButton) {
+        detachDrag?.();
+        dragButton = button;
+        detachDrag = attachChatDrag(button);
+      }
+    };
+    // O botão e o selo são renderizados de forma tardia dentro do shadow DOM.
+    const observer = new MutationObserver(updateBubble);
     observer.observe(document.body, { childList: true, subtree: true });
-    const interval = window.setInterval(hideTypebotBadge, 1500);
-    hideTypebotBadge();
+    const interval = window.setInterval(updateBubble, 1500);
+    updateBubble();
 
     // No celular: fundo escuro bloqueia toques acidentais nos botões do site.
     const backdrop = document.createElement("div");
@@ -89,6 +99,7 @@ export function TypebotChat() {
     window.addEventListener("kf-chat", onChat);
 
     return () => {
+      detachDrag?.();
       window.removeEventListener("kf-chat", onChat);
       backdrop.remove();
       document.documentElement.classList.remove("kf-chat-open");
