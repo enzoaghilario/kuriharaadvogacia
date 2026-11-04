@@ -2,11 +2,8 @@ import { pageHead } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
-import { InstagramFeed } from "@/components/InstagramFeed";
 import { LegalNews } from "@/components/LegalNews";
 import { PageIntro } from "@/components/PageIntro";
-import { formatDate, type Post } from "@/content/posts";
-import { getInstagramFeed } from "@/lib/instagram.functions";
 import { getLegalNews } from "@/lib/news.functions";
 
 const T = "Conteúdos | Kurihara & Figueiredo Advogados Associados";
