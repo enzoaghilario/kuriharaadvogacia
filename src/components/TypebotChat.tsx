@@ -1,20 +1,7 @@
 import { useEffect } from "react";
+import { KF_MONOGRAM_SVG } from "@/lib/kf-monogram";
 
 const SCRIPT_ID = "typebot-bubble-script";
-
-/**
- * Ícone do balão: aspas tipográficas em azul-marinho.
- * O símbolo padrão do Typebot é uma bolha de conversa que lembrava o
- * ícone do WhatsApp; as aspas combinam com a identidade sóbria do site.
- */
-const BUBBLE_ICON_SVG =
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">' +
-  '<g fill="#070a5a">' +
-  '<circle cx="8.4" cy="8.6" r="4"/>' +
-  '<path d="M5.0 10.6 L9.6 11.6 L4.2 17.8 Z"/>' +
-  '<circle cx="17.4" cy="8.6" r="4"/>' +
-  '<path d="M14.0 10.6 L18.6 11.6 L13.2 17.8 Z"/>' +
-  "</g></svg>";
 
 /**
  * Esconde o selo "Made with Typebot" que vive dentro do shadow DOM do balão.
@@ -29,6 +16,8 @@ function hideTypebotBadge() {
   style.id = "kf-hide-typebot-badge";
   style.textContent =
     "a.lite-badge, typebot-badge, a[href*='typebot.io'] { display: none !important; }" +
+    /* O monograma precisa de mais espaço que o padrão do Typebot. */
+    "button[part='button'] img { width: 72% !important; height: auto !important; }" +
     /* Caixa de texto e botão Enviar mais compactos. */
     ".typebot-input-form .typebot-input { min-height: 0 !important; padding: 0 4px !important; }" +
     ".typebot-input-form input, .typebot-input-form textarea { font-size: 13px !important; padding: 6px 8px !important; min-height: 0 !important; }" +
@@ -62,7 +51,7 @@ export function TypebotChat() {
               button: {
                 backgroundColor: '#D2B379',
                 iconColor: '#070a5a',
-                customIconSrc: 'data:image/svg+xml;base64,${btoa(BUBBLE_ICON_SVG)}',
+                customIconSrc: 'data:image/svg+xml;base64,${btoa(KF_MONOGRAM_SVG)}',
               },
               chatWindow: { backgroundColor: '#070a5a' },
             },
