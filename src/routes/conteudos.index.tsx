@@ -1,18 +1,14 @@
 import { pageHead } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { LegalNews } from "@/components/LegalNews";
 import { PageIntro } from "@/components/PageIntro";
+import { formatDate, type Post } from "@/content/posts";
 import { getLegalNews } from "@/lib/news.functions";
 
 const T = "Conteúdos | Kurihara & Figueiredo Advogados Associados";
-const D = "Publicações recentes do Instagram do escritório Kurihara & Figueiredo Advogados Associados e notícias jurídicas selecionadas.";
-
-const instagramFeedQueryOptions = queryOptions({
-  queryKey: ["instagram-feed"],
-  queryFn: () => getInstagramFeed(),
-});
+const D = "Notícias jurídicas selecionadas do escritório Kurihara & Figueiredo Advogados Associados.";
 
 const legalNewsQueryOptions = queryOptions({
   queryKey: ["legal-news"],
@@ -23,7 +19,6 @@ const legalNewsQueryOptions = queryOptions({
 export const Route = createFileRoute("/conteudos/")({
   head: ({ match }) => pageHead({ origin: match.context.origin, path: "/conteudos", title: T, description: D }),
   // As notícias não bloqueiam a página: carregam no navegador depois da renderização.
-  loader: ({ context }) => context.queryClient.ensureQueryData(instagramFeedQueryOptions),
   component: Conteudos,
 });
 
@@ -41,7 +36,6 @@ export function PostCard({ post }: { post: Post }) {
 }
 
 function Conteudos() {
-  const { data: feed } = useSuspenseQuery(instagramFeedQueryOptions);
   const news = useQuery(legalNewsQueryOptions);
 
   return (
@@ -49,8 +43,6 @@ function Conteudos() {
       <PageIntro eyebrow="Conteúdos" title="Conteúdos jurídicos">
         Informações jurídicas apresentadas de forma clara e acessível.
       </PageIntro>
-
-      <InstagramFeed posts={feed.posts} configured={feed.configured} lastSuccessAt={feed.lastSuccessAt} />
 
       <LegalNews loading={news.isPending} noticias={news.data?.noticias ?? []} ok={news.data?.ok ?? !news.isError} />
     </>
