@@ -4,6 +4,8 @@ import { ArrowLeft, Building2, Send, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY_SIZES, PARTNER_AREAS, REVENUE_RANGES, partnerSchema } from "@/lib/partner-schema";
 import { maskCnpj, maskCpf, maskPhone } from "@/lib/masks";
+import { SITE } from "@/content/site";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 
 const field = "mt-2 w-full rounded-sm border border-input bg-background px-3 py-3 text-base text-foreground outline-none focus:border-bronze focus:ring-1 focus:ring-ring";
 const fieldError = "border-destructive focus:border-destructive focus:ring-destructive";
@@ -105,7 +107,17 @@ export function PartnerForm() {
         <input name="privacy" type="checkbox" required className="mt-1 h-4 w-4 shrink-0 accent-primary" />
         <span>Declaro que autorizo o envio das informações para análise e estou ciente de que os dados serão enviados exclusivamente por e-mail e NÃO serão armazenados no site *</span>
       </label>
-      <p role="status" className="text-sm leading-relaxed text-muted-foreground">O envio está temporariamente indisponível. Nenhuma informação será transmitida ou armazenada no site.</p>
+      <p role="status" className="text-sm leading-relaxed text-muted-foreground">O envio online está em configuração. Enquanto isso, fale com o escritório pelo WhatsApp.</p>
+      <div>
+        <a
+          href={SITE.whatsappHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex h-12 items-center gap-3 bg-primary px-6 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-graphite"
+        >
+          <WhatsAppIcon size={16} /> Falar no WhatsApp
+        </a>
+      </div>
       {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
       <div className="flex flex-wrap items-center gap-4">
         <Button type="submit" disabled className="h-12 w-full px-6 sm:w-auto"><Send aria-hidden="true" />Enviar relatório para análise</Button>

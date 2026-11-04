@@ -10,7 +10,6 @@ import { HeroParticles } from "@/components/HeroParticles";
 import { SectionHeading } from "@/components/PageIntro";
 import { PostCard } from "./conteudos.index";
 import { POSTS } from "@/content/posts";
-import { Faq } from "@/components/Faq";
 
 const TITLE = "Kurihara & Figueiredo Advogados Associados | Advocacia em Morro Agudo, SP";
 const DESC =
@@ -60,7 +59,7 @@ function Index() {
           <WhatsAppIcon size={16} /> Falar no WhatsApp
         </a>
         <p style={{ animationDelay: "3.9s" }} className="hero-rise-3d mt-8 max-w-xl text-lg leading-relaxed text-foreground sm:text-xl">
-          Soluções jurídicas ágeis e seguras para você e sua empresa. Fale com um especialista agora.
+          Soluções jurídicas ágeis e seguras para você e sua empresa. Fale com nossa equipe.
         </p>
         <div style={{ animationDelay: "3.85s" }} className="hero-rise-3d mt-10 flex flex-col gap-3 sm:flex-row">
           <a href={SITE.whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-primary px-7 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-graphite">
@@ -91,8 +90,6 @@ function Index() {
           </div>
         </div>
       </section>
-
-      <Faq />
 
       {POSTS.length > 0 && (
         <section className="section-y border-t bg-secondary">

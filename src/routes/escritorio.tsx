@@ -2,7 +2,6 @@ import { pageHead } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 const fachada = "/escritorio-fachada-original.png";
 const atendimento = "/escritorio-atendimento.jpg";
-import { Faq } from "@/components/Faq";
 
 
 const T = "Sobre nós | Kurihara & Figueiredo Advogados Associados";
@@ -57,7 +56,6 @@ function Escritorio() {
           </div>
         </div>
       </section>
-      <Faq />
     </>
   );
 }

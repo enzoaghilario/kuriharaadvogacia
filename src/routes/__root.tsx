@@ -14,7 +14,6 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { TypebotChat } from "@/components/TypebotChat";
 import { getRequestOrigin } from "@/lib/seo";
 import { buildStructuredData, safeJsonLd } from "@/lib/structured-data";
 import { GOOGLE_SITE_VERIFICATION } from "@/content/analytics";
@@ -163,7 +162,6 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
-      <TypebotChat />
       <ConsentBanner />
     </QueryClientProvider>
   );
