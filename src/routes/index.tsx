@@ -55,9 +55,6 @@ function Index() {
           Kurihara & Figueiredo
         </h1>
         <p className="hero-rise-3d mt-2 text-lg text-muted-foreground" style={{ animationDelay: "3.65s" }}>Advogados Associados</p>
-        <a href={SITE.whatsappHref} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center justify-center gap-3 bg-primary px-7 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-graphite sm:hidden">
-          <WhatsAppIcon size={16} /> Falar no WhatsApp
-        </a>
         <p style={{ animationDelay: "3.9s" }} className="hero-rise-3d mt-8 max-w-xl text-lg leading-relaxed text-foreground sm:text-xl">
           Soluções jurídicas ágeis e seguras para você e sua empresa. Fale com nossa equipe.
         </p>
