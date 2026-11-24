@@ -34,33 +34,59 @@ function hideTypebotBadge() {
   root.append(style);
 }
 
+/** Eventos que indicam interação real — carregam o chat na hora. */
+const INTERACTION_EVENTS = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
+/** Sem interação, o chat carrega quando o navegador fica ocioso após este tempo. */
+const IDLE_DELAY_MS = 4000;
+
+function loadTypebot() {
+  if (!document.getElementById(SCRIPT_ID)) {
+    const script = document.createElement("script");
+    script.id = SCRIPT_ID;
+    script.type = "module";
+    script.textContent = `
+      import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.10.11/dist/web.js';
+      if (document.getElementById('${SCRIPT_ID}')) {
+        window.__kfTypebot = Typebot;
+        Typebot.initBubble({
+          typebot: 'my-typebot-8fqmxb7',
+          onOpen: () => window.dispatchEvent(new CustomEvent('kf-chat', { detail: true })),
+          onClose: () => window.dispatchEvent(new CustomEvent('kf-chat', { detail: false })),
+          theme: {
+            button: {
+              backgroundColor: '#D2B379',
+              iconColor: '#070a5a',
+              customIconSrc: 'data:image/svg+xml;base64,${btoa(KF_MONOGRAM_SVG)}',
+            },
+            chatWindow: { backgroundColor: '#070a5a' },
+          },
+        });
+      }
+    `;
+    document.body.append(script);
+  }
+}
+
 export function TypebotChat() {
   useEffect(() => {
-    if (!document.getElementById(SCRIPT_ID)) {
-      const script = document.createElement("script");
-      script.id = SCRIPT_ID;
-      script.type = "module";
-      script.textContent = `
-        import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.10.11/dist/web.js';
-        if (document.getElementById('${SCRIPT_ID}')) {
-          window.__kfTypebot = Typebot;
-          Typebot.initBubble({
-            typebot: 'my-typebot-8fqmxb7',
-            onOpen: () => window.dispatchEvent(new CustomEvent('kf-chat', { detail: true })),
-            onClose: () => window.dispatchEvent(new CustomEvent('kf-chat', { detail: false })),
-            theme: {
-              button: {
-                backgroundColor: '#D2B379',
-                iconColor: '#070a5a',
-                customIconSrc: 'data:image/svg+xml;base64,${btoa(KF_MONOGRAM_SVG)}',
-              },
-              chatWindow: { backgroundColor: '#070a5a' },
-            },
-          });
-        }
-      `;
-      document.body.append(script);
-    }
+    // O Typebot (~160 KB) não é necessário para o primeiro carregamento:
+    // adia até a primeira interação ou até o navegador ficar ocioso.
+    let loaded = false;
+    let idleHandle: number | undefined;
+    const triggerLoad = () => {
+      if (loaded) return;
+      loaded = true;
+      INTERACTION_EVENTS.forEach((ev) => window.removeEventListener(ev, triggerLoad));
+      loadTypebot();
+    };
+    INTERACTION_EVENTS.forEach((ev) => window.addEventListener(ev, triggerLoad, { passive: true, once: true }));
+    const delayTimer = window.setTimeout(() => {
+      if ("requestIdleCallback" in window) {
+        idleHandle = window.requestIdleCallback(triggerLoad, { timeout: 2000 });
+      } else {
+        triggerLoad();
+      }
+    }, IDLE_DELAY_MS);
 
     let dragButton: HTMLButtonElement | undefined;
     let detachDrag: (() => void) | undefined;
@@ -99,6 +125,9 @@ export function TypebotChat() {
     window.addEventListener("kf-chat", onChat);
 
     return () => {
+      INTERACTION_EVENTS.forEach((ev) => window.removeEventListener(ev, triggerLoad));
+      window.clearTimeout(delayTimer);
+      if (idleHandle !== undefined && "cancelIdleCallback" in window) window.cancelIdleCallback(idleHandle);
       detachDrag?.();
       window.removeEventListener("kf-chat", onChat);
       backdrop.remove();

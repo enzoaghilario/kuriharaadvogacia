@@ -1,7 +1,7 @@
 import { pageHead } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
-const fachada = "/escritorio-fachada-original.png";
-const atendimento = "/escritorio-atendimento.jpg";
+const fachada = "/escritorio-fachada-original.webp";
+const atendimento = "/escritorio-atendimento.webp";
 
 
 const T = "Sobre nós | Kurihara & Figueiredo Advogados Associados";

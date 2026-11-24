@@ -3,8 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Phone } from "lucide-react";
 import { SITE } from "@/content/site";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
-const logo = "/logo-hd-white.png";
-const logoDark = "/logo-hd.png";
+const logo = "/logo-hd-white.webp";
+const logoDark = "/logo-hd.webp";
 import { ContactBlock } from "@/components/ContactBlock";
 import { HeroParticles } from "@/components/HeroParticles";
 import { SectionHeading } from "@/components/PageIntro";
@@ -40,7 +40,7 @@ function Index() {
               alt="Grupo Kurihara & Figueiredo"
               width={1314}
               height={514}
-              fetchPriority="high"
+              loading="lazy"
               decoding="async"
               className="hero-logo-3d only-light w-full h-auto object-contain"
             />
