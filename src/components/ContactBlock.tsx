@@ -1,5 +1,6 @@
 import { Clock, Facebook, Instagram, MapPin, Phone } from "lucide-react";
-import { FULL_ADDRESS, MAPS_EMBED, MAPS_URL, SITE } from "@/content/site";
+import { DIRECTIONS_URL, FULL_ADDRESS, MAPS_URL, SITE } from "@/content/site";
+import { LocationShowcase } from "./location/LocationShowcase";
 import { WhatsAppIcon } from "./WhatsAppIcon";
 
 export function ContactBlock() {
@@ -47,7 +48,7 @@ export function ContactBlock() {
           <a href={SITE.phoneHref} className="border border-foreground/30 px-6 py-4 text-xs font-semibold uppercase tracking-[0.18em] hover:border-bronze hover:text-bronze">
             Ligar agora
           </a>
-          <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="border border-foreground/30 px-6 py-4 text-xs font-semibold uppercase tracking-[0.18em] hover:border-bronze hover:text-bronze">
+          <a href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className="border border-foreground/30 px-6 py-4 text-xs font-semibold uppercase tracking-[0.18em] hover:border-bronze hover:text-bronze">
             Como chegar
           </a>
         </div>
@@ -56,9 +57,7 @@ export function ContactBlock() {
           <a href={SITE.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="grid h-11 w-11 place-items-center border hover:border-bronze hover:text-bronze"><Facebook size={18} /></a>
         </div>
       </div>
-      <div className="aspect-[4/3] w-full overflow-hidden border bg-muted">
-        <iframe title={`Mapa — ${SITE.name}`} src={MAPS_EMBED} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-full w-full grayscale-[60%]" />
-      </div>
+      <LocationShowcase className="self-start" />
     </div>
   );
 }

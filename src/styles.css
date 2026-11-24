@@ -317,3 +317,250 @@ typebot-bubble { position: relative; z-index: 2147483647; }
     );
   }
 }
+
+/* locmap:start — mapa 3D da localização (src/components/location) */
+:root {
+  --locmap-bg: #111829;
+  --locmap-gold: #d9b874;
+  --locmap-gold-ink: #0d1631;
+  --locmap-sign: #0d6a3a;
+  --locmap-sign-ink: #ffffff;
+  --locmap-shadow: 0 22px 50px -22px rgb(0 0 0 / 0.6);
+}
+html.light {
+  --locmap-bg: #edf0f4;
+  --locmap-gold: #c9a35a;
+  --locmap-shadow: 0 22px 50px -24px rgb(20 30 60 / 0.35);
+}
+.locmap {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--locmap-bg);
+}
+.locmap > canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.locmap-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+.locmap-ui > * {
+  visibility: hidden;
+  opacity: 0;
+}
+.locmap-scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--locmap-bg);
+}
+.locmap-intro {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.locmap-mark {
+  display: grid;
+  width: 5.5rem;
+  height: 5.5rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--locmap-gold);
+  color: var(--locmap-gold-ink);
+  box-shadow: var(--locmap-shadow);
+}
+.locmap-mark-text {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+.locmap-card {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: min(19rem, calc(100% - 2rem));
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--card-foreground);
+  padding: 1.1rem 1.2rem 1.2rem;
+  box-shadow: var(--locmap-shadow);
+}
+.locmap-eyebrow {
+  display: block;
+  color: var(--bronze);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.locmap-title {
+  margin-top: 0.4rem;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.locmap-title-sub {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+.locmap-line {
+  margin-top: 0.45rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+.locmap-line + .locmap-line {
+  margin-top: 0.1rem;
+}
+.locmap-muted {
+  color: var(--muted-foreground);
+}
+.locmap-btn {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 0.6rem 1rem;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.locmap-btn:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+.locmap-btn--ghost {
+  border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent);
+  background: transparent;
+  color: var(--foreground);
+}
+.locmap-sign {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 2px solid var(--locmap-sign-ink);
+  border-radius: 6px;
+  background: var(--locmap-sign);
+  color: var(--locmap-sign-ink);
+  padding: 0.35rem 0.75rem 0.4rem 0.45rem;
+  white-space: nowrap;
+  box-shadow: var(--locmap-shadow);
+}
+.locmap-sign::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 2px;
+  height: 10px;
+  background: var(--locmap-sign-ink);
+  transform: translateX(-50%);
+}
+.locmap-sign-arrow {
+  display: grid;
+  width: 1.6rem;
+  height: 1.6rem;
+  place-items: center;
+  border-radius: 4px;
+  background: var(--locmap-sign-ink);
+  color: var(--locmap-sign);
+}
+.locmap-sign-text small {
+  display: block;
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.locmap-sign-text strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.locmap-arrived {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  background: var(--locmap-gold);
+  color: var(--locmap-gold-ink);
+  padding: 0.55rem 1rem 0.6rem;
+  white-space: nowrap;
+  box-shadow: var(--locmap-shadow);
+}
+.locmap-arrived::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border: 7px solid transparent;
+  border-top-color: var(--locmap-gold);
+  transform: translateX(-50%);
+}
+.locmap-arrived strong {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.locmap-arrived span {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.locmap-final {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+.locmap-final-card {
+  width: min(24rem, 100%);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--card-foreground);
+  padding: 1.5rem 1.4rem;
+  text-align: center;
+  box-shadow: var(--locmap-shadow);
+}
+.locmap-final-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+@media (max-width: 480px) {
+  .locmap-card {
+    top: 0.6rem;
+    left: 0.6rem;
+    width: calc(100% - 1.2rem);
+    padding: 0.85rem 0.95rem 0.95rem;
+  }
+  .locmap-card .locmap-muted:last-of-type {
+    display: none;
+  }
+  .locmap-sign-text strong {
+    font-size: 0.72rem;
+  }
+}
+/* locmap:end */

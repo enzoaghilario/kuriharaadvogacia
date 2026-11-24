@@ -21,7 +21,7 @@ export const Route = createFileRoute("/privacidade")({
           {(GA_MEASUREMENT_ID || CLARITY_PROJECT_ID) && (
             <p>Com sua permissão, o site usa ferramentas de análise ({[GA_MEASUREMENT_ID && "Google Analytics", CLARITY_PROJECT_ID && "Microsoft Clarity"].filter(Boolean).join(" e ")}) para entender, de forma agregada, como as páginas são usadas. Elas só são carregadas se você clicar em "Aceitar" no aviso de cookies; se recusar, nada é carregado. Sua escolha fica salva no armazenamento local do navegador e pode ser revista apagando os dados do site no navegador.</p>
           )}
-          <p>O mapa incorporado é fornecido pelo Google, e os links para Instagram e Facebook levam a serviços de terceiros, sujeitos às respectivas políticas de privacidade.</p>
+          <p>O mapa animado da seção de contato é desenhado no seu navegador com a biblioteca Three.js, carregada do jsDelivr; se ele não puder ser exibido, mostramos o mapa incorporado do Google. Os botões “Como chegar” abrem o Google Maps, e os links para Instagram e Facebook levam a serviços de terceiros, sujeitos às respectivas políticas de privacidade.</p>
           <p>Para solicitar informações sobre o tratamento dos seus dados, acesso, correção ou exclusão, entre em contato com o escritório pelo telefone (16) 3851-0303 ou pelo WhatsApp (16) 98801-4617. As solicitações serão analisadas conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018) e as obrigações legais aplicáveis.</p>
         </div>
       </section>

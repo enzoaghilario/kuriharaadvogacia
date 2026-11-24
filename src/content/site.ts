@@ -24,4 +24,5 @@ export const SITE = {
 export const FULL_ADDRESS = `${SITE.street}, ${SITE.district}, ${SITE.city} — ${SITE.state}, CEP ${SITE.zip}`;
 const q = encodeURIComponent(`${SITE.street}, ${SITE.city} - ${SITE.state}, ${SITE.zip}`);
 export const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${q}`;
+export const DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
 export const MAPS_EMBED = `https://www.google.com/maps?q=${q}&output=embed`;
