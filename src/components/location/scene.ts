@@ -29,6 +29,8 @@ export type LocationScene = {
   setTheme(light: boolean): void;
   setSound(on: boolean): void;
   restart(): void;
+  /** Sai do quadro estático (movimento reduzido) e começa a animação. */
+  play(): void;
   /** Vai para o instante t (s) do ciclo; útil para depuração e capturas. */
   seek(t: number): void;
   destroy(): void;
@@ -38,6 +40,8 @@ export type LocationSceneOptions = {
   info: LocationSceneInfo;
   light: boolean;
   reducedMotion: boolean;
+  /** Chamado se o WebGL falhar depois de iniciado (contexto perdido, erro de quadro). */
+  onError?: (err: unknown) => void;
 };
 
 // ---------------------------------------------------------------- utilidades
@@ -362,6 +366,17 @@ function setFade(e: HTMLElement, o: number, transform: string) {
   e.style.pointerEvents = o > 0.6 ? "auto" : "none";
 }
 
+/** GPU emulada em software: o 3D roda, mas bem mais devagar. */
+function isSoftwareRenderer(gl: WebGLRenderingContext | WebGL2RenderingContext): boolean {
+  try {
+    const ext = gl.getExtension("WEBGL_debug_renderer_info");
+    const name = String(gl.getParameter(ext ? ext.UNMASKED_RENDERER_WEBGL : gl.RENDERER) ?? "");
+    return /swiftshader|llvmpipe|software|basic render|softpipe/i.test(name);
+  } catch {
+    return false;
+  }
+}
+
 // ---------------------------------------------------------------- cena
 export async function createLocationScene(
   container: HTMLElement,
@@ -372,9 +387,15 @@ export async function createLocationScene(
 
   let palette = opts.light ? LIGHT : DARK;
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  // GPU emulada (SwiftShader/llvmpipe/aceleração desligada): resolução 1x e sombra simples.
+  const softwareGL = isSoftwareRenderer(renderer.getContext());
+  let maxRatio = softwareGL ? 1 : 1.75;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxRatio));
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = softwareGL ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
+  // A cidade não se move: a sombra é calculada uma vez, não a cada quadro.
+  renderer.shadowMap.autoUpdate = false;
+  renderer.shadowMap.needsUpdate = true;
   const canvas: HTMLCanvasElement = renderer.domElement;
   canvas.setAttribute("aria-hidden", "true");
   container.appendChild(canvas);
@@ -389,7 +410,7 @@ export async function createLocationScene(
   const sun = new THREE.DirectionalLight(palette.sun, palette.sunI);
   sun.position.set(-220, 380, 160);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.mapSize.set(softwareGL ? 1024 : 2048, softwareGL ? 1024 : 2048);
   const sc = sun.shadow.camera;
   sc.left = -460;
   sc.right = 460;
@@ -602,9 +623,7 @@ export async function createLocationScene(
   dot.position.y = 9.4;
   dot.scale.set(1, 1, 2.55);
   pin.add(head, cone, dot);
-  pin.traverse((o: any) => {
-    if (o.isMesh) o.castShadow = true;
-  });
+  // O pino balança; como a sombra é estática, ele usa só a sombra falsa abaixo.
   pin.position.set(DEST_X, 0.6 + DEST_H + 2, DEST_Z);
   scene.add(pin);
   const pinShadow = new THREE.Mesh(
@@ -887,7 +906,30 @@ export async function createLocationScene(
   let prevT = 0;
   let sound: Sound | null = null;
   let soundOn = false;
-  const staticMode = opts.reducedMotion;
+  let staticMode = opts.reducedMotion;
+  let failed = false;
+  let errors = 0;
+  // Desempenho medido: se os quadros ficarem lentos, baixa a resolução.
+  let slowFrames = 0;
+  let sampled = 0;
+
+  const fail = (err: unknown) => {
+    if (failed) return;
+    failed = true;
+    stop();
+    opts.onError?.(err);
+  };
+  const safeRender = (t: number, still: boolean) => {
+    if (failed) return;
+    try {
+      renderAt(t, still);
+      errors = 0;
+    } catch (err) {
+      errors += 1;
+      console.warn("Mapa 3D: erro ao desenhar o quadro.", err);
+      if (errors >= 3) fail(err);
+    }
+  };
 
   const audioTick = (t: number) => {
     if (!sound || !soundOn) return;
@@ -903,17 +945,33 @@ export async function createLocationScene(
 
   const frame = (now: number) => {
     raf = requestAnimationFrame(frame);
-    const dt = last ? Math.min(0.1, (now - last) / 1000) : 0;
+    const raw = last ? (now - last) / 1000 : 0;
+    // Em máquinas lentas o relógio acompanha o tempo real (até 0,25 s por quadro),
+    // para a animação não parecer congelada.
+    const dt = Math.min(0.25, raw);
     last = now;
     clock += dt;
     const t = clock % LOOP;
     audioTick(t);
     prevT = t;
-    renderAt(t);
+    if (raw > 0 && raw < 1) {
+      sampled += 1;
+      if (raw > 0.045) slowFrames += 1;
+      if (sampled >= 40) {
+        if (slowFrames > 24 && maxRatio > 1) {
+          maxRatio = 1;
+          renderer.setPixelRatio(1);
+          renderer.setSize(width, height, false);
+        }
+        sampled = 0;
+        slowFrames = 0;
+      }
+    }
+    safeRender(t, false);
   };
 
   const start = () => {
-    if (raf || staticMode || !active || document.hidden) return;
+    if (raf || failed || staticMode || !active || document.hidden) return;
     last = 0;
     raf = requestAnimationFrame(frame);
   };
@@ -931,7 +989,7 @@ export async function createLocationScene(
     camera.aspect = aspect;
     camera.fov = aspect < 1 ? 46 : 36;
     camera.updateProjectionMatrix();
-    if (!raf) renderAt(staticMode ? 0 : clock % LOOP, staticMode);
+    if (!raf) safeRender(staticMode ? 0 : clock % LOOP, staticMode);
   };
   const ro = new ResizeObserver(resize);
   ro.observe(container);
@@ -939,6 +997,19 @@ export async function createLocationScene(
 
   const onVis = () => (document.hidden ? stop() : start());
   document.addEventListener("visibilitychange", onVis);
+  const onLost = (e: Event) => {
+    e.preventDefault();
+    fail(new Error("WebGL context lost"));
+  };
+  canvas.addEventListener("webglcontextlost", onLost);
+  const play = () => {
+    if (failed) return;
+    staticMode = false;
+    clock = 0;
+    prevT = 0;
+    start();
+    if (!raf) safeRender(0, false);
+  };
 
   return {
     setActive(a) {
@@ -949,7 +1020,8 @@ export async function createLocationScene(
     setTheme(light) {
       palette = light ? LIGHT : DARK;
       applyPalette();
-      if (!raf) renderAt(staticMode ? 0 : clock % LOOP, staticMode);
+      renderer.shadowMap.needsUpdate = true;
+      if (!raf) safeRender(staticMode ? 0 : clock % LOOP, staticMode);
     },
     setSound(on) {
       soundOn = on;
@@ -957,6 +1029,7 @@ export async function createLocationScene(
         try {
           sound ??= new Sound();
           void sound.ctx.resume();
+          if (staticMode) play();
         } catch {
           soundOn = false;
         }
@@ -967,17 +1040,20 @@ export async function createLocationScene(
     seek(t) {
       clock = ((t % LOOP) + LOOP) % LOOP;
       prevT = clock;
-      if (!raf) renderAt(clock, staticMode);
+      if (!raf) safeRender(clock, staticMode);
     },
     restart() {
+      if (staticMode) return play();
       clock = 0;
       prevT = 0;
-      if (!raf) renderAt(0, staticMode);
+      if (!raf) safeRender(0, false);
     },
+    play,
     destroy() {
       stop();
       ro.disconnect();
       document.removeEventListener("visibilitychange", onVis);
+      canvas.removeEventListener("webglcontextlost", onLost);
       if (sound) void sound.ctx.close();
       for (const d of disposables) d?.dispose?.();
       slabMesh.dispose();

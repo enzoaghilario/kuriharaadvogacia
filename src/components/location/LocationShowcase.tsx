@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MapPin, Navigation, RotateCcw, Volume2, VolumeX } from "lucide-react";
+import { MapPin, Navigation, Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
 import { DIRECTIONS_URL, FULL_ADDRESS, MAPS_EMBED, MAPS_URL, SITE } from "@/content/site";
 import type { LocationScene, LocationSceneInfo } from "./scene";
 
@@ -26,15 +26,16 @@ type Status = "idle" | "loading" | "ready" | "error";
 /**
  * Localização animada: cidade 3D com a rota até o escritório.
  * Só carrega o Three.js quando a seção chega perto da tela, pausa fora dela,
- * respeita prefers-reduced-motion (quadro estático) e cai no mapa do Google
- * se o WebGL não estiver disponível.
+ * respeita prefers-reduced-motion (quadro estático com botão para assistir) e
+ * cai no mapa do Google se o WebGL não estiver disponível ou falhar.
  */
 export function LocationShowcase({ className = "" }: { className?: string }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<LocationScene | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [sound, setSound] = useState(false);
-  const [reduced, setReduced] = useState(false);
+  // Movimento reduzido no sistema: mostra o quadro parado até a pessoa pedir.
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -43,7 +44,7 @@ export function LocationShowcase({ className = "" }: { className?: string }) {
     let started = false;
     let visible = false;
     const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setReduced(isReduced);
+    setPaused(isReduced);
 
     const boot = async () => {
       started = true;
@@ -55,6 +56,12 @@ export function LocationShowcase({ className = "" }: { className?: string }) {
           info: INFO,
           light: document.documentElement.classList.contains("light"),
           reducedMotion: isReduced,
+          onError: (err) => {
+            console.warn("Mapa 3D interrompido, usando o mapa do Google.", err);
+            engineRef.current?.destroy();
+            engineRef.current = null;
+            if (!disposed) setStatus("error");
+          },
         });
         if (disposed) {
           engine.destroy();
@@ -99,6 +106,17 @@ export function LocationShowcase({ className = "" }: { className?: string }) {
     const next = !sound;
     setSound(next);
     engineRef.current?.setSound(next);
+    if (next) setPaused(false);
+  };
+
+  const play = () => {
+    setPaused(false);
+    engineRef.current?.play();
+  };
+
+  const restart = () => {
+    setPaused(false);
+    engineRef.current?.restart();
   };
 
   return (
@@ -120,6 +138,16 @@ export function LocationShowcase({ className = "" }: { className?: string }) {
               {status === "loading" && <p className="eyebrow mt-2 animate-pulse">Carregando mapa</p>}
             </div>
           </div>
+        )}
+        {status === "ready" && paused && (
+          <button
+            type="button"
+            onClick={play}
+            className="absolute bottom-4 left-1/2 z-10 inline-flex min-h-11 -translate-x-1/2 items-center gap-2 bg-primary px-5 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground shadow-lg hover:bg-graphite"
+          >
+            <Play size={14} aria-hidden />
+            Ver o trajeto
+          </button>
         )}
         {status === "error" && (
           <iframe
@@ -149,11 +177,11 @@ export function LocationShowcase({ className = "" }: { className?: string }) {
         >
           Abrir no Google Maps
         </a>
-        {status === "ready" && !reduced && (
+        {status === "ready" && (
           <span className="ml-auto flex gap-2">
             <button
               type="button"
-              onClick={() => engineRef.current?.restart()}
+              onClick={restart}
               aria-label="Reiniciar animação"
               title="Reiniciar animação"
               className="grid h-11 w-11 place-items-center border hover:border-bronze hover:text-bronze"
